@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/rmkr-dev/spring-boot-aks-blueprint/actions/workflows/ci.yml/badge.svg)](https://github.com/rmkr-dev/spring-boot-aks-blueprint/actions/workflows/ci.yml)
 
-A personal engineering blueprint for a **Java 21 / Spring Boot 3** HTTP service aimed at **Azure Kubernetes Service (AKS)**. Honest docs, a small production-shaped app, container build, and GitHub Actions CI—not a claim that anything is running in a live cluster.
+A personal engineering blueprint for a **Java 21 / Spring Boot 3** HTTP service aimed at **Azure Kubernetes Service (AKS)**. Honest docs, a small production-shaped app, container build, GitHub Actions CI, and **reference-only** Kubernetes samples—not a claim that anything is running in a live cluster.
 
 ## Why this exists
 
@@ -11,8 +11,8 @@ Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a
 1. **Docs and guardrails** — what the system is, how to change it, what “done” means
 2. **Application + tests** — a minimal REST service you can run and test locally
 3. **Observability + Docker** — Actuator exposure, multi-stage non-root image
-4. **CI + hygiene** — GitHub Actions (`mvn test` + docker build without push), Dependabot, templates *(this slice)*
-5. **Architecture + k8s samples** — diagrams, ADR, reference manifests
+4. **CI + hygiene** — GitHub Actions (`mvn test` + docker build without push), Dependabot, templates
+5. **Architecture + k8s samples** — diagrams, ADR, reference manifests *(this slice)*
 
 ## Target stack
 
@@ -22,7 +22,7 @@ Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a
 | Framework | Spring Boot 3.5.x (Web + Actuator + Validation) |
 | Build | Maven |
 | Container | Multi-stage Dockerfile, non-root user |
-| Orchestration target | AKS (documented path; manifests arrive in a later slice) |
+| Orchestration target | AKS (sample manifests are **reference only**) |
 | CI | GitHub Actions calling `rmkr-dev/gha-reusable-workflows` `@v0.1.0` |
 
 No Node/npm. No fake auth. No secrets in the tree.
@@ -42,8 +42,6 @@ Then open:
 - Health: `http://localhost:8080/actuator/health`
 - Metrics: `http://localhost:8080/actuator/metrics`
 - Info: `http://localhost:8080/actuator/info`
-
-Configuration via env (see `src/main/resources/application.yml`):
 
 | Variable | Default |
 | --- | --- |
@@ -70,50 +68,42 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 
 ```text
 .
-├── AGENTS.md
-├── CONTRIBUTING.md
-├── LICENSE
+├── AGENTS.md / CONTRIBUTING.md / SECURITY.md / LICENSE
 ├── README.md
-├── SECURITY.md
-├── pom.xml
-├── Dockerfile
-├── .dockerignore
-├── .github/                        # CI, Dependabot, CODEOWNERS, templates
-├── src/main/java/dev/rmkr/blueprint/
-├── src/main/resources/application.yml
-├── src/test/java/...
+├── pom.xml / Dockerfile / .dockerignore
+├── .github/                 # CI, Dependabot, CODEOWNERS, templates
+├── src/                     # Spring Boot app + tests
+├── deploy/k8s/              # Reference Deployment/Service/ConfigMap
 └── docs/
-    ├── architecture/
-    ├── decisions/
+    ├── architecture/        # Diagrams matching the tree
+    ├── decisions/           # ADRs (see ADR-001)
     ├── development/
     ├── deployment/
     └── security/
 ```
 
-`deploy/k8s/` lands in the architecture/k8s slice.
-
 ## Documentation
 
 | Doc | Purpose |
 | --- | --- |
-| [AGENTS.md](AGENTS.md) | Guardrails for humans and coding agents |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | How to open a change |
+| [AGENTS.md](AGENTS.md) | Guardrails |
 | [Development](docs/development/development.md) | Contributor workflow |
-| [CI](docs/development/ci.md) | How GitHub Actions works |
-| [Architecture](docs/architecture/README.md) | System shape |
+| [CI](docs/development/ci.md) | How Actions works |
+| [Architecture](docs/architecture/README.md) | System shape + diagrams |
+| [ADR-001](docs/decisions/0001-spring-boot-aks-blueprint.md) | Blueprint decision |
+| [Deployment](docs/deployment/deployment.md) | Local, container, reference k8s |
 | [Security](docs/security/security.md) | Security posture |
 | [SECURITY.md](SECURITY.md) | Vulnerability reporting |
-| [Deployment](docs/deployment/deployment.md) | Local, container, AKS reference path |
 
-## What is not claimed yet
+## What is not claimed
 
-- No applied AKS cluster, Ingress, or live URL
-- No Kubernetes manifests yet (next slice)
-- CI builds the image but does **not** push it
+- No applied AKS cluster, Ingress, or live public URL from this repo
+- Sample manifests under `deploy/k8s/` are **reference only**
+- CI builds the image but does **not** push it or run `kubectl apply`
 
 ## Contributing
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md). Prefer one complete slice per PR. `mvn -B test` must pass when application code changes; wait for CI green when workflows exist.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md). Prefer one complete slice per PR. `mvn -B test` must pass when application code changes; wait for CI green.
 
 ## License
 

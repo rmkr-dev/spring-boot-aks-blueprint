@@ -2,7 +2,7 @@
 
 ## Current state
 
-This repository is a **Spring Boot + AKS engineering blueprint**. Application, container, CI, diagrams, and ADR are present. Reference Kubernetes manifests land with the final commit of this slice.
+This repository is a **Spring Boot + AKS engineering blueprint**. Application, container, CI, diagrams, ADR, and reference Kubernetes manifests are present. Nothing claims a live cluster apply.
 
 | Surface | Role | Status |
 | --- | --- | --- |
@@ -13,7 +13,7 @@ This repository is a **Spring Boot + AKS engineering blueprint**. Application, c
 | `src/test/java/...` | Unit + WebMvc + Actuator tests | Present |
 | `Dockerfile` / `.dockerignore` | Multi-stage non-root image | Present |
 | `.github/workflows/ci.yml` | Reusable Maven CI + docker build (no push) | Present |
-| `deploy/k8s/` | Sample manifests | Landing next in this slice |
+| `deploy/k8s/` | Sample Deployment / Service / ConfigMap | Reference only |
 
 ## Application components
 
@@ -30,7 +30,7 @@ Configuration prefers environment variables over hardcoding (`SERVER_PORT`, `SPR
 
 ## Network posture
 
-Local and container processes listen on port 8080. See [network-diagram.md](network-diagram.md) for implemented vs aspirational AKS paths.
+Local and container processes listen on port 8080. Sample Kubernetes Service/Pod networking is documented as **reference**; Azure LB/Ingress remains aspirational. See [network-diagram.md](network-diagram.md).
 
 ## Related decisions
 

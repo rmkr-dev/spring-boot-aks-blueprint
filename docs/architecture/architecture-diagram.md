@@ -45,7 +45,7 @@ flowchart TB
 | Actuator `health` / `info` / `metrics` only | Yes |
 | Multi-stage non-root Dockerfile | Yes |
 | CI (`mvn test` + docker build, no push) | Yes |
-| `deploy/k8s/` sample manifests | Same PR as this diagram when landed |
+| `deploy/k8s/` sample manifests | Yes — reference only |
 | Live AKS apply / Ingress / registry push | **No** — not claimed |
 
 When the runtime shape changes, update this file in the same PR.

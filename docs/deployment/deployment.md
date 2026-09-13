@@ -20,47 +20,49 @@ Useful endpoints:
 - Metrics: `http://localhost:8080/actuator/metrics`
 - Info: `http://localhost:8080/actuator/info`
 
-Only `health`, `info`, and `metrics` are exposed via the web endpoint set. Health details stay restricted (`show-details: when_authorized`). Liveness/readiness probes are enabled for a future Kubernetes slice.
-
 ## Container image
-
-Multi-stage Dockerfile builds with Maven, then runs the JAR as a non-root `app` user:
 
 ```bash
 docker build -t spring-boot-aks-blueprint:local .
 docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
 ```
 
-Override config without rebuilding:
+CI builds the same image on pull requests and `main` pushes **without pushing** to a registry. See [ci.md](../development/ci.md).
+
+## Reference Kubernetes manifests
+
+Samples live under [`deploy/k8s/`](../../deploy/k8s/):
+
+| File | Purpose |
+| --- | --- |
+| `configmap.yaml` | Non-secret env (`SPRING_APPLICATION_NAME`, `SERVER_PORT`) |
+| `deployment.yaml` | Single replica, non-root securityContext, probes on `/actuator/health` |
+| `service.yaml` | ClusterIP Service on port 80 → container 8080 |
+
+Treat them as **reference**. Optional client-side validation:
 
 ```bash
-docker run --rm -p 8080:8080 \
-  -e SERVER_PORT=8080 \
-  -e SPRING_APPLICATION_NAME=spring-boot-aks-blueprint \
-  spring-boot-aks-blueprint:local
+kubectl apply --dry-run=client -f deploy/k8s/
 ```
 
-CI builds the same image on pull requests and `main` pushes **without pushing** to a registry. See [ci.md](../development/ci.md).
+Do **not** expect this repository’s CI to run `kubectl apply` or to create Azure resources.
 
 ## AKS path (documented target)
 
-Intended operator flow when you choose to deploy:
-
 1. Build and push an image to a registry you control.
-2. Review sample manifests under `deploy/k8s/` when that slice lands—treat them as **reference**.
-3. Adjust namespace, image, probes, and resources for your cluster.
-4. Apply with `kubectl` (or GitOps) against **your** AKS cluster using credentials that never enter this git repo.
-5. Optionally add Ingress / TLS / DNS—not shipped as a completed story here.
+2. Edit `deploy/k8s/deployment.yaml` `image` (and namespace/resources as needed).
+3. Apply with `kubectl` (or GitOps) against **your** AKS cluster using credentials that never enter this git repo.
+4. Optionally add Ingress / TLS / DNS—not shipped as a completed story here.
 
 | Step | In this repo? |
 | --- | --- |
 | Runnable Spring Boot app | Yes |
 | Dockerfile (multi-stage, non-root) | Yes |
 | CI docker build (no push) | Yes |
-| Sample Deployment / Service / ConfigMap | Planned — k8s slice |
+| Sample Deployment / Service / ConfigMap | Yes — **reference** |
 | Live `kubectl apply` from CI | **No** — not claimed |
 | Ingress, cert-manager, production sizing | Operator / later ADR |
 
 ## What “done” does not mean
 
-Shipping the Dockerfile and CI does **not** mean an AKS cluster exists, the image was pushed, or traffic is serving from Azure.
+Having sample YAML does **not** mean an AKS cluster exists, the image was pushed, or traffic is serving from Azure.
