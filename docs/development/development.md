@@ -4,19 +4,18 @@ How people (and agents) work on this blueprint.
 
 ## Prerequisites
 
-| Slice | Tools |
+| Need | Tools |
 | --- | --- |
-| Docs only (this foundation) | Git, GitHub account |
-| Application (later) | JDK 21, Maven 3.9+ |
-| Container (later) | Docker (or compatible build) |
-| k8s reference (later) | Optional: `kubectl` for local validation — **not** required to merge |
+| Build and test | JDK 21, Maven 3.9+ |
+| Docs-only edits | Git, GitHub account |
+| Container (later slice) | Docker (or compatible build) |
 
 Do not add Node/npm unless an ADR requires it.
 
 ## Branching and review
 
 - Branch from `main`. One concern per branch and pull request.
-- Conventional commits (`docs:`, `feat:`, `chore:`, `fix:`). Messages should read as if a person typed them; no Cursor/AI co-author trailers.
+- Conventional commits (`docs:`, `feat:`, `chore:`, `test:`). No Cursor/AI co-author trailers.
 - PRs say what slice landed and what is still out of scope.
 - High-impact changes wait for human approval. See [AGENTS.md](../../AGENTS.md).
 
@@ -26,16 +25,21 @@ Do not add Node/npm unless an ADR requires it.
 2. Change the smallest set of files that leaves the repo consistent.
 3. Update indexes (`README.md`, folder READMEs) when you add or remove docs.
 4. If the decision is significant, add an ADR under `docs/decisions/`.
-5. When application code exists: run `mvn -B test` before opening the PR.
+5. Run `mvn -B test` before opening a PR that touches application code.
 
-## Expected slice order
+## Local verification
 
-1. Foundation docs + `AGENTS.md` (this slice)
-2. Spring Boot app + unit tests + Dockerfile
-3. Architecture/network diagrams, ADR, CI, Dependabot, templates
-4. Reference k8s manifests + deployment doc update
+```bash
+mvn -B test
+mvn -B spring-boot:run
+curl -s http://localhost:8080/api/v1/hello
+curl -s 'http://localhost:8080/api/v1/hello?name=AKS'
+```
 
-## Local verification (foundation)
+`mvn -B test` runs unit and WebMvc tests under `src/test/java`. It must pass for any PR that changes application code.
 
-- Links in `README.md` and `docs/` resolve to files that exist.
-- No doc claims `src/`, workflows, or a live AKS apply.
+## Remaining planned slices
+
+- Actuator exposure tuning + multi-stage Dockerfile
+- GitHub Actions CI, Dependabot, templates
+- Architecture/network diagram polish, ADR, reference k8s manifests

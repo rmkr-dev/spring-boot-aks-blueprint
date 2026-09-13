@@ -2,43 +2,41 @@
 
 ## Current state
 
-This repository is a **Spring Boot + AKS engineering blueprint**. At this foundation slice it contains documentation and process guardrails only. Application source, CI, diagrams with real components, and Kubernetes manifests arrive in later slices.
+This repository is a **Spring Boot + AKS engineering blueprint**. The application slice adds a runnable Java 21 / Spring Boot 3 service with tests. Container image, CI, and Kubernetes manifests are still planned.
 
-| Surface | Role | Status in this slice |
+| Surface | Role | Status |
 | --- | --- | --- |
-| `README.md` | Entry point, local run (when app exists), structure | Present |
-| `AGENTS.md` | Human and coding-agent guardrails | Present |
-| `CONTRIBUTING.md` | How to propose changes | Present |
-| `docs/architecture/` | Current-state narrative and diagram stubs | Present (stubs) |
-| `docs/decisions/` | Architecture Decision Records | Index present; ADRs in later slices |
-| `docs/development/` | Contributor workflow | Present |
-| `docs/deployment/` | Local / container / AKS reference path | Present |
-| `docs/security/` | Security posture | Present |
-| `src/` Spring Boot app | HTTP API + Actuator | Planned — application slice |
+| `README.md` / `AGENTS.md` / `CONTRIBUTING.md` | Entry and guardrails | Present |
+| `docs/*` | Architecture, security, development, deployment | Present |
+| `pom.xml` | Maven / Spring Boot 3.5 / Java 21 | Present |
+| `src/main/java/dev/rmkr/blueprint` | App, `/api/v1/hello` | Present |
+| `src/test/java/...` | Unit + WebMvc tests (`mvn test`) | Present |
+| `Dockerfile` | Multi-stage non-root image | Planned — observability/Docker slice |
 | `.github/` | Actions, Dependabot, templates | Planned — CI slice |
 | `deploy/k8s/` | Sample manifests | Planned — k8s slice |
 
-## Intended shape (after later slices)
+## Application components
 
-When complete, the blueprint is:
+```text
+SpringBootAksBlueprintApplication
+  └── HelloController (/api/v1/hello)
+        └── HelloService  (message + spring.application.name)
+Actuator dependency present; careful endpoint exposure lands with the Docker slice
+```
 
-1. A Maven Spring Boot 3 service on Java 21 with a sample REST endpoint and Actuator health/metrics.
-2. A multi-stage non-root Dockerfile.
-3. GitHub Actions CI that runs `mvn -B test` (and optionally builds the image without pushing).
-4. Reference Kubernetes manifests for Deployment, Service, and ConfigMap aimed at AKS—**not** evidence of a live apply.
-
-Until those files exist, do not treat the intended shape as current state.
+Configuration prefers environment variables over hardcoding (`SERVER_PORT`, `SPRING_APPLICATION_NAME`). There is no authentication layer and no datastore in this blueprint.
 
 ## Network posture
 
-See [network-diagram.md](network-diagram.md). Until the application and manifests exist, there is no runtime network in this tree. The AKS path (Internet → LB/Ingress → Service → Pod) is documented as a **target**, not a deployed topology.
+The local process listens on port 8080. The AKS path remains a **documented target**; see [network-diagram.md](network-diagram.md). No cluster apply is claimed.
 
 ## Related decisions
 
-ADRs will land with the CI/architecture slice (for example Spring Boot + AKS blueprint choices). Link them here when added.
+ADRs for Spring Boot + AKS choices land with the architecture slice. Link them here when added.
 
 ## What is intentionally out of scope here
 
-- Claiming a production AKS deployment from this repository
-- Auth, databases, or multi-service meshes in the foundation
+- Claiming a production AKS deployment
+- Auth, databases, or multi-service meshes
 - Live CI badges before workflows exist
+- Dockerfile / container run (next slice)
