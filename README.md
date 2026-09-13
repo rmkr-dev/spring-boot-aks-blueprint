@@ -2,30 +2,30 @@
 
 [![CI](https://github.com/rmkr-dev/spring-boot-aks-blueprint/actions/workflows/ci.yml/badge.svg)](https://github.com/rmkr-dev/spring-boot-aks-blueprint/actions/workflows/ci.yml)
 
-A personal engineering blueprint for a **Java 21 / Spring Boot 3** HTTP service aimed at **Azure Kubernetes Service (AKS)**. Honest docs, a small production-shaped app, container build, GitHub Actions CI, and **reference-only** Kubernetes samples—not a claim that anything is running in a live cluster.
+A personal **v1** engineering blueprint for a **Java 21 / Spring Boot 3.5** HTTP service aimed at **Azure Kubernetes Service (AKS)**. Honest docs, a runnable app with tests, multi-stage non-root container, GitHub Actions CI pinned to reusable workflows, and **reference-only** Kubernetes samples—not a claim that anything is running in a live cluster.
 
 ## Why this exists
 
-Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a wall of aspirational YAML. This blueprint keeps each layer reviewable:
+Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a wall of aspirational YAML. This blueprint keeps each layer reviewable and present on `main`:
 
-1. **Docs and guardrails** — what the system is, how to change it, what “done” means
-2. **Application + tests** — a minimal REST service you can run and test locally
-3. **Observability + Docker** — Actuator exposure, multi-stage non-root image
-4. **CI + hygiene** — GitHub Actions (`mvn test` + docker build without push), Dependabot, templates
-5. **Architecture + k8s samples** — diagrams, ADR, reference manifests *(this slice)*
+1. Docs and guardrails (`AGENTS.md`, CONTRIBUTING, SECURITY)
+2. Application + tests (`GET /api/v1/hello`, Problem Details errors)
+3. Observability + Docker (Actuator exposure, multi-stage image)
+4. CI + hygiene (reusable Maven CI `@v0.2.0`, Dependabot, templates)
+5. Architecture + ADR + reference `deploy/k8s/` manifests
 
 ## Target stack
 
 | Concern | Choice |
 | --- | --- |
 | Language / runtime | Java 21 (Temurin) |
-| Framework | Spring Boot 3.5.x (Web + Actuator + Validation) |
+| Framework | Spring Boot **3.5.x** (Web + Actuator + Validation) — not Boot 4 |
 | Build | Maven |
-| Container | Multi-stage Dockerfile, non-root user |
-| Orchestration target | AKS (sample manifests are **reference only**) |
-| CI | GitHub Actions calling `rmkr-dev/gha-reusable-workflows` `@v0.1.0` |
+| Container | Multi-stage Dockerfile, non-root `app` user |
+| Orchestration | AKS path documented; manifests under `deploy/k8s/` are **reference only** |
+| CI | `rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.2.0` + local docker build (no push) |
 
-No Node/npm. No fake auth. No secrets in the tree.
+No Node/npm. No fake auth. No secrets in the tree. **springdoc-openapi deferred** until the public API grows (see [api-errors.md](docs/development/api-errors.md)).
 
 ## How to run locally
 
@@ -59,7 +59,7 @@ docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
 
 Pushes to `main` and pull requests run [`.github/workflows/ci.yml`](.github/workflows/ci.yml):
 
-1. **test** — reusable Java Maven workflow (`mvn -B test`, JDK 21)
+1. **test** — reusable Java Maven workflow pinned at **`@v0.2.0`** (`mvn -B test`, JDK 21)
 2. **docker** — `docker build` on the runner with **no registry push**
 
 Details: [docs/development/ci.md](docs/development/ci.md).
@@ -71,14 +71,14 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 ├── AGENTS.md / CONTRIBUTING.md / SECURITY.md / LICENSE
 ├── README.md
 ├── pom.xml / Dockerfile / .dockerignore
-├── .github/                 # CI, Dependabot, CODEOWNERS, templates
+├── .github/                 # CI (@v0.2.0 pin), Dependabot, CODEOWNERS, templates
 ├── src/                     # Spring Boot app + tests
 ├── deploy/k8s/              # Reference Deployment/Service/ConfigMap
 └── docs/
     ├── architecture/        # Diagrams matching the tree
-    ├── decisions/           # ADRs (see ADR-001)
-    ├── development/
-    ├── deployment/
+    ├── decisions/           # ADR-001
+    ├── development/         # Workflow, CI, API errors
+    ├── deployment/          # Local / container / reference k8s
     └── security/
 ```
 
@@ -88,7 +88,7 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 | --- | --- |
 | [AGENTS.md](AGENTS.md) | Guardrails |
 | [Development](docs/development/development.md) | Contributor workflow |
-| [CI](docs/development/ci.md) | How Actions works |
+| [CI](docs/development/ci.md) | Actions + reusable pin |
 | [API errors](docs/development/api-errors.md) | Problem Details + OpenAPI note |
 | [Architecture](docs/architecture/README.md) | System shape + diagrams |
 | [ADR-001](docs/decisions/0001-spring-boot-aks-blueprint.md) | Blueprint decision |
@@ -101,10 +101,11 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 - No applied AKS cluster, Ingress, or live public URL from this repo
 - Sample manifests under `deploy/k8s/` are **reference only**
 - CI builds the image but does **not** push it or run `kubectl apply`
+- No springdoc/OpenAPI UI in v1
 
 ## Contributing
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md). Prefer one complete slice per PR. `mvn -B test` must pass when application code changes; wait for CI green.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md). Prefer multi-commit, one-slice PRs. `mvn -B test` must pass; wait for CI green. Dependabot ignores Spring Boot **major** upgrades (stay on 3.5.x).
 
 ## License
 

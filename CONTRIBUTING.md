@@ -11,15 +11,17 @@ Thanks for improving this blueprint. Keep changes small, complete, and honest ab
 ## How to propose a change
 
 1. Branch from `main`.
-2. Implement **one slice**. Update every layer that slice needs (code, tests, docs, CI, manifests). Do not leave a half-described feature.
-3. Use a conventional commit message (`docs:`, `feat:`, `chore:`, `fix:`). Write it as if a colleague will read it in `git log` a year from now. No tool or agent co-author footers.
+2. Implement **one slice** with **multiple focused commits** (not one giant commit). Update every layer that slice needs (code, tests, docs, CI, manifests).
+3. Use a conventional commit message (`docs:`, `feat:`, `chore:`, `test:`, `ci:`). Write it as if a colleague will read it in `git log` a year from now. No tool or agent co-author footers.
 4. Open a pull request against `main`. Say what slice this is, what is in scope, and what is explicitly out of scope.
+5. Wait for CI green (`test` via reusable workflow `@v0.2.0`, plus docker build).
 
 ## What we will not merge
 
-- Speculative extras (auth frameworks, databases, Node/npm) that the slice did not ask for
-- Docs that describe live AKS deployment, CI, or product behavior that is not in the tree
+- Speculative extras (auth frameworks, databases, Node/npm, springdoc without tests) that the slice did not ask for
+- Docs that describe live AKS deployment or product behavior that is not in the tree
 - Secrets, personal contact details, or company-specific branding
+- Unsolicited Spring Boot 4 major upgrades (Dependabot ignores them; change needs an ADR)
 - Drive-by reformatting of files you did not otherwise change
 
-Questions about process belong in the pull request. Architecture-level choices belong in an ADR — see [docs/decisions/README.md](docs/decisions/README.md) when that folder exists, or add it with the decision.
+Questions about process belong in the pull request. Architecture-level choices belong in an ADR — see [docs/decisions/](docs/decisions/).
