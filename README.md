@@ -89,6 +89,7 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 | [AGENTS.md](AGENTS.md) | Guardrails |
 | [Development](docs/development/development.md) | Contributor workflow |
 | [CI](docs/development/ci.md) | How Actions works |
+| [API errors](docs/development/api-errors.md) | Problem Details + OpenAPI note |
 | [Architecture](docs/architecture/README.md) | System shape + diagrams |
 | [ADR-001](docs/decisions/0001-spring-boot-aks-blueprint.md) | Blueprint decision |
 | [Deployment](docs/deployment/deployment.md) | Local, container, reference k8s |

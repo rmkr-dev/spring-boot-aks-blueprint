@@ -36,7 +36,11 @@ mvn -B test
 mvn -B spring-boot:run
 curl -s http://localhost:8080/api/v1/hello
 curl -s http://localhost:8080/actuator/health
+# validation error (Problem Details):
+curl -si "http://localhost:8080/api/v1/hello?name=$(python3 -c 'print("x"*65)')"
 ```
+
+See [api-errors.md](api-errors.md) for error-handling conventions and the OpenAPI note.
 
 Container (optional):
 
