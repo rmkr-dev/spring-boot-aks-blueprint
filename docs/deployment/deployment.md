@@ -13,15 +13,40 @@ mvn -B package && java -jar target/spring-boot-aks-blueprint-0.1.0-SNAPSHOT.jar
 
 Default listen port: `8080` (override with `SERVER_PORT`).
 
+Useful endpoints:
+
+- API: `http://localhost:8080/api/v1/hello`
+- Health: `http://localhost:8080/actuator/health`
+- Metrics: `http://localhost:8080/actuator/metrics`
+- Info: `http://localhost:8080/actuator/info`
+
+Only `health`, `info`, and `metrics` are exposed via the web endpoint set. Health details stay restricted (`show-details: when_authorized`). Liveness/readiness probes are enabled for a future Kubernetes slice.
+
 ## Container image
 
-Dockerfile and local container run instructions land in the observability/Docker slice. Until then, run the JAR or `spring-boot:run` as above.
+Multi-stage Dockerfile builds with Maven, then runs the JAR as a non-root `app` user:
+
+```bash
+docker build -t spring-boot-aks-blueprint:local .
+docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
+```
+
+Override config without rebuilding:
+
+```bash
+docker run --rm -p 8080:8080 \
+  -e SERVER_PORT=8080 \
+  -e SPRING_APPLICATION_NAME=spring-boot-aks-blueprint \
+  spring-boot-aks-blueprint:local
+```
+
+CI (when added) may build the image without pushing to a registry.
 
 ## AKS path (documented target)
 
 Intended operator flow when you choose to deploy:
 
-1. Build and push an image to a registry you control (after Dockerfile lands).
+1. Build and push an image to a registry you control.
 2. Review sample manifests under `deploy/k8s/` when that slice lands—treat them as **reference**.
 3. Adjust namespace, image, probes, and resources for your cluster.
 4. Apply with `kubectl` (or GitOps) against **your** AKS cluster using credentials that never enter this git repo.
@@ -30,11 +55,11 @@ Intended operator flow when you choose to deploy:
 | Step | In this repo? |
 | --- | --- |
 | Runnable Spring Boot app | Yes |
-| Dockerfile | Planned — next slice |
+| Dockerfile (multi-stage, non-root) | Yes |
 | Sample Deployment / Service / ConfigMap | Planned — k8s slice |
 | Live `kubectl apply` from CI | **No** — not claimed |
 | Ingress, cert-manager, production sizing | Operator / later ADR |
 
 ## What “done” does not mean
 
-Having a local app does **not** mean an AKS cluster exists, an image was pushed, or traffic is serving from Azure.
+Shipping the Dockerfile does **not** mean an AKS cluster exists, the image was pushed, or traffic is serving from Azure.

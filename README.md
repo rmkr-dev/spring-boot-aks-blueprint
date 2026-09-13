@@ -1,14 +1,14 @@
 # Spring Boot AKS Blueprint
 
-A personal engineering blueprint for a **Java 21 / Spring Boot 3** HTTP service aimed at **Azure Kubernetes Service (AKS)**. Honest docs and a small production-shaped app you can run and test locally—not a claim that anything is running in a live cluster.
+A personal engineering blueprint for a **Java 21 / Spring Boot 3** HTTP service aimed at **Azure Kubernetes Service (AKS)**. Honest docs, a small production-shaped app, and a container build—not a claim that anything is running in a live cluster.
 
 ## Why this exists
 
 Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a wall of aspirational YAML. This blueprint keeps each layer reviewable:
 
 1. **Docs and guardrails** — what the system is, how to change it, what “done” means
-2. **Application + tests** — a minimal REST service you can run and test locally *(this slice)*
-3. **Observability + Docker** — Actuator exposure, multi-stage non-root image
+2. **Application + tests** — a minimal REST service you can run and test locally
+3. **Observability + Docker** — Actuator exposure, multi-stage non-root image *(this slice)*
 4. **CI + diagrams + ADRs** — GitHub Actions that run `mvn test`, architecture that matches the tree
 5. **Reference k8s manifests** — sample Deployment/Service/ConfigMap with clear “not applied” language
 
@@ -19,7 +19,7 @@ Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a
 | Language / runtime | Java 21 (Temurin) |
 | Framework | Spring Boot 3.5.x (Web + Actuator + Validation) |
 | Build | Maven |
-| Container | Planned — multi-stage Dockerfile, non-root user |
+| Container | Multi-stage Dockerfile, non-root user |
 | Orchestration target | AKS (documented path; manifests arrive in a later slice) |
 | CI | Planned — workflow calling `rmkr-dev/gha-reusable-workflows` |
 
@@ -37,7 +37,9 @@ mvn -B spring-boot:run
 Then open:
 
 - Sample API: `http://localhost:8080/api/v1/hello` (optional `?name=`)
-- Default Actuator health (Boot defaults): `http://localhost:8080/actuator/health`
+- Health: `http://localhost:8080/actuator/health`
+- Metrics: `http://localhost:8080/actuator/metrics`
+- Info: `http://localhost:8080/actuator/info`
 
 Configuration via env (see `src/main/resources/application.yml`):
 
@@ -45,6 +47,13 @@ Configuration via env (see `src/main/resources/application.yml`):
 | --- | --- |
 | `SERVER_PORT` | `8080` |
 | `SPRING_APPLICATION_NAME` | `spring-boot-aks-blueprint` |
+
+### Docker
+
+```bash
+docker build -t spring-boot-aks-blueprint:local .
+docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
+```
 
 ## Repository structure
 
@@ -55,6 +64,8 @@ Configuration via env (see `src/main/resources/application.yml`):
 ├── LICENSE
 ├── README.md
 ├── pom.xml
+├── Dockerfile
+├── .dockerignore
 ├── src/main/java/dev/rmkr/blueprint/   # Application, web, service
 ├── src/main/resources/application.yml
 ├── src/test/java/...                   # Unit / WebMvc tests
@@ -66,7 +77,7 @@ Configuration via env (see `src/main/resources/application.yml`):
     └── security/
 ```
 
-Dockerfile, `.github/`, and `deploy/k8s/` land in follow-up slices.
+CI (`.github/`) and `deploy/k8s/` are planned follow-up slices.
 
 ## Documentation
 
@@ -74,17 +85,16 @@ Dockerfile, `.github/`, and `deploy/k8s/` land in follow-up slices.
 | --- | --- |
 | [AGENTS.md](AGENTS.md) | Guardrails for humans and coding agents |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to open a change |
-| [Development](docs/development/development.md) | Contributor workflow (`mvn -B test`) |
+| [Development](docs/development/development.md) | Contributor workflow |
 | [Architecture](docs/architecture/README.md) | System shape |
 | [Security](docs/security/security.md) | Security posture |
-| [Deployment](docs/deployment/deployment.md) | Local / AKS reference path |
+| [Deployment](docs/deployment/deployment.md) | Local, container, AKS reference path |
 
 ## What is not claimed yet
 
-- No Dockerfile in this slice
 - No GitHub Actions workflows in this slice
 - No applied AKS cluster, Ingress, or live URL
-- No Kubernetes manifests yet
+- No Kubernetes manifests yet (next slices)
 
 ## Contributing
 

@@ -1,26 +1,29 @@
 # Network diagram
 
-## Foundation reality
+## Implemented today
 
-This foundation slice has **no networked runtime** in the tree. There is no Pod, Service, Ingress, or load balancer created by applying manifests from this repository yet.
+| Hop | Status |
+| --- | --- |
+| JVM process on `SERVER_PORT` (default 8080) | Implemented |
+| Container exposing 8080 | Implemented (Dockerfile) |
+| Kubernetes Service / Pod | Not in tree yet |
+| Azure LB / Ingress / TLS / DNS | Documented target only |
+| Database | Optional future — not in this blueprint |
+
+```mermaid
+flowchart LR
+  Client["HTTP client"] --> Local["localhost:8080<br/>or container :8080"]
+  Local --> App["Spring Boot<br/>/api/v1/* + /actuator/*"]
+```
 
 ## Documented AKS target (not implemented here)
-
-The intended topology for a later, operator-owned apply looks like:
 
 ```mermaid
 flowchart LR
   Internet["Internet / clients"] --> LB["Azure LB / Ingress<br/>(target)"]
-  LB --> Svc["Kubernetes Service<br/>(reference manifest)"]
-  Svc --> Pod["Pod: Spring Boot app<br/>(reference Deployment)"]
+  LB --> Svc["Kubernetes Service<br/>(future reference manifest)"]
+  Svc --> Pod["Pod: Spring Boot app"]
   Pod -.->|"optional future"| DB["Managed DB<br/>(not in this blueprint)"]
 ```
 
-| Hop | Status |
-| --- | --- |
-| Spring Boot process locally | Application slice |
-| Container image build | Application slice (Dockerfile) |
-| Service + Deployment YAML | k8s slice — **sample/reference** |
-| Live AKS apply, Ingress, TLS, DNS | **Out of scope** unless an operator documents a real apply |
-
-Update this file in the same PR that adds real components or changes the documented target. Keep secrets out of labels.
+Update this file when manifests or real network boundaries are added. Keep secrets out of labels.
