@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -39,6 +40,13 @@ class HelloControllerTest {
     }
 
     @Test
+    void helloTreatsBlankNameAsWorld() throws Exception {
+        mockMvc.perform(get("/api/v1/hello").param("name", "   "))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Hello, world!"));
+    }
+
+    @Test
     void helloRejectsOversizedNameWithProblemDetail() throws Exception {
         String oversized = "x".repeat(65);
         mockMvc.perform(get("/api/v1/hello").param("name", oversized))
@@ -47,6 +55,6 @@ class HelloControllerTest {
                 .andExpect(jsonPath("$.title").value("Bad Request"))
                 .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.detail").value("Request validation failed"))
-                .andExpect(jsonPath("$.errors", hasItem(org.hamcrest.Matchers.containsString("size must be between 0 and 64"))));
+                .andExpect(jsonPath("$.errors", hasItem(containsString("size must be between 0 and 64"))));
     }
 }
