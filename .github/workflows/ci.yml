@@ -9,10 +9,10 @@ permissions:
   contents: read
 
 # Maven test job is delegated to the pinned reusable workflow:
-# rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.1.0
+# rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.2.0
 jobs:
   test:
-    uses: rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.1.0
+    uses: rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.2.0
     with:
       working-directory: .
       java-version: "21"
