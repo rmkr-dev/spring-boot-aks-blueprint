@@ -8,13 +8,15 @@ flowchart TB
     App["SpringBootAksBlueprintApplication"]
     Ctrl["HelloController<br/>GET /api/v1/hello"]
     Svc["HelloService"]
+    Err["ApiExceptionHandler<br/>ProblemDetail 400"]
     Act["Actuator<br/>/actuator/health<br/>/actuator/info<br/>/actuator/metrics"]
     App --> Ctrl
     Ctrl --> Svc
+    Ctrl -.-> Err
     App --> Act
   end
 
-  Client["HTTP client"] -->|"JSON"| Ctrl
+  Client["HTTP client"] -->|"JSON / problem+json"| Ctrl
   Client -->|"JSON"| Act
 
   subgraph image["Implemented: container image"]
@@ -42,10 +44,12 @@ flowchart TB
 | Piece | In tree? |
 | --- | --- |
 | `HelloController` / `HelloService` | Yes |
+| `ApiExceptionHandler` (Problem Details) | Yes |
 | Actuator `health` / `info` / `metrics` only | Yes |
 | Multi-stage non-root Dockerfile | Yes |
 | CI (`mvn test` + docker build, no push) | Yes |
 | `deploy/k8s/` sample manifests | Yes — reference only |
 | Live AKS apply / Ingress / registry push | **No** — not claimed |
+| springdoc-openapi | Deferred — see api-errors.md |
 
 When the runtime shape changes, update this file in the same PR.
