@@ -1,0 +1,56 @@
+# Reference only — not applied from this repository.
+# Replace `image` with a registry you control after building/pushing the Dockerfile.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-aks-blueprint
+  labels:
+    app.kubernetes.io/name: spring-boot-aks-blueprint
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spring-boot-aks-blueprint
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: spring-boot-aks-blueprint
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: app
+          image: spring-boot-aks-blueprint:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: spring-boot-aks-blueprint
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi

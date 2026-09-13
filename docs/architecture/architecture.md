@@ -2,19 +2,18 @@
 
 ## Current state
 
-This repository is a **Spring Boot + AKS engineering blueprint**. Application, container, and CI slices are present. Kubernetes manifests remain planned.
+This repository is a **Spring Boot + AKS engineering blueprint**. Application, container, CI, diagrams, ADR, and reference Kubernetes manifests are present. Nothing claims a live cluster apply.
 
 | Surface | Role | Status |
 | --- | --- | --- |
 | `README.md` / `AGENTS.md` / `CONTRIBUTING.md` | Entry and guardrails | Present |
-| `docs/*` | Architecture, security, development, deployment | Present |
+| `docs/*` | Architecture, security, development, deployment, ADRs | Present |
 | `pom.xml` | Maven / Spring Boot 3.5 / Java 21 | Present |
 | `src/main/java/dev/rmkr/blueprint` | App, `/api/v1/hello`, Actuator config | Present |
 | `src/test/java/...` | Unit + WebMvc + Actuator tests | Present |
 | `Dockerfile` / `.dockerignore` | Multi-stage non-root image | Present |
-| `.github/workflows/ci.yml` | `mvn test` via reusable WF + docker build (no push) | Present |
-| `.github/` Dependabot, CODEOWNERS, templates | Repo hygiene | Present |
-| `deploy/k8s/` | Sample manifests | Planned — k8s slice |
+| `.github/workflows/ci.yml` | Reusable Maven CI + docker build (no push) | Present |
+| `deploy/k8s/` | Sample Deployment / Service / ConfigMap | Reference only |
 
 ## Application components
 
@@ -25,18 +24,20 @@ SpringBootAksBlueprintApplication
 Actuator (exposed): /actuator/health, /actuator/info, /actuator/metrics
 ```
 
-Configuration prefers environment variables over hardcoding (`SERVER_PORT`, `SPRING_APPLICATION_NAME`). Health probes are enabled for future Kubernetes use; health details are not shown anonymously. There is no authentication layer and no datastore in this blueprint.
+See the Mermaid view in [architecture-diagram.md](architecture-diagram.md).
+
+Configuration prefers environment variables over hardcoding (`SERVER_PORT`, `SPRING_APPLICATION_NAME`). Health probes are enabled for Kubernetes samples; health details are not shown anonymously. There is no authentication layer and no datastore in this blueprint.
 
 ## Network posture
 
-Local and container processes listen on port 8080. The AKS path (Internet → LB/Ingress → Service → Pod) remains a **documented target**; see [network-diagram.md](network-diagram.md). No cluster apply is claimed.
+Local and container processes listen on port 8080. Sample Kubernetes Service/Pod networking is documented as **reference**; Azure LB/Ingress remains aspirational. See [network-diagram.md](network-diagram.md).
 
 ## Related decisions
 
-ADRs for Spring Boot + AKS choices land with the architecture slice. Link them here when added.
+- [ADR-001: Spring Boot + AKS blueprint](../decisions/0001-spring-boot-aks-blueprint.md)
 
 ## What is intentionally out of scope here
 
 - Claiming a production AKS deployment
 - Auth, databases, or multi-service meshes
-- Registry push from CI
+- Registry push or `kubectl apply` from CI

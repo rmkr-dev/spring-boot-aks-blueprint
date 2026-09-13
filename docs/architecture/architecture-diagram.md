@@ -1,37 +1,51 @@
 # Architecture diagram
 
-Mermaid view of components **that exist in the tree**. AKS is drawn as an aspirational boundary, not a live deploy.
+Mermaid view of components **that exist in the tree**. AKS appears only as a documented target.
 
 ```mermaid
 flowchart TB
-  subgraph local_or_container["Implemented: process / container"]
+  subgraph jvm["Implemented: Spring Boot process"]
     App["SpringBootAksBlueprintApplication"]
     Ctrl["HelloController<br/>GET /api/v1/hello"]
     Svc["HelloService"]
-    Act["Actuator<br/>health / info / metrics"]
+    Act["Actuator<br/>/actuator/health<br/>/actuator/info<br/>/actuator/metrics"]
     App --> Ctrl
     Ctrl --> Svc
     App --> Act
   end
 
-  Client["HTTP client"] --> Ctrl
-  Client --> Act
+  Client["HTTP client"] -->|"JSON"| Ctrl
+  Client -->|"JSON"| Act
 
   subgraph image["Implemented: container image"]
-    Docker["Dockerfile<br/>multi-stage, non-root"]
+    Docker["Dockerfile<br/>multi-stage Maven build<br/>Temurin JRE, USER app"]
   end
 
-  Docker -.->|"packages"| App
+  Docker -.->|"packages JAR"| App
+
+  subgraph ci["Implemented: GitHub Actions"]
+    GHA["ci.yml<br/>reusable java-maven-ci@v0.1.0<br/>docker build (no push)"]
+  end
+
+  GHA -.->|"mvn test"| App
+  GHA -.->|"docker build"| Docker
 
   subgraph aks_target["Documented target — not applied from this repo"]
-    AKS["AKS cluster"]
+    AKS["AKS cluster + sample manifests"]
   end
 
-  image -.->|"operator push + apply later"| aks_target
+  Docker -.->|"operator push + apply"| aks_target
 ```
 
 ## How to read it
 
-- **Implemented:** Spring Boot app, carefully exposed Actuator endpoints, unit/WebMvc tests, Dockerfile.
-- **Not in this slice:** GitHub Actions, Kubernetes manifests, Ingress, managed databases.
-- When CI or `deploy/k8s/` land, update this diagram in the same PR.
+| Piece | In tree? |
+| --- | --- |
+| `HelloController` / `HelloService` | Yes |
+| Actuator `health` / `info` / `metrics` only | Yes |
+| Multi-stage non-root Dockerfile | Yes |
+| CI (`mvn test` + docker build, no push) | Yes |
+| `deploy/k8s/` sample manifests | Yes — reference only |
+| Live AKS apply / Ingress / registry push | **No** — not claimed |
+
+When the runtime shape changes, update this file in the same PR.

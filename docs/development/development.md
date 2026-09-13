@@ -9,6 +9,7 @@ How people (and agents) work on this blueprint.
 | Build and test | JDK 21, Maven 3.9+ |
 | Container image | Docker (or compatible build) |
 | Docs-only edits | Git, GitHub account |
+| Optional k8s YAML check | `kubectl` (client dry-run only) |
 
 Do not add Node/npm unless an ADR requires it.
 
@@ -44,6 +45,8 @@ docker build -t spring-boot-aks-blueprint:local .
 docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
 ```
 
-## Remaining planned slices
+Kubernetes samples (optional client dry-run — does not apply to a cluster from this repo):
 
-- Architecture/network diagram polish, ADR, reference k8s manifests
+```bash
+kubectl apply --dry-run=client -f deploy/k8s/
+```
