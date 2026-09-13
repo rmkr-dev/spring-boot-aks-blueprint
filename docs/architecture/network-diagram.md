@@ -1,29 +1,40 @@
 # Network diagram
 
+Clearly separates **implemented** local/container traffic from the **aspirational AKS** path.
+
 ## Implemented today
 
 | Hop | Status |
 | --- | --- |
 | JVM process on `SERVER_PORT` (default 8080) | Implemented |
-| Container exposing 8080 | Implemented (Dockerfile) |
-| Kubernetes Service / Pod | Not in tree yet |
-| Azure LB / Ingress / TLS / DNS | Documented target only |
-| Database | Optional future — not in this blueprint |
+| Container exposing 8080 (non-root) | Implemented |
+| GitHub Actions docker build (no push) | Implemented |
+| Kubernetes Service / Pod (sample YAML) | Reference manifests only — not applied |
+| Azure LB / Ingress / TLS / DNS | Documented AKS target only |
+| Database | Not in this blueprint |
 
 ```mermaid
 flowchart LR
   Client["HTTP client"] --> Local["localhost:8080<br/>or container :8080"]
-  Local --> App["Spring Boot<br/>/api/v1/* + /actuator/*"]
+  Local --> App["Spring Boot<br/>/api/v1/* + /actuator/health|info|metrics"]
 ```
 
-## Documented AKS target (not implemented here)
+## AKS target (aspirational — labeled)
+
+Sample manifests under `deploy/k8s/` describe ClusterIP Service → Pod. They are **reference**. Applying them, attaching an Ingress, and publishing a public URL are operator steps outside this repository.
 
 ```mermaid
 flowchart LR
-  Internet["Internet / clients"] --> LB["Azure LB / Ingress<br/>(target)"]
-  LB --> Svc["Kubernetes Service<br/>(future reference manifest)"]
-  Svc --> Pod["Pod: Spring Boot app"]
-  Pod -.->|"optional future"| DB["Managed DB<br/>(not in this blueprint)"]
+  Internet["Internet / clients"] -->|"aspirational"| LB["Azure LB / Ingress<br/>(not in this repo)"]
+  LB -->|"aspirational"| Svc["Service ClusterIP<br/>deploy/k8s/service.yaml<br/>(reference)"]
+  Svc -->|"aspirational"| Pod["Pod: spring-boot-aks-blueprint<br/>deploy/k8s/deployment.yaml<br/>(reference)"]
+  Pod --> App["Container :8080<br/>probes → /actuator/health"]
+  CM["ConfigMap<br/>deploy/k8s/configmap.yaml"] -.->|"non-secret env"| Pod
 ```
 
-Update this file when manifests or real network boundaries are added. Keep secrets out of labels.
+### Legend
+
+- **Implemented:** solid edges in the first diagram; runnable on a laptop or in CI’s docker build.
+- **Aspirational / reference:** dashed intent in the second diagram; YAML exists for learning and copy-adapt, not as proof of a live AKS deployment.
+
+Keep secrets out of labels, ConfigMaps, and commit history.
