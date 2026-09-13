@@ -33,4 +33,14 @@ class HelloServiceTest {
     void greetTrimsBlankNameToWorld() {
         assertThat(helloService.greet("   ").message()).isEqualTo("Hello, world!");
     }
+
+    @Test
+    void greetTrimsSurroundingWhitespace() {
+        assertThat(helloService.greet("  AKS  ").message()).isEqualTo("Hello, AKS!");
+    }
+
+    @Test
+    void greetAcceptsEmptyStringAsWorld() {
+        assertThat(helloService.greet("").message()).isEqualTo("Hello, world!");
+    }
 }

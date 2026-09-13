@@ -27,6 +27,8 @@ Advice for extending this blueprint:
 - Do not leak stack traces or internal exception types to clients.
 - Map domain “not found” / conflict cases explicitly when you add more resources.
 
-## OpenAPI / Springdoc
+## OpenAPI / Springdoc (v1 stance)
 
-OpenAPI generation via **springdoc-openapi** is **intentionally deferred**. The sample API is one GET endpoint; adding springdoc would increase dependency surface without enough payload yet. When you grow the public API, reconsider a minimal springdoc setup in its own PR with tests—do not add it “just in case.”
+OpenAPI generation via **springdoc-openapi** is **not** part of v1. The public surface is one GET endpoint plus Actuator; adding springdoc would grow the dependency tree without enough payoff. Prefer more tests and clear Problem Details over a speculative OpenAPI stack.
+
+When the public API grows, introduce a **minimal** springdoc setup in its own multi-commit PR with tests—do not add it “just in case.”
