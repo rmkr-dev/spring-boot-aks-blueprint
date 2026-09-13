@@ -40,7 +40,7 @@ docker run --rm -p 8080:8080 \
   spring-boot-aks-blueprint:local
 ```
 
-CI (when added) may build the image without pushing to a registry.
+CI builds the same image on pull requests and `main` pushes **without pushing** to a registry. See [ci.md](../development/ci.md).
 
 ## AKS path (documented target)
 
@@ -56,10 +56,11 @@ Intended operator flow when you choose to deploy:
 | --- | --- |
 | Runnable Spring Boot app | Yes |
 | Dockerfile (multi-stage, non-root) | Yes |
+| CI docker build (no push) | Yes |
 | Sample Deployment / Service / ConfigMap | Planned — k8s slice |
 | Live `kubectl apply` from CI | **No** — not claimed |
 | Ingress, cert-manager, production sizing | Operator / later ADR |
 
 ## What “done” does not mean
 
-Shipping the Dockerfile does **not** mean an AKS cluster exists, the image was pushed, or traffic is serving from Azure.
+Shipping the Dockerfile and CI does **not** mean an AKS cluster exists, the image was pushed, or traffic is serving from Azure.

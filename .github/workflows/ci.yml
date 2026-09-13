@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+# Maven test job is delegated to the pinned reusable workflow:
+# rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.1.0
+jobs:
+  test:
+    uses: rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.1.0
+    with:
+      working-directory: .
+      java-version: "21"
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build image (no push)
+        run: docker build -t spring-boot-aks-blueprint:ci .

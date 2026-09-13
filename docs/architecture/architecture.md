@@ -2,7 +2,7 @@
 
 ## Current state
 
-This repository is a **Spring Boot + AKS engineering blueprint**. The application and container slices add a runnable Java 21 / Spring Boot 3 service with tests and a multi-stage non-root image. CI workflows and Kubernetes manifests are still planned.
+This repository is a **Spring Boot + AKS engineering blueprint**. Application, container, and CI slices are present. Kubernetes manifests remain planned.
 
 | Surface | Role | Status |
 | --- | --- | --- |
@@ -10,9 +10,10 @@ This repository is a **Spring Boot + AKS engineering blueprint**. The applicatio
 | `docs/*` | Architecture, security, development, deployment | Present |
 | `pom.xml` | Maven / Spring Boot 3.5 / Java 21 | Present |
 | `src/main/java/dev/rmkr/blueprint` | App, `/api/v1/hello`, Actuator config | Present |
-| `src/test/java/...` | Unit + WebMvc tests (`mvn test`) | Present |
+| `src/test/java/...` | Unit + WebMvc + Actuator tests | Present |
 | `Dockerfile` / `.dockerignore` | Multi-stage non-root image | Present |
-| `.github/` | Actions, Dependabot, templates | Planned — CI slice |
+| `.github/workflows/ci.yml` | `mvn test` via reusable WF + docker build (no push) | Present |
+| `.github/` Dependabot, CODEOWNERS, templates | Repo hygiene | Present |
 | `deploy/k8s/` | Sample manifests | Planned — k8s slice |
 
 ## Application components
@@ -38,4 +39,4 @@ ADRs for Spring Boot + AKS choices land with the architecture slice. Link them h
 
 - Claiming a production AKS deployment
 - Auth, databases, or multi-service meshes
-- Live CI badges before workflows exist
+- Registry push from CI
