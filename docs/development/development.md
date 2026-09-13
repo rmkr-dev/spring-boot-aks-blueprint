@@ -18,6 +18,7 @@ Do not add Node/npm unless an ADR requires it.
 - Conventional commits (`docs:`, `feat:`, `chore:`, `test:`). No Cursor/AI co-author trailers.
 - PRs say what slice landed and what is still out of scope.
 - High-impact changes wait for human approval. See [AGENTS.md](../../AGENTS.md).
+- Wait for CI green on PRs that touch application or workflow files. See [ci.md](ci.md).
 
 ## Working on a slice
 
@@ -43,9 +44,6 @@ docker build -t spring-boot-aks-blueprint:local .
 docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
 ```
 
-`mvn -B test` must pass for any PR that changes application code.
-
 ## Remaining planned slices
 
-- GitHub Actions CI, Dependabot, templates
 - Architecture/network diagram polish, ADR, reference k8s manifests
