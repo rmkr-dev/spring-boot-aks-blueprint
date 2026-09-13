@@ -2,18 +2,18 @@
 
 ## Current state
 
-This repository is a **Spring Boot + AKS engineering blueprint**. Application, container, and CI slices are present. Kubernetes sample manifests land in the same architecture slice as the polished diagrams.
+This repository is a **Spring Boot + AKS engineering blueprint**. Application, container, CI, diagrams, and ADR are present. Reference Kubernetes manifests land with the final commit of this slice.
 
 | Surface | Role | Status |
 | --- | --- | --- |
 | `README.md` / `AGENTS.md` / `CONTRIBUTING.md` | Entry and guardrails | Present |
-| `docs/*` | Architecture, security, development, deployment | Present |
+| `docs/*` | Architecture, security, development, deployment, ADRs | Present |
 | `pom.xml` | Maven / Spring Boot 3.5 / Java 21 | Present |
 | `src/main/java/dev/rmkr/blueprint` | App, `/api/v1/hello`, Actuator config | Present |
 | `src/test/java/...` | Unit + WebMvc + Actuator tests | Present |
 | `Dockerfile` / `.dockerignore` | Multi-stage non-root image | Present |
 | `.github/workflows/ci.yml` | Reusable Maven CI + docker build (no push) | Present |
-| `deploy/k8s/` | Sample manifests | Landing with this architecture slice |
+| `deploy/k8s/` | Sample manifests | Landing next in this slice |
 
 ## Application components
 
@@ -34,7 +34,7 @@ Local and container processes listen on port 8080. See [network-diagram.md](netw
 
 ## Related decisions
 
-ADRs live under `docs/decisions/` (ADR-001 lands with this slice).
+- [ADR-001: Spring Boot + AKS blueprint](../decisions/0001-spring-boot-aks-blueprint.md)
 
 ## What is intentionally out of scope here
 
