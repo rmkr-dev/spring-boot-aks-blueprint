@@ -1,31 +1,37 @@
 # Architecture diagram
 
-## Foundation slice
-
-This slice has documentation surfaces only. A Mermaid diagram of the running system belongs when the Spring Boot application (and later container/k8s boundaries) exist. Until then, the diagram below is an explicit **placeholder of doc surfaces**, not a fake application topology.
+Mermaid view of components **that exist in the tree**. AKS is drawn as an aspirational boundary, not a live deploy.
 
 ```mermaid
 flowchart TB
-  subgraph docs_surfaces["This repo today (foundation)"]
-    README["README.md"]
-    AGENTS["AGENTS.md"]
-    Contrib["CONTRIBUTING.md"]
-    Arch["docs/architecture/"]
-    Dec["docs/decisions/"]
-    Dev["docs/development/"]
-    Deploy["docs/deployment/"]
-    Sec["docs/security/"]
+  subgraph local_or_container["Implemented: process / container"]
+    App["SpringBootAksBlueprintApplication"]
+    Ctrl["HelloController<br/>GET /api/v1/hello"]
+    Svc["HelloService"]
+    Act["Actuator<br/>health / info / metrics"]
+    App --> Ctrl
+    Ctrl --> Svc
+    App --> Act
   end
 
-  subgraph planned["Planned slices (not present yet)"]
-    App["src/ Spring Boot 3 + Java 21"]
-    CI[".github/workflows CI"]
-    K8s["deploy/k8s reference manifests"]
+  Client["HTTP client"] --> Ctrl
+  Client --> Act
+
+  subgraph image["Implemented: container image"]
+    Docker["Dockerfile<br/>multi-stage, non-root"]
   end
 
-  README --> Arch
-  AGENTS --> Dev
-  planned -.->|"later PRs"| docs_surfaces
+  Docker -.->|"packages"| App
+
+  subgraph aks_target["Documented target — not applied from this repo"]
+    AKS["AKS cluster"]
+  end
+
+  image -.->|"operator push + apply later"| aks_target
 ```
 
-When the application slice lands, replace this figure with components that exist in the tree (Application, controller, Actuator, container). When the k8s slice lands, show the AKS boundary as **aspirational / reference** unless a real apply is documented.
+## How to read it
+
+- **Implemented:** Spring Boot app, carefully exposed Actuator endpoints, unit/WebMvc tests, Dockerfile.
+- **Not in this slice:** GitHub Actions, Kubernetes manifests, Ingress, managed databases.
+- When CI or `deploy/k8s/` land, update this diagram in the same PR.

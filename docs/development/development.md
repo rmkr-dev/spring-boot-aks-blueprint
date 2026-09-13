@@ -7,8 +7,8 @@ How people (and agents) work on this blueprint.
 | Need | Tools |
 | --- | --- |
 | Build and test | JDK 21, Maven 3.9+ |
+| Container image | Docker (or compatible build) |
 | Docs-only edits | Git, GitHub account |
-| Container (later slice) | Docker (or compatible build) |
 
 Do not add Node/npm unless an ADR requires it.
 
@@ -33,13 +33,19 @@ Do not add Node/npm unless an ADR requires it.
 mvn -B test
 mvn -B spring-boot:run
 curl -s http://localhost:8080/api/v1/hello
-curl -s 'http://localhost:8080/api/v1/hello?name=AKS'
+curl -s http://localhost:8080/actuator/health
 ```
 
-`mvn -B test` runs unit and WebMvc tests under `src/test/java`. It must pass for any PR that changes application code.
+Container (optional):
+
+```bash
+docker build -t spring-boot-aks-blueprint:local .
+docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
+```
+
+`mvn -B test` must pass for any PR that changes application code.
 
 ## Remaining planned slices
 
-- Actuator exposure tuning + multi-stage Dockerfile
 - GitHub Actions CI, Dependabot, templates
 - Architecture/network diagram polish, ADR, reference k8s manifests
