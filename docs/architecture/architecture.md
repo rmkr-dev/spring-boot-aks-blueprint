@@ -14,7 +14,7 @@ This repository is a **Spring Boot + AKS engineering blueprint**. Application, c
 | `Dockerfile` / `.dockerignore` / `compose.yaml` | Multi-stage non-root image (uid/gid 10001) + Compose healthcheck | Present |
 | `.github/workflows/ci.yml` | Reusable Maven CI `@v0.4.2` + docker build (no push) | Present |
 | `scripts/` | Optional `load-hello` bash/Python smokes | Present |
-| `deploy/k8s/` | Sample Deployment / Service / ConfigMap / HPA / NetworkPolicy / PDB / ServiceAccount / Ingress + `secret.example.yaml` | Reference only |
+| `deploy/k8s/` | Sample Deployment (uid 10001, RollingUpdate) / Service (`appProtocol`) / ConfigMap / HPA (behavior) / NP / PDB / SA / Ingress + `secret.example.yaml` | Reference only |
 
 ## Application components
 
