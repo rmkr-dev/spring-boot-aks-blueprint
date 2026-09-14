@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- `BuildInfoContributorTest` reads expected version from `pom.xml` (no hardcoded release version)
+
 ## [1.3.1] — 2026-09-14
 
 Patch after v1.3.0: safer RollingUpdate defaults, Kubernetes manifest contract tests, numeric non-root uid/gid **10001**, and CI pin to reusable `java-maven-ci.yml@v0.4.2`. Still Spring Boot **3.5.x**.
