@@ -11,6 +11,7 @@
 | `Referrer-Policy` | `no-referrer` | Avoid leaking URLs in Referer |
 | `X-XSS-Protection` | `0` | Disable legacy XSS auditor (modern guidance) |
 | `Permissions-Policy` | geolocation/mic/camera disabled | Tighten powerful browser features |
+| `Cache-Control` | `no-store` | Avoid caching JSON/Actuator responses in browsers or shared caches |
 
 `SecurityHeadersFilter` is ordered after `RequestIdFilter` (`Ordered.HIGHEST_PRECEDENCE + 20` vs `+ 10`) so correlation ids are assigned first.
 
