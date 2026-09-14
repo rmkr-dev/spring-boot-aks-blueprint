@@ -28,3 +28,7 @@ Default workflow `permissions: contents: read`. No secrets are required for the 
 ## Concurrency
 
 The workflow uses a concurrency group per ref with `cancel-in-progress: true` so newer pushes to the same PR or branch cancel superseded runs.
+
+## Dependabot
+
+GitHub Actions updates are grouped (`groups.github-actions`) in `.github/dependabot.yml`. Spring Boot major upgrades remain ignored. Checkout stays pinned at `actions/checkout@v7` in `ci.yml`.
