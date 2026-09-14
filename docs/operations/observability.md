@@ -45,7 +45,7 @@ JVM and HTTP server metrics from Micrometer/Spring Boot remain available under `
 - Kubernetes samples probe readiness/liveness paths; see [deployment.md](../deployment/deployment.md) and `deploy/k8s/`.
 - Health details stay `when_authorized` so anonymous clients do not get component-level detail dumps.
 
-Graceful shutdown (`server.shutdown=graceful`) is documented in [graceful-shutdown.md](graceful-shutdown.md).
+Graceful shutdown (`server.shutdown=graceful`) is documented in [graceful-shutdown.md](graceful-shutdown.md). Request correlation via `X-Request-Id` is documented in [request-id.md](request-id.md).
 
 ## Out of scope here
 
