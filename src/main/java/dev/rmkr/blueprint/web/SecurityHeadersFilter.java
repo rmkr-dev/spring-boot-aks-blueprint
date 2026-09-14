@@ -29,6 +29,7 @@ public class SecurityHeadersFilter extends OncePerRequestFilter {
         response.setHeader("Referrer-Policy", "no-referrer");
         response.setHeader("X-XSS-Protection", "0");
         response.setHeader("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
+        response.setHeader("Cache-Control", "no-store");
         filterChain.doFilter(request, response);
     }
 }
