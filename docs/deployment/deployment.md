@@ -17,6 +17,8 @@ Useful endpoints:
 
 - API: `http://localhost:8080/api/v1/hello`
 - Health: `http://localhost:8080/actuator/health`
+- Readiness (K8s): `http://localhost:8080/actuator/health/readiness`
+- Liveness (K8s): `http://localhost:8080/actuator/health/liveness`
 - Metrics: `http://localhost:8080/actuator/metrics`
 - Info: `http://localhost:8080/actuator/info`
 
@@ -36,8 +38,18 @@ Samples live under [`deploy/k8s/`](../../deploy/k8s/):
 | File | Purpose |
 | --- | --- |
 | `configmap.yaml` | Non-secret env (`SPRING_APPLICATION_NAME`, `SERVER_PORT`) |
-| `deployment.yaml` | Single replica, non-root securityContext, probes on `/actuator/health` |
+| `deployment.yaml` | Single replica, non-root securityContext, Actuator probes, CPU/memory requests/limits |
 | `service.yaml` | ClusterIP Service on port 80 → container 8080 |
+
+Probe paths match Actuator when `management.endpoint.health.probes.enabled=true`:
+
+| Probe | Path |
+| --- | --- |
+| startup | `/actuator/health/liveness` |
+| readiness | `/actuator/health/readiness` |
+| liveness | `/actuator/health/liveness` |
+
+Starter resources: requests `100m` CPU / `256Mi` memory; limits `1` CPU / `512Mi` memory. See [`deploy/k8s/README.md`](../../deploy/k8s/README.md).
 
 Treat them as **reference**. Optional client-side validation:
 

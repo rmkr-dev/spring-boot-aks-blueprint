@@ -1,5 +1,7 @@
 # Reference only — not applied from this repository.
 # Replace `image` with a registry you control after building/pushing the Dockerfile.
+# Probes match Spring Boot Actuator when management.endpoint.health.probes.enabled=true
+# (see src/main/resources/application.yml).
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,18 +37,29 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop: ["ALL"]
+          # startupProbe: give the JVM time before liveness starts failing the pod
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            failureThreshold: 30
+            periodSeconds: 5
           readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/health/readiness
               port: http
-            initialDelaySeconds: 5
+            initialDelaySeconds: 0
             periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/health/liveness
               port: http
-            initialDelaySeconds: 15
+            initialDelaySeconds: 0
             periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 3
           resources:
             requests:
               cpu: 100m
