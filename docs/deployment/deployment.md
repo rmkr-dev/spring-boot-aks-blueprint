@@ -49,6 +49,7 @@ Samples live under [`deploy/k8s/`](../../deploy/k8s/):
 | `deployment.yaml` | Single replica, non-root securityContext, Actuator probes, CPU/memory requests/limits |
 | `service.yaml` | ClusterIP Service on port 80 → container 8080 |
 | `hpa.yaml` | Optional CPU HPA (1–3 replicas @ 70% average utilization) — needs metrics-server |
+| `networkpolicy.yaml` | Optional NetworkPolicy sample — CNI must enforce policies |
 
 Probe paths match Actuator when `management.endpoint.health.probes.enabled=true`:
 

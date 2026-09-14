@@ -10,6 +10,7 @@ These manifests illustrate a minimal Deployment, Service, ConfigMap, and optiona
 | `deployment.yaml` | Pod template, probes, resources |
 | `service.yaml` | ClusterIP |
 | `hpa.yaml` | CPU-based HorizontalPodAutoscaler (optional) |
+| `networkpolicy.yaml` | Sample ingress/egress NetworkPolicy (optional; CNI-dependent) |
 
 ## Probes and resources
 
@@ -26,6 +27,10 @@ Resource requests/limits (`100m`/`1` CPU, `256Mi`/`512Mi` memory) are starter va
 ## Horizontal Pod Autoscaler
 
 `hpa.yaml` is an optional sample: scale the Deployment between 1 and 3 replicas when average CPU utilization exceeds 70%. It needs a cluster metrics source (for example metrics-server). It does **not** run from this repo's CI.
+
+## NetworkPolicy
+
+`networkpolicy.yaml` is an optional sample that selects pods labeled `app.kubernetes.io/name=spring-boot-aks-blueprint`. It allows ingress on TCP 8080 from same-namespace pods and from pods labeled `app.kubernetes.io/component=api-client`, plus limited egress (DNS and HTTPS). **Enforcement depends on your CNI.** Treat it as a starting point—tighten for real clusters. Not applied by CI.
 
 Suggested local review (optional):
 
