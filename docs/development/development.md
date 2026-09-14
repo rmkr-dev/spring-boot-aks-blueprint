@@ -46,6 +46,8 @@ Container (optional):
 ```bash
 docker build -t spring-boot-aks-blueprint:local .
 docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
+# or
+docker compose up --build
 ```
 
 Kubernetes samples (optional client dry-run — does not apply to a cluster from this repo):
