@@ -4,6 +4,18 @@ These manifests illustrate a minimal Deployment, Service, and ConfigMap for the 
 
 **They are not applied by CI and are not proof of a live AKS cluster.**
 
+## Probes and resources
+
+The Deployment uses Actuator probe endpoints (requires `management.endpoint.health.probes.enabled=true` in `application.yml`):
+
+| Probe | Path | Role |
+| --- | --- | --- |
+| `startupProbe` | `/actuator/health/liveness` | Delays liveness until the process is up |
+| `readinessProbe` | `/actuator/health/readiness` | Controls Service traffic |
+| `livenessProbe` | `/actuator/health/liveness` | Restarts a stuck process |
+
+Resource requests/limits (`100m`/`1` CPU, `256Mi`/`512Mi` memory) are starter values for a small JVM service—tune for your cluster and load. The Dockerfile sets `MaxRAMPercentage=75.0` so the heap stays within the container limit.
+
 Suggested local review (optional):
 
 ```bash
