@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `logback-spring.xml` console pattern includes MDC `requestId`
 - HTTP response compression for JSON/problem+json/text (min 1 KiB)
 - `server.forward-headers-strategy=framework` for Ingress/`X-Forwarded-*` support
 - `RequestIdFilter` for `X-Request-Id` correlation (echo or generate) + MDC
