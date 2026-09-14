@@ -5,7 +5,7 @@
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](pom.xml)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.x-green.svg)](pom.xml)
 
-A personal **v1** engineering blueprint for a **Java 21 / Spring Boot 3.5** HTTP service aimed at **Azure Kubernetes Service (AKS)**. Honest docs, a runnable app with tests, multi-stage non-root container, GitHub Actions CI pinned to reusable workflows, and **reference-only** Kubernetes samples—not a claim that anything is running in a live cluster.
+A personal **v1.0.0** engineering blueprint for a **Java 21 / Spring Boot 3.5** HTTP service aimed at **Azure Kubernetes Service (AKS)**. Honest docs, a runnable app with tests, multi-stage non-root container, GitHub Actions CI pinned to reusable workflows, and **reference-only** Kubernetes samples—not a claim that anything is running in a live cluster.
 
 ## Why this exists
 
@@ -77,7 +77,7 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 
 ```text
 .
-├── AGENTS.md / CONTRIBUTING.md / SECURITY.md / LICENSE
+├── AGENTS.md / CONTRIBUTING.md / SECURITY.md / LICENSE / CHANGELOG.md
 ├── README.md
 ├── pom.xml / Dockerfile / compose.yaml / .dockerignore
 ├── .github/                 # CI (@v0.2.0 pin), Dependabot, CODEOWNERS, templates
@@ -104,6 +104,7 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 | [ADR-001](docs/decisions/0001-spring-boot-aks-blueprint.md) | Blueprint decision |
 | [Deployment](docs/deployment/deployment.md) | Local, container, reference k8s |
 | [kind notes](docs/deployment/kind.md) | Optional local cluster; Compose preferred for app-only |
+| [CHANGELOG](CHANGELOG.md) | Release notes |
 | [Observability](docs/operations/observability.md) | Actuator, custom metric, info |
 | [Security](docs/security/security.md) | Security posture |
 | [SECURITY.md](SECURITY.md) | Vulnerability reporting |
