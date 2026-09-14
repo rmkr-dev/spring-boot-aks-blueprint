@@ -104,3 +104,7 @@ See [config-secrets.md](config-secrets.md) for ConfigMap vs Secret patterns and 
 ## What “done” does not mean
 
 Having sample YAML does **not** mean an AKS cluster exists, the image was pushed, or traffic is serving from Azure.
+
+## Forwarded headers (Ingress / LB)
+
+`server.forward-headers-strategy=framework` lets Spring honor `X-Forwarded-*` from a trusted proxy (Ingress, Azure LB, or local reverse proxy) when building redirects and absolute URLs. Only enable this when a proxy sits in front; do not expose the app directly to the internet without a hop that strips client-supplied forward headers.
