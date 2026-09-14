@@ -15,20 +15,24 @@ What this blueprint exposes today via Spring Boot Actuator and Micrometer. No Pr
 
 Exposure is controlled in `src/main/resources/application.yml` (`management.endpoints.web.exposure.include`). Sensitive endpoints such as `env` are **not** exposed.
 
-## Custom metric
+## Custom metrics
 
-`HelloService` registers a counter:
+`HelloService` registers:
 
-- **Name:** `blueprint.hello.requests`
-- **Meaning:** number of greetings produced (each successful `greet` call)
+| Metric | Type | Tags / notes |
+| --- | --- | --- |
+| `blueprint.hello.requests` | Counter | `outcome=default` when name blank/null; `outcome=named` otherwise |
+| `blueprint.hello.duration` | Timer | Latency of producing a greeting |
 
 After calling `GET /api/v1/hello`, inspect:
 
 ```bash
 curl -s http://localhost:8080/actuator/metrics/blueprint.hello.requests
+curl -s 'http://localhost:8080/actuator/metrics/blueprint.hello.requests?tag=outcome:named'
+curl -s http://localhost:8080/actuator/metrics/blueprint.hello.duration
 ```
 
-JVM and HTTP server metrics from Micrometer/Spring Boot remain available under `/actuator/metrics` without extra configuration.
+JVM and HTTP server metrics from Micrometer/Spring Boot remain available under `/actuator/metrics` without extra configuration. No Prometheus registry or remote-write is configured in this blueprint.
 
 ## Info contributor
 
