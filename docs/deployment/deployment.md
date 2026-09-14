@@ -72,6 +72,10 @@ kubectl apply --dry-run=client -f deploy/k8s/
 
 Do **not** expect this repository’s CI to run `kubectl apply` or to create Azure resources.
 
+## Config vs secrets
+
+See [config-secrets.md](config-secrets.md) for ConfigMap vs Secret patterns and a future External Secrets note. `secret.example.yaml` is a placeholder shape only.
+
 ## AKS path (documented target)
 
 1. Build and push an image to a registry you control.
