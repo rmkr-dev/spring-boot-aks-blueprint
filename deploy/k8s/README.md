@@ -58,6 +58,11 @@ Non-secret env lives in `configmap.yaml`. Credentials use Kubernetes Secrets cre
 
 
 
+
+## Namespace quotas
+
+`ResourceQuota` / `LimitRange` are **not** shipped here—they are namespace/operator concerns. See [namespace-quotas.md](../../docs/deployment/namespace-quotas.md) for a checklist when placing this Deployment in a constrained AKS namespace.
+
 ## Topology spread
 
 The Deployment sample includes soft `topologySpreadConstraints` (`whenUnsatisfiable: ScheduleAnyway`, `topologyKey: kubernetes.io/hostname`, `maxSkew: 1`) so schedulers prefer spreading replicas across nodes when capacity allows. Pair with HPA (`maxReplicas > 1`) for meaningful effect. Reference only—cluster topology and taints still win.
