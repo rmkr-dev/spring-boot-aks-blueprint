@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] — 2026-09-14
+
+Minor after v1.2.1: Kubernetes rollout knobs (`minReadySeconds`, `progressDeadlineSeconds`) and filter hardening (`Cache-Control: no-store`, request-id sanitization). Still Spring Boot **3.5.x**.
+
+
 ### Added
 - Deployment sample `minReadySeconds: 10` for safer rolling updates
 - Deployment sample `progressDeadlineSeconds: 120` for stalled-rollout detection
@@ -97,6 +102,7 @@ First tagged release of the personal Spring Boot + AKS engineering blueprint.
 - Dependabot ignores Spring Boot **major** upgrades (stay on 3.5.x)
 - NetworkPolicy enforcement depends on cluster CNI; HPA needs metrics-server
 
+[1.3.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.3.0
 [1.2.1]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.2.1
 [1.2.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.2.0
 [1.1.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.1.0
