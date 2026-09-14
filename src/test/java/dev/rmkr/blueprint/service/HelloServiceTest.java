@@ -1,5 +1,6 @@
 package dev.rmkr.blueprint.service;
 
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,11 +8,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class HelloServiceTest {
 
+    private SimpleMeterRegistry meterRegistry;
     private HelloService helloService;
 
     @BeforeEach
     void setUp() {
-        helloService = new HelloService("spring-boot-aks-blueprint");
+        meterRegistry = new SimpleMeterRegistry();
+        helloService = new HelloService("spring-boot-aks-blueprint", meterRegistry);
     }
 
     @Test
@@ -57,12 +60,23 @@ class HelloServiceTest {
 
     @Test
     void greetReflectsConfiguredApplicationName() {
-        HelloService other = new HelloService("custom-app");
+        HelloService other = new HelloService("custom-app", new SimpleMeterRegistry());
         assertThat(other.greet("x").application()).isEqualTo("custom-app");
     }
 
     @Test
     void greetTreatsTabOnlyAsBlank() {
         assertThat(helloService.greet("\t\t").message()).isEqualTo("Hello, world!");
+    }
+
+    @Test
+    void greetIncrementsCustomCounter() {
+        helloService.greet("one");
+        helloService.greet("two");
+
+        assertThat(meterRegistry.find("blueprint.hello.requests").counter())
+                .isNotNull()
+                .extracting(c -> c.count())
+                .isEqualTo(2.0);
     }
 }

@@ -19,5 +19,6 @@ class SpringBootAksBlueprintApplicationTest {
         assertThat(applicationContext.containsBean("helloController")).isTrue();
         assertThat(applicationContext.containsBean("helloService")).isTrue();
         assertThat(applicationContext.containsBean("apiExceptionHandler")).isTrue();
+        assertThat(applicationContext.containsBean("blueprintInfoContributor")).isTrue();
     }
 }
