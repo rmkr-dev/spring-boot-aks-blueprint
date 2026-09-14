@@ -8,7 +8,7 @@ These manifests illustrate a minimal Deployment, Service, ConfigMap, optional HP
 | --- | --- |
 | `configmap.yaml` | Non-secret env |
 | `deployment.yaml` | Pod template, probes, resources |
-| `service.yaml` | ClusterIP |
+| `service.yaml` | ClusterIP (`appProtocol: http`) |
 | `hpa.yaml` | CPU-based HorizontalPodAutoscaler (optional) |
 | `networkpolicy.yaml` | Sample ingress/egress NetworkPolicy (optional; CNI-dependent) |
 | `pdb.yaml` | Optional PodDisruptionBudget (`minAvailable: 1`) |

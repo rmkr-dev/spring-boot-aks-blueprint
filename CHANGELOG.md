@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Service sample `appProtocol: http` on the ClusterIP port
+
 ### Changed
 - `BuildInfoContributorTest` reads expected version from `pom.xml` (no hardcoded release version)
 
