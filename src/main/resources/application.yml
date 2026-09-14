@@ -1,6 +1,9 @@
 spring:
   application:
     name: ${SPRING_APPLICATION_NAME:spring-boot-aks-blueprint}
+  threads:
+    virtual:
+      enabled: true
   lifecycle:
     timeout-per-shutdown-phase: 30s
 
