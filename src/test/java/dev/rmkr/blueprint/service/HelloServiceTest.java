@@ -43,4 +43,26 @@ class HelloServiceTest {
     void greetAcceptsEmptyStringAsWorld() {
         assertThat(helloService.greet("").message()).isEqualTo("Hello, world!");
     }
+
+    @Test
+    void greetAcceptsMaxLengthName() {
+        String max = "n".repeat(64);
+        assertThat(helloService.greet(max).message()).isEqualTo("Hello, " + max + "!");
+    }
+
+    @Test
+    void greetPreservesInternalWhitespace() {
+        assertThat(helloService.greet("hello world").message()).isEqualTo("Hello, hello world!");
+    }
+
+    @Test
+    void greetReflectsConfiguredApplicationName() {
+        HelloService other = new HelloService("custom-app");
+        assertThat(other.greet("x").application()).isEqualTo("custom-app");
+    }
+
+    @Test
+    void greetTreatsTabOnlyAsBlank() {
+        assertThat(helloService.greet("\t\t").message()).isEqualTo("Hello, world!");
+    }
 }
