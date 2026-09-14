@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Compose `healthcheck` aligned with Dockerfile Actuator liveness
+
 ## [1.1.0] — 2026-09-14
 
 Minor blueprint refresh after v1.0.0: more reference Kubernetes samples, ops hardening, tests, and local tooling.
