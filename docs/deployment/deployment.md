@@ -65,7 +65,7 @@ Probe paths match Actuator when `management.endpoint.health.probes.enabled=true`
 | readiness | `/actuator/health/readiness` |
 | liveness | `/actuator/health/liveness` |
 
-The sample Deployment also sets `minReadySeconds: 10`, `progressDeadlineSeconds: 120`, and `terminationGracePeriodSeconds: 45` and a 5s `preStop` sleep to align with `server.shutdown=graceful` and a 30s Spring lifecycle timeout (see [graceful-shutdown.md](../operations/graceful-shutdown.md)).
+The sample Deployment also sets `revisionHistoryLimit: 5`, RollingUpdate `maxUnavailable: 0` / `maxSurge: 1`, `minReadySeconds: 10`, `progressDeadlineSeconds: 120`, and `terminationGracePeriodSeconds: 45` and a 5s `preStop` sleep to align with `server.shutdown=graceful` and a 30s Spring lifecycle timeout (see [graceful-shutdown.md](../operations/graceful-shutdown.md)).
 
 Starter resources: requests `100m` CPU / `256Mi` memory; limits `1` CPU / `512Mi` memory. With `readOnlyRootFilesystem: true`, the sample mounts `emptyDir` at `/tmp` for JVM temp files. Soft `topologySpreadConstraints` prefer spreading replicas across hosts when you scale out. See [`deploy/k8s/README.md`](../../deploy/k8s/README.md).
 

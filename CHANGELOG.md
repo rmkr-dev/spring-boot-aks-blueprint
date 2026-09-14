@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Deployment sample `revisionHistoryLimit: 5` and RollingUpdate `maxUnavailable: 0` / `maxSurge: 1`
+
 ## [1.3.0] — 2026-09-14
 
 Minor after v1.2.1: Kubernetes rollout knobs (`minReadySeconds`, `progressDeadlineSeconds`) and filter hardening (`Cache-Control: no-store`, request-id sanitization). Still Spring Boot **3.5.x**.
