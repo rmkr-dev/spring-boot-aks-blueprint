@@ -36,4 +36,28 @@ class ApiExceptionHandlerTest {
         var errors = (java.util.List<String>) problem.getProperties().get("errors");
         assertThat(errors).containsExactly("hello.name: size must be between 0 and 64");
     }
+
+    @Test
+    void sortsMultipleViolationsLexicographically() {
+        ConstraintViolation<?> a = mock(ConstraintViolation.class);
+        Path pathA = mock(Path.class);
+        when(pathA.toString()).thenReturn("hello.z");
+        when(a.getPropertyPath()).thenReturn(pathA);
+        when(a.getMessage()).thenReturn("must not be blank");
+
+        ConstraintViolation<?> b = mock(ConstraintViolation.class);
+        Path pathB = mock(Path.class);
+        when(pathB.toString()).thenReturn("hello.a");
+        when(b.getPropertyPath()).thenReturn(pathB);
+        when(b.getMessage()).thenReturn("size must be between 0 and 64");
+
+        ProblemDetail problem = handler.handleConstraintViolation(
+                new ConstraintViolationException(Set.of(a, b)));
+
+        @SuppressWarnings("unchecked")
+        var errors = (java.util.List<String>) problem.getProperties().get("errors");
+        assertThat(errors).containsExactly(
+                "hello.a: size must be between 0 and 64",
+                "hello.z: must not be blank");
+    }
 }

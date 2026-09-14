@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -28,6 +29,7 @@ class HelloControllerTest {
     void helloReturnsDefaultGreeting() throws Exception {
         mockMvc.perform(get("/api/v1/hello"))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").value("Hello, world!"))
                 .andExpect(jsonPath("$.application").value("spring-boot-aks-blueprint"));
     }
@@ -36,6 +38,7 @@ class HelloControllerTest {
     void helloAcceptsNameQueryParam() throws Exception {
         mockMvc.perform(get("/api/v1/hello").param("name", "AKS"))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").value("Hello, AKS!"));
     }
 
@@ -47,6 +50,21 @@ class HelloControllerTest {
     }
 
     @Test
+    void helloAcceptsNameAtMaxLength() throws Exception {
+        String max = "a".repeat(64);
+        mockMvc.perform(get("/api/v1/hello").param("name", max))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Hello, " + max + "!"));
+    }
+
+    @Test
+    void helloTrimsSurroundingWhitespaceViaService() throws Exception {
+        mockMvc.perform(get("/api/v1/hello").param("name", "  blueprint  "))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Hello, blueprint!"));
+    }
+
+    @Test
     void helloRejectsOversizedNameWithProblemDetail() throws Exception {
         String oversized = "x".repeat(65);
         mockMvc.perform(get("/api/v1/hello").param("name", oversized))
@@ -55,6 +73,13 @@ class HelloControllerTest {
                 .andExpect(jsonPath("$.title").value("Bad Request"))
                 .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.detail").value("Request validation failed"))
+                .andExpect(jsonPath("$.errors", hasSize(1)))
                 .andExpect(jsonPath("$.errors", hasItem(containsString("size must be between 0 and 64"))));
+    }
+
+    @Test
+    void unknownApiPathIsNotFound() throws Exception {
+        mockMvc.perform(get("/api/v1/missing"))
+                .andExpect(status().isNotFound());
     }
 }
