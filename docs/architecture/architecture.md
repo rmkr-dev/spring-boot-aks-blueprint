@@ -10,10 +10,11 @@ This repository is a **Spring Boot + AKS engineering blueprint**. Application, c
 | `docs/*` | Architecture, security, development, deployment, ADRs | Present |
 | `pom.xml` | Maven / Spring Boot 3.5 / Java 21 | Present |
 | `src/main/java/dev/rmkr/blueprint` | App, `/api/v1/hello`, Actuator, ProblemDetail errors | Present |
-| `src/test/java/...` | Unit + WebMvc + Actuator + error tests | Present |
-| `Dockerfile` / `.dockerignore` | Multi-stage non-root image | Present |
+| `src/test/java/...` | Unit + WebMvc + Actuator + error + graceful-shutdown config tests | Present |
+| `Dockerfile` / `.dockerignore` / `compose.yaml` | Multi-stage non-root image + Compose healthcheck | Present |
 | `.github/workflows/ci.yml` | Reusable Maven CI + docker build (no push) | Present |
-| `deploy/k8s/` | Sample Deployment / Service / ConfigMap / HPA / NetworkPolicy / PDB / ServiceAccount / Ingress | Reference only |
+| `scripts/` | Optional `load-hello` bash/Python smokes | Present |
+| `deploy/k8s/` | Sample Deployment / Service / ConfigMap / HPA / NetworkPolicy / PDB / ServiceAccount / Ingress + `secret.example.yaml` | Reference only |
 
 ## Application components
 
