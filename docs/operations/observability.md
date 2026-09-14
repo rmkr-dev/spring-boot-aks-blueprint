@@ -51,3 +51,7 @@ Graceful shutdown (`server.shutdown=graceful`) is documented in [graceful-shutdo
 
 - OpenTelemetry exporters, Grafana dashboards, Alertmanager rules, or Prometheus Operator ServiceMonitor CRs
 - Changing Actuator base path or adding Spring Security
+
+## HTTP response compression
+
+`server.compression.enabled=true` with MIME types `application/json`, `application/problem+json`, and `text/plain` (min size 1024 bytes). Useful behind Ingress when clients accept gzip. Disable if an edge proxy already compresses end-to-end.
