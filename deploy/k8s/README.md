@@ -77,7 +77,7 @@ The Deployment sets `readOnlyRootFilesystem: true` on the container. The JVM and
 
 ## Rollout readiness
 
-The Deployment sets `minReadySeconds: 10` so a newly Ready pod must stay Ready briefly before the rolling update proceeds. Pair with readiness probes; tune for your JVM warm-up. Reference only.
+The Deployment sets `minReadySeconds: 10` so a newly Ready pod must stay Ready briefly before the rolling update proceeds, and `progressDeadlineSeconds: 120` so a stalled rollout surfaces as a ProgressDeadlineExceeded condition sooner than the 600s default. Pair with readiness probes; tune for your JVM warm-up. Reference only.
 
 ## Graceful shutdown
 
