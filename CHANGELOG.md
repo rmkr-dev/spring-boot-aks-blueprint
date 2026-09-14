@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unit/integration assertions for `server.shutdown=graceful` and lifecycle timeout
 - Architecture inventory refreshed for Compose healthcheck, scripts, secrets example, graceful shutdown
 - NetworkPolicy sample notes optional Ingress-controller allow rule (commented)
+- CONTRIBUTING/AGENTS pointers for load-hello, graceful shutdown, and Docker healthcheck docs
 
 ## [1.1.0] — 2026-09-14
 
