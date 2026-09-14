@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - README and network diagram refreshed for v1.2.0 surfaces
+- AGENTS/CONTRIBUTING reminders for prometheus, filters, and Boot 3.5 guardrail
 
 ## [1.2.0] — 2026-09-14
 
