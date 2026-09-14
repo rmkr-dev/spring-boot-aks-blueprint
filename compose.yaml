@@ -12,7 +12,7 @@ services:
       SERVER_PORT: "8080"
       SPRING_APPLICATION_NAME: spring-boot-aks-blueprint
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/actuator/health/liveness"]
+      test: ["CMD", "curl", "-fsS", "--max-time", "2", "http://127.0.0.1:8080/actuator/health/liveness"]
       interval: 30s
       timeout: 3s
       retries: 3
