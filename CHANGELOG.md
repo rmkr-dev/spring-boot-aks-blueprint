@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Deployment sample `revisionHistoryLimit: 5` and RollingUpdate `maxUnavailable: 0` / `maxSurge: 1`
 - `KubernetesManifestContractTest` covering SA, probes, securityContext, Service/HPA/PDB/NP/Ingress samples
+- Dockerfile and Deployment numeric non-root identity (`uid/gid 10001`)
 
 ### Changed
 - CI reusable workflow pin `java-maven-ci.yml@v0.4.0` → `@v0.4.2`
