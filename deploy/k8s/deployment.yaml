@@ -20,6 +20,8 @@ spec:
     spec:
       serviceAccountName: spring-boot-aks-blueprint
       automountServiceAccountToken: false
+      # Allow in-flight requests to finish (matches spring.lifecycle.timeout-per-shutdown-phase)
+      terminationGracePeriodSeconds: 45
       securityContext:
         runAsNonRoot: true
         seccompProfile:
