@@ -31,7 +31,7 @@ HelloService counter: blueprint.hello.requests
 
 See the Mermaid view in [architecture-diagram.md](architecture-diagram.md).
 
-Configuration prefers environment variables over hardcoding (`SERVER_PORT`, `SPRING_APPLICATION_NAME`). Virtual threads are enabled via `spring.threads.virtual.enabled=true` (Java 21). Health probes are enabled for Kubernetes samples; health details are not shown anonymously. There is no authentication layer and no datastore in this blueprint. Springdoc/OpenAPI is deferred—see [api-errors.md](../development/api-errors.md).
+Configuration prefers environment variables over hardcoding (`SERVER_PORT`, `SPRING_APPLICATION_NAME`). Virtual threads are enabled via `spring.threads.virtual.enabled=true` (Java 21). Tomcat `connection-timeout`/`keep-alive-timeout` are set explicitly for honest defaults. Health probes are enabled for Kubernetes samples; health details are not shown anonymously. There is no authentication layer and no datastore in this blueprint. Springdoc/OpenAPI is deferred—see [api-errors.md](../development/api-errors.md).
 
 ## Network posture
 

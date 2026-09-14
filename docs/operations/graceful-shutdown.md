@@ -38,3 +38,14 @@ Or send `SIGTERM` to the JVM PID. No load generator is required for a smoke chec
 - Custom `TomcatServletWebServerFactory` beans
 - PreStop hooks that sleep instead of relying on graceful shutdown (optional later)
 - Claiming zero dropped requests under extreme load without measurement
+
+## Related Tomcat timeouts
+
+This blueprint also sets:
+
+| Property | Value | Role |
+| --- | --- | --- |
+| `server.tomcat.connection-timeout` | `10s` | Max time to accept/establish a connection |
+| `server.tomcat.keep-alive-timeout` | `20s` | Idle keep-alive before the connector closes |
+
+These are connector limits, separate from graceful shutdown's lifecycle timeout. Tune for your Ingress/LB idle timeouts so they stay aligned.
