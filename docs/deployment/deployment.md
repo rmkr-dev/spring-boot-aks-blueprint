@@ -24,6 +24,8 @@ Useful endpoints:
 
 ## Container image
 
+The image defines a Docker `HEALTHCHECK` against `/actuator/health/liveness` (see [docker-healthcheck.md](docker-healthcheck.md)).
+
 ```bash
 docker build -t spring-boot-aks-blueprint:local .
 docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
