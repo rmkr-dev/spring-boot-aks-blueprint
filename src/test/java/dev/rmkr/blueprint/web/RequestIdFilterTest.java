@@ -110,4 +110,31 @@ class RequestIdFilterTest {
                 .andExpect(status().isOk())
                 .andExpect(header().string(RequestIdFilter.HEADER, "prom-1"));
     }
+
+    @Test
+    void rejectsOversizedIncomingRequestId() throws Exception {
+        String oversized = "a".repeat(RequestIdFilter.MAX_LENGTH + 1);
+        MvcResult result = mockMvc.perform(get("/api/v1/hello").header(RequestIdFilter.HEADER, oversized))
+                .andExpect(status().isOk())
+                .andExpect(header().string(RequestIdFilter.HEADER, Matchers.not(Matchers.equalTo(oversized))))
+                .andReturn();
+        UUID.fromString(result.getResponse().getHeader(RequestIdFilter.HEADER));
+    }
+
+    @Test
+    void acceptsIncomingRequestIdAtMaxLength() throws Exception {
+        String max = "b".repeat(RequestIdFilter.MAX_LENGTH);
+        mockMvc.perform(get("/api/v1/hello").header(RequestIdFilter.HEADER, max))
+                .andExpect(status().isOk())
+                .andExpect(header().string(RequestIdFilter.HEADER, max));
+    }
+
+    @Test
+    void rejectsIncomingRequestIdWithControlCharacters() throws Exception {
+        MvcResult result = mockMvc.perform(get("/api/v1/hello").header(RequestIdFilter.HEADER, "bad\nid"))
+                .andExpect(status().isOk())
+                .andExpect(header().string(RequestIdFilter.HEADER, Matchers.not(Matchers.equalTo("bad\nid"))))
+                .andReturn();
+        UUID.fromString(result.getResponse().getHeader(RequestIdFilter.HEADER));
+    }
 }

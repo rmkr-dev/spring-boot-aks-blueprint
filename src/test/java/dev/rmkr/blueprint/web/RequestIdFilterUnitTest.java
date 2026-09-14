@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RequestIdFilterUnitTest {
@@ -94,5 +95,16 @@ class RequestIdFilterUnitTest {
 
         assertThrows(IOException.class, () -> filter.doFilter(request, response, chain));
         assertNull(MDC.get(RequestIdFilter.MDC_KEY));
+    }
+
+    @Test
+    void usableIncomingRejectsNullBlankOversizeAndControls() {
+        assertFalse(RequestIdFilter.usableIncoming(null));
+        assertFalse(RequestIdFilter.usableIncoming(""));
+        assertFalse(RequestIdFilter.usableIncoming("   "));
+        assertFalse(RequestIdFilter.usableIncoming("a".repeat(RequestIdFilter.MAX_LENGTH + 1)));
+        assertFalse(RequestIdFilter.usableIncoming("has\nnewline"));
+        assertTrue(RequestIdFilter.usableIncoming("ok-id"));
+        assertTrue(RequestIdFilter.usableIncoming("b".repeat(RequestIdFilter.MAX_LENGTH)));
     }
 }
