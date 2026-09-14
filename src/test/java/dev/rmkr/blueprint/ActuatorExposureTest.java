@@ -25,6 +25,20 @@ class ActuatorExposureTest {
     }
 
     @Test
+    void readinessProbeEndpointIsExposed() throws Exception {
+        mockMvc.perform(get("/actuator/health/readiness"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("UP"));
+    }
+
+    @Test
+    void livenessProbeEndpointIsExposed() throws Exception {
+        mockMvc.perform(get("/actuator/health/liveness"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("UP"));
+    }
+
+    @Test
     void metricsEndpointIsExposed() throws Exception {
         mockMvc.perform(get("/actuator/metrics"))
                 .andExpect(status().isOk())
