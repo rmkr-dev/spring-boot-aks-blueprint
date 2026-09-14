@@ -66,7 +66,7 @@ Probe paths match Actuator when `management.endpoint.health.probes.enabled=true`
 
 The sample Deployment also sets `terminationGracePeriodSeconds: 45` to align with `server.shutdown=graceful` and a 30s Spring lifecycle timeout (see [graceful-shutdown.md](../operations/graceful-shutdown.md)).
 
-Starter resources: requests `100m` CPU / `256Mi` memory; limits `1` CPU / `512Mi` memory. See [`deploy/k8s/README.md`](../../deploy/k8s/README.md).
+Starter resources: requests `100m` CPU / `256Mi` memory; limits `1` CPU / `512Mi` memory. With `readOnlyRootFilesystem: true`, the sample mounts `emptyDir` at `/tmp` for JVM temp files. See [`deploy/k8s/README.md`](../../deploy/k8s/README.md).
 
 Treat them as **reference**. Optional client-side validation:
 

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Deployment `emptyDir` volume at `/tmp` so read-only root filesystem pods have JVM scratch space
 - Compose `healthcheck` aligned with Dockerfile Actuator liveness
 - Unit/integration assertions for `server.shutdown=graceful` and lifecycle timeout
 - Architecture inventory refreshed for Compose healthcheck, scripts, secrets example, graceful shutdown
