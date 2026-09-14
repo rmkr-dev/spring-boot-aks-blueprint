@@ -71,3 +71,10 @@ spec:
             limits:
               cpu: "1"
               memory: 512Mi
+          # Writable scratch for JVM/OS temp files when root FS is read-only
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
