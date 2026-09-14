@@ -1,0 +1,50 @@
+# Reference only — not applied from this repository.
+# Default-deny ingress except from pods labeled to talk to this app, plus
+# allow probes from the node/network where kubelet health checks originate.
+# Adjust selectors for your cluster CNI and namespace layout.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: spring-boot-aks-blueprint
+  labels:
+    app.kubernetes.io/name: spring-boot-aks-blueprint
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: spring-boot-aks-blueprint
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    # Application traffic from clients that opt into this label
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/component: api-client
+      ports:
+        - protocol: TCP
+          port: 8080
+    # Same-namespace peers (Service backends / optional sidecars)
+    - from:
+        - podSelector: {}
+      ports:
+        - protocol: TCP
+          port: 8080
+  egress:
+    # DNS
+    - to:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    # Allow general egress for JVM/OS needs in this sample; tighten in real clusters
+    - to:
+        - namespaceSelector: {}
+      ports:
+        - protocol: TCP
+          port: 443
