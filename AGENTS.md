@@ -71,12 +71,12 @@ A change is done when all of the following are true:
 - [ ] `mvn test` passes when application code is in scope
 
 
-## Current blueprint reminders (v1.2+)
+## Current blueprint reminders (v1.3+)
 
 - Stay on Spring Boot **3.5.x** — Dependabot ignores Boot **major** upgrades; no Boot 4 without an ADR.
 - Actuator exposure includes `prometheus` only with `management.prometheus.metrics.export.enabled=true`.
-- Filters: `SecurityHeadersFilter`, `RequestIdFilter` (+ `logback-spring.xml` MDC pattern).
-- K8s samples: `readOnlyRootFilesystem` needs `emptyDir` at `/tmp`; graceful shutdown pairs `preStop` sleep with `terminationGracePeriodSeconds`; manifests remain reference-only.
+- Filters: `SecurityHeadersFilter` (`Cache-Control: no-store`), `RequestIdFilter` (sanitized ids + `logback-spring.xml` MDC).
+- K8s samples: uid/gid **10001**, `readOnlyRootFilesystem` + `emptyDir` `/tmp`, RollingUpdate `maxUnavailable: 0`, `minReadySeconds` / `progressDeadlineSeconds`, `preStop` + `terminationGracePeriodSeconds`; manifests remain reference-only.
 - CI pin: reusable `java-maven-ci.yml@v0.4.2` (annotated tag; bump deliberately).
 
 ## Final self-review
