@@ -10,6 +10,8 @@ metadata:
     app.kubernetes.io/name: spring-boot-aks-blueprint
 spec:
   replicas: 1
+  # Wait after a pod becomes Ready before considering the rollout step done
+  minReadySeconds: 10
   selector:
     matchLabels:
       app.kubernetes.io/name: spring-boot-aks-blueprint
