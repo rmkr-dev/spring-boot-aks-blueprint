@@ -12,7 +12,7 @@ Personal projects often need a small, honest starting point for a JVM HTTP servi
 
 1. **Java 21 + Spring Boot 3.x (Maven)** for the sample service (`web`, `actuator`, `validation`).
 2. **Config over hardcoding** via `application.yml` and environment variables (`SERVER_PORT`, `SPRING_APPLICATION_NAME`).
-3. **Careful Actuator exposure**: only `health`, `info`, and `metrics` on the web endpoint set; health details restricted; probes enabled for future k8s use.
+3. **Careful Actuator exposure**: `health`, `info`, `metrics`, and `prometheus` on the web endpoint set; health details restricted; probes enabled for k8s samples.
 4. **Multi-stage non-root Dockerfile**; CI may build the image but does not push to a registry by default.
 5. **GitHub Actions** calling pinned `rmkr-dev/gha-reusable-workflows` `java-maven-ci.yml` at an annotated tag (**currently `@v0.2.0`**) for `mvn -B test`.
 6. **Reference-only Kubernetes samples** under `deploy/k8s/` with deployment docs that never claim a live apply from this repo.
@@ -30,3 +30,4 @@ Personal projects often need a small, honest starting point for a JVM HTTP servi
 - **Spring Boot without Actuator** — rejected; health/metrics are baseline for containers.
 - **Helm chart as the first deliverable** — deferred; plain manifests are easier to review for a blueprint.
 - **Floating `@main` reusable workflows** — rejected for consumers; pin annotated tags.
+- **Spring Boot 4 major upgrade** — deferred; Dependabot ignores Boot majors; stay on 3.5.x until an explicit ADR revisits the major.
