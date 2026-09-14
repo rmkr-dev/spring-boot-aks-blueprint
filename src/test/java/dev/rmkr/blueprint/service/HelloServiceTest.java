@@ -93,4 +93,35 @@ class HelloServiceTest {
                 .extracting(t -> t.count())
                 .isEqualTo(1L);
     }
+
+    @Test
+    void greetIncrementsDefaultOutcomeForBlankAndNull() {
+        helloService.greet(null);
+        helloService.greet("");
+        helloService.greet("  ");
+
+        assertThat(meterRegistry.find("blueprint.hello.requests").tag("outcome", "default").counter().count())
+                .isEqualTo(3.0);
+        assertThat(meterRegistry.find("blueprint.hello.requests").tag("outcome", "named").counter())
+                .isNull();
+    }
+
+    @Test
+    void greetIncrementsNamedOutcomeMultipleTimes() {
+        helloService.greet("one");
+        helloService.greet("two");
+
+        assertThat(meterRegistry.find("blueprint.hello.requests").tag("outcome", "named").counter().count())
+                .isEqualTo(2.0);
+        assertThat(meterRegistry.find("blueprint.hello.duration").timer().count()).isEqualTo(2L);
+    }
+
+    @Test
+    void greetDoesNotCreateNamedTagWhenOnlyDefaultUsed() {
+        helloService.greet(null);
+        assertThat(meterRegistry.find("blueprint.hello.requests").tag("outcome", "named").counter()).isNull();
+        assertThat(meterRegistry.find("blueprint.hello.requests").tag("outcome", "default").counter().count())
+                .isEqualTo(1.0);
+    }
+
 }
