@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.2] — 2026-09-14
+
+Patch after v1.3.1: Service `appProtocol`, HPA scale-down stabilization, Compose uid alignment, and small docs/test hardening. Still Spring Boot **3.5.x**.
+
 ### Added
 - Service sample `appProtocol: http` on the ClusterIP port
 - HPA sample `behavior` with 60s scale-down stabilization (and faster scale-up)
@@ -126,6 +130,7 @@ First tagged release of the personal Spring Boot + AKS engineering blueprint.
 - Dependabot ignores Spring Boot **major** upgrades (stay on 3.5.x)
 - NetworkPolicy enforcement depends on cluster CNI; HPA needs metrics-server
 
+[1.3.2]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.3.2
 [1.3.1]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.3.1
 [1.3.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.3.0
 [1.2.1]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.2.1
