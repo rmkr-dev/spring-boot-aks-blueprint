@@ -51,7 +51,7 @@ Samples live under [`deploy/k8s/`](../../deploy/k8s/):
 | `configmap.yaml` | Non-secret env (`SPRING_APPLICATION_NAME`, `SERVER_PORT`) |
 | `deployment.yaml` | Single replica, non-root uid/gid 10001, Actuator probes, CPU/memory requests/limits |
 | `service.yaml` | ClusterIP Service on port 80 → container 8080 (`appProtocol: http`) |
-| `hpa.yaml` | Optional CPU HPA (1–3 replicas @ 70% average utilization) — needs metrics-server |
+| `hpa.yaml` | Optional CPU HPA (1–3 @ 70%) with scale-down stabilization — needs metrics-server |
 | `networkpolicy.yaml` | Optional NetworkPolicy sample — CNI must enforce policies |
 | `pdb.yaml` | Optional PodDisruptionBudget (`minAvailable: 1`) |
 | `serviceaccount.yaml` | Dedicated ServiceAccount (token automount off) |

@@ -30,7 +30,7 @@ Resource requests/limits (`100m`/`1` CPU, `256Mi`/`512Mi` memory) are starter va
 
 ## Horizontal Pod Autoscaler
 
-`hpa.yaml` is an optional sample: scale the Deployment between 1 and 3 replicas when average CPU utilization exceeds 70%. It needs a cluster metrics source (for example metrics-server). It does **not** run from this repo's CI.
+`hpa.yaml` is an optional sample: scale the Deployment between 1 and 3 replicas when average CPU utilization exceeds 70%. It includes a conservative `behavior` block (60s scale-down stabilization; faster scale-up) so short CPU spikes are less likely to thrash replica counts. It needs a cluster metrics source (for example metrics-server). It does **not** run from this repo's CI.
 
 ## NetworkPolicy
 
