@@ -5,10 +5,12 @@ spring:
     virtual:
       enabled: true
   lifecycle:
+    # Must stay below k8s terminationGracePeriodSeconds minus preStop sleep
     timeout-per-shutdown-phase: 30s
 
 server:
   port: ${SERVER_PORT:8080}
+  # Drain in-flight requests on SIGTERM (see docs/operations/graceful-shutdown.md)
   shutdown: graceful
   forward-headers-strategy: framework
   compression:

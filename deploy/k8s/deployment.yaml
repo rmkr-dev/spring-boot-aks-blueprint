@@ -25,7 +25,7 @@ spec:
     spec:
       serviceAccountName: spring-boot-aks-blueprint
       automountServiceAccountToken: false
-      # Allow in-flight requests to finish (matches spring.lifecycle.timeout-per-shutdown-phase)
+      # 45s > preStop sleep (5s) + spring.lifecycle.timeout-per-shutdown-phase (30s) + JVM exit buffer
       terminationGracePeriodSeconds: 45
       topologySpreadConstraints:
         - maxSkew: 1
@@ -76,6 +76,12 @@ spec:
             periodSeconds: 20
             timeoutSeconds: 2
             failureThreshold: 3
+          # Sleep before SIGTERM so kube-proxy can drop endpoints; pair with
+          # terminationGracePeriodSeconds (45) > preStop (5) + Spring drain (30).
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sleep", "5"]
           resources:
             requests:
               cpu: 100m
