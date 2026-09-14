@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Dockerfile and Compose healthchecks use `curl --max-time 2` under the 3s Docker timeout
 - Architecture/network diagrams refreshed for uid 10001, RollingUpdate, HPA behavior, and `appProtocol`
+- `docs/deployment/kind.md` inventory notes for uid 10001, RollingUpdate, HPA behavior, and `appProtocol`
 
 ## [1.3.2] — 2026-09-14
 
