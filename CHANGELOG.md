@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Compose `healthcheck` aligned with Dockerfile Actuator liveness
+- Unit/integration assertions for `server.shutdown=graceful` and lifecycle timeout
 
 ## [1.1.0] — 2026-09-14
 
