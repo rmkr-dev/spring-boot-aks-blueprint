@@ -77,7 +77,7 @@ A change is done when all of the following are true:
 - Actuator exposure includes `prometheus` only with `management.prometheus.metrics.export.enabled=true`.
 - Filters: `SecurityHeadersFilter`, `RequestIdFilter` (+ `logback-spring.xml` MDC pattern).
 - K8s samples: `readOnlyRootFilesystem` needs `emptyDir` at `/tmp`; graceful shutdown pairs `preStop` sleep with `terminationGracePeriodSeconds`; manifests remain reference-only.
-- CI pin: reusable `java-maven-ci.yml@v0.4.0` (annotated tag; bump deliberately).
+- CI pin: reusable `java-maven-ci.yml@v0.4.2` (annotated tag; bump deliberately).
 
 ## Final self-review
 
