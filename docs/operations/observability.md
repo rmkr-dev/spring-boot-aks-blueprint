@@ -12,8 +12,9 @@ What this blueprint exposes today via Spring Boot Actuator and Micrometer. No Pr
 | `/actuator/info` | App + blueprint metadata |
 | `/actuator/metrics` | Micrometer metric names |
 | `/actuator/metrics/{name}` | Single metric |
+| `/actuator/prometheus` | Prometheus text exposition (Micrometer registry) |
 
-Exposure is controlled in `src/main/resources/application.yml` (`management.endpoints.web.exposure.include`). Sensitive endpoints such as `env` are **not** exposed.
+Exposure is controlled in `src/main/resources/application.yml` (`management.endpoints.web.exposure.include`: `health`, `info`, `metrics`, `prometheus`). Sensitive endpoints such as `env` are **not** exposed.
 
 ## Custom metrics
 
@@ -32,7 +33,7 @@ curl -s 'http://localhost:8080/actuator/metrics/blueprint.hello.requests?tag=out
 curl -s http://localhost:8080/actuator/metrics/blueprint.hello.duration
 ```
 
-JVM and HTTP server metrics from Micrometer/Spring Boot remain available under `/actuator/metrics` without extra configuration. No Prometheus registry or remote-write is configured in this blueprint.
+JVM and HTTP server metrics from Micrometer/Spring Boot remain available under `/actuator/metrics`. The `micrometer-registry-prometheus` dependency plus `management.prometheus.metrics.export.enabled=true` exposes the same meters at `/actuator/prometheus` in Prometheus text format. No remote-write or managed dashboard is configured in this blueprint.
 
 ## Info contributor
 
@@ -40,7 +41,7 @@ JVM and HTTP server metrics from Micrometer/Spring Boot remain available under `
 
 ## Operations notes
 
-- Prefer scraping `/actuator/metrics` (or a future Prometheus registry) from your platform—do not commit credentials for remote write.
+- Prefer scraping `/actuator/prometheus` (or `/actuator/metrics`) from your platform—do not commit credentials for remote write. Sample pod annotations are in `deploy/k8s/deployment.yaml`.
 - Kubernetes samples probe readiness/liveness paths; see [deployment.md](../deployment/deployment.md) and `deploy/k8s/`.
 - Health details stay `when_authorized` so anonymous clients do not get component-level detail dumps.
 
@@ -48,5 +49,5 @@ Graceful shutdown (`server.shutdown=graceful`) is documented in [graceful-shutdo
 
 ## Out of scope here
 
-- OpenTelemetry exporters, Grafana dashboards, or Alertmanager rules
+- OpenTelemetry exporters, Grafana dashboards, Alertmanager rules, or Prometheus Operator ServiceMonitor CRs
 - Changing Actuator base path or adding Spring Security

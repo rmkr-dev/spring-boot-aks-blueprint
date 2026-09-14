@@ -44,6 +44,7 @@ Then open:
 - Sample API: `http://localhost:8080/api/v1/hello` (optional `?name=`)
 - Health: `http://localhost:8080/actuator/health`
 - Metrics: `http://localhost:8080/actuator/metrics`
+- Prometheus: `http://localhost:8080/actuator/prometheus`
 - Info: `http://localhost:8080/actuator/info`
 
 | Variable | Default |

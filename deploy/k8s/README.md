@@ -56,6 +56,11 @@ Non-secret env lives in `configmap.yaml`. Credentials use Kubernetes Secrets cre
 
 
 
+
+## Prometheus scrape annotations
+
+The Deployment pod template includes optional `prometheus.io/scrape`, `prometheus.io/path`, and `prometheus.io/port` annotations pointing at `/actuator/prometheus`. They help operators who already run a Prometheus that honors those annotations. **No scrape, ServiceMonitor, or live metrics pipeline is claimed by this repo.**
+
 ## Read-only root filesystem and `/tmp`
 
 The Deployment sets `readOnlyRootFilesystem: true` on the container. The JVM and many libraries expect a writable temp directory, so the sample mounts an `emptyDir` volume at `/tmp`. Without that mount, the process can fail at runtime even though local `java -jar` works on a writable disk. Tune `emptyDir` size limits in real clusters if needed.

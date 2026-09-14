@@ -23,7 +23,7 @@ SpringBootAksBlueprintApplication
   └── HelloController (/api/v1/hello)
         └── HelloService  (message + spring.application.name)
   └── ApiExceptionHandler  (ConstraintViolation → ProblemDetail 400)
-Actuator (exposed): /actuator/health(+readiness/liveness), /actuator/info, /actuator/metrics
+Actuator (exposed): /actuator/health(+readiness/liveness), /actuator/info, /actuator/metrics, /actuator/prometheus
   └── BlueprintInfoContributor → info.blueprint
 HelloService counter: blueprint.hello.requests
 ```
