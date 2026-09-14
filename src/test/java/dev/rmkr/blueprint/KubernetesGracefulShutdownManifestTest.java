@@ -30,4 +30,18 @@ class KubernetesGracefulShutdownManifestTest {
         String text = Files.readString(Path.of("deploy/k8s/deployment.yaml"));
         assertThat(text).contains("progressDeadlineSeconds: 120");
     }
+
+    @Test
+    void deploymentSetsRevisionHistoryLimit() throws Exception {
+        String text = Files.readString(Path.of("deploy/k8s/deployment.yaml"));
+        assertThat(text).contains("revisionHistoryLimit: 5");
+    }
+
+    @Test
+    void deploymentUsesRollingUpdateWithoutUnavailablePods() throws Exception {
+        String text = Files.readString(Path.of("deploy/k8s/deployment.yaml"));
+        assertThat(text).contains("type: RollingUpdate");
+        assertThat(text).contains("maxUnavailable: 0");
+        assertThat(text).contains("maxSurge: 1");
+    }
 }
