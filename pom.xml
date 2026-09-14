@@ -13,7 +13,7 @@
 
   <groupId>dev.rmkr</groupId>
   <artifactId>spring-boot-aks-blueprint</artifactId>
-  <version>1.3.1</version>
+  <version>1.3.2</version>
   <name>spring-boot-aks-blueprint</name>
   <description>Spring Boot 3 + Java 21 blueprint aimed at AKS</description>
 
