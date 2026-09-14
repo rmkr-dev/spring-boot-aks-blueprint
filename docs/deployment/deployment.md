@@ -29,6 +29,14 @@ docker build -t spring-boot-aks-blueprint:local .
 docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
 ```
 
+Or with Compose (app only — no database service):
+
+```bash
+docker compose up --build
+```
+
+This uses root [`compose.yaml`](../../compose.yaml) to build the Dockerfile and publish port `8080`. Stop with `Ctrl+C` or `docker compose down`. Compose does **not** create a Kubernetes cluster; for cluster experiments use your own kind/minikube and the reference manifests under `deploy/k8s/` (still not applied by this repo's CI).
+
 CI builds the same image on pull requests and `main` pushes **without pushing** to a registry. See [ci.md](../development/ci.md).
 
 ## Reference Kubernetes manifests

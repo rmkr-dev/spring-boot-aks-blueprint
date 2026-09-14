@@ -55,6 +55,12 @@ docker build -t spring-boot-aks-blueprint:local .
 docker run --rm -p 8080:8080 spring-boot-aks-blueprint:local
 ```
 
+Or Compose (app image only, no database):
+
+```bash
+docker compose up --build
+```
+
 ## Continuous integration
 
 Pushes to `main` and pull requests run [`.github/workflows/ci.yml`](.github/workflows/ci.yml):
@@ -70,7 +76,7 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 .
 ├── AGENTS.md / CONTRIBUTING.md / SECURITY.md / LICENSE
 ├── README.md
-├── pom.xml / Dockerfile / .dockerignore
+├── pom.xml / Dockerfile / compose.yaml / .dockerignore
 ├── .github/                 # CI (@v0.2.0 pin), Dependabot, CODEOWNERS, templates
 ├── src/                     # Spring Boot app + tests
 ├── deploy/k8s/              # Reference Deployment/Service/ConfigMap
