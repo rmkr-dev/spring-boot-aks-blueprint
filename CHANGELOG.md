@@ -5,6 +5,12 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Additional MockMvc and Actuator metric tag-filter tests
+- Reference `deploy/k8s/pdb.yaml` PodDisruptionBudget (`minAvailable: 1`)
+
 ## [1.0.0] — 2026-09-14
 
 First tagged release of the personal Spring Boot + AKS engineering blueprint.
