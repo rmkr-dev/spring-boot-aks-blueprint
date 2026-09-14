@@ -11,6 +11,10 @@ server:
   port: ${SERVER_PORT:8080}
   shutdown: graceful
   forward-headers-strategy: framework
+  compression:
+    enabled: true
+    mime-types: application/json,application/problem+json,text/plain
+    min-response-size: 1024
   tomcat:
     connection-timeout: 10s
     keep-alive-timeout: 20s
