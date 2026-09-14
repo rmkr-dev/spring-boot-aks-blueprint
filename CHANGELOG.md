@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `BuildInfoContributorTest` reads expected version from `pom.xml` (no hardcoded release version)
+- `docs/security/security.md` lists `Cache-Control: no-store` among SecurityHeadersFilter defaults
 
 ## [1.3.1] — 2026-09-14
 
