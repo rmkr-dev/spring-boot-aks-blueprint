@@ -13,7 +13,7 @@ This repository is a **Spring Boot + AKS engineering blueprint**. Application, c
 | `src/test/java/...` | Unit + WebMvc + Actuator + error tests | Present |
 | `Dockerfile` / `.dockerignore` | Multi-stage non-root image | Present |
 | `.github/workflows/ci.yml` | Reusable Maven CI + docker build (no push) | Present |
-| `deploy/k8s/` | Sample Deployment / Service / ConfigMap / HPA / NetworkPolicy / PDB | Reference only |
+| `deploy/k8s/` | Sample Deployment / Service / ConfigMap / HPA / NetworkPolicy / PDB / ServiceAccount | Reference only |
 
 ## Application components
 
