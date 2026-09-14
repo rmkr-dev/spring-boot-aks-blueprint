@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Dockerfile and Compose healthchecks use `curl --max-time 2` under the 3s Docker timeout
+
 ## [1.3.2] — 2026-09-14
 
 Patch after v1.3.1: Service `appProtocol`, HPA scale-down stabilization, Compose uid alignment, and small docs/test hardening. Still Spring Boot **3.5.x**.
