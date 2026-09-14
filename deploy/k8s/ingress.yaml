@@ -1,0 +1,29 @@
+# Reference only — not applied from this repository.
+# Requires an Ingress controller (e.g. ingress-nginx, Application Gateway Ingress Controller).
+# Replace host and optional TLS secretName before use. Do not commit real certificates.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spring-boot-aks-blueprint
+  labels:
+    app.kubernetes.io/name: spring-boot-aks-blueprint
+  annotations:
+    # Example annotation — pick values that match YOUR controller; this is not applied by CI.
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: spring-boot-aks-blueprint.example.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: spring-boot-aks-blueprint
+                port:
+                  number: 80
+  # tls:
+  #   - hosts:
+  #       - spring-boot-aks-blueprint.example.local
+  #     secretName: spring-boot-aks-blueprint-tls
