@@ -100,14 +100,15 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 ├── pom.xml / Dockerfile / compose.yaml / .dockerignore
 ├── .github/                 # CI (@v0.4.0 pin), Dependabot, CODEOWNERS, templates
 ├── src/                     # Spring Boot app + tests
-├── deploy/k8s/              # Reference Deployment/Service/ConfigMap
+├── scripts/                 # Optional load-hello smokes (bash/Python)
+├── deploy/k8s/              # Reference Deployment/Service/ConfigMap/HPA/NP/PDB/SA/Ingress
 └── docs/
     ├── architecture/        # Diagrams matching the tree
     ├── decisions/           # ADR-001
-    ├── development/         # Workflow, CI, API errors
+    ├── development/         # Workflow, CI, API errors, load-hello
     ├── deployment/          # Local / container / reference k8s
-    ├── operations/          # Observability notes
-    └── security/
+    ├── operations/          # Observability, graceful shutdown, request-id
+    └── security/            # HTTP headers + posture
 ```
 
 ## Documentation
@@ -123,7 +124,10 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 | [Deployment](docs/deployment/deployment.md) | Local, container, reference k8s |
 | [kind notes](docs/deployment/kind.md) | Optional local cluster; Compose preferred for app-only |
 | [CHANGELOG](CHANGELOG.md) | Release notes |
-| [Observability](docs/operations/observability.md) | Actuator, custom metric, info |
+| [Observability](docs/operations/observability.md) | Actuator, custom metric, info, prometheus |
+| [Graceful shutdown](docs/operations/graceful-shutdown.md) | `server.shutdown=graceful`, preStop budget |
+| [Request ID](docs/operations/request-id.md) | `X-Request-Id` + logback MDC |
+| [HTTP headers](docs/security/http-headers.md) | Conservative response headers |
 | [Security](docs/security/security.md) | Security posture |
 | [SECURITY.md](SECURITY.md) | Vulnerability reporting |
 
