@@ -83,6 +83,7 @@ class KubernetesManifestContractTest {
         assertThat(service).contains("type: ClusterIP");
         assertThat(service).contains("targetPort: http");
         assertThat(service).contains("port: 80");
+        assertThat(service).contains("appProtocol: http");
         assertThat(service).contains("app.kubernetes.io/name: spring-boot-aks-blueprint");
     }
 
