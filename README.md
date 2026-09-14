@@ -71,6 +71,8 @@ Pushes to `main` and pull requests run [`.github/workflows/ci.yml`](.github/work
 1. **test** — reusable Java Maven workflow pinned at **`@v0.2.0`** (`mvn -B test`, JDK 21)
 2. **docker** — `docker build` on the runner with **no registry push**
 
+Superseded runs on the same ref are cancelled via workflow concurrency.
+
 Details: [docs/development/ci.md](docs/development/ci.md).
 
 ## Repository structure
