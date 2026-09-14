@@ -103,6 +103,7 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 | [Architecture](docs/architecture/README.md) | System shape + diagrams |
 | [ADR-001](docs/decisions/0001-spring-boot-aks-blueprint.md) | Blueprint decision |
 | [Deployment](docs/deployment/deployment.md) | Local, container, reference k8s |
+| [kind notes](docs/deployment/kind.md) | Optional local cluster; Compose preferred for app-only |
 | [Observability](docs/operations/observability.md) | Actuator, custom metric, info |
 | [Security](docs/security/security.md) | Security posture |
 | [SECURITY.md](SECURITY.md) | Vulnerability reporting |
