@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Reference `deploy/k8s/ingress.yaml` Ingress sample (controller/host; TLS commented)
 - Additional MockMvc and Actuator metric tag-filter tests
 - Reference `deploy/k8s/pdb.yaml` PodDisruptionBudget (`minAvailable: 1`)
 - Reference `deploy/k8s/serviceaccount.yaml` with token automount disabled (Deployment wired)
