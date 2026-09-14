@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Maven `build-info` for `/actuator/info` build metadata
+- Broader RequestIdFilter and SecurityHeadersFilter tests (blank/UUID/error/actuator paths, MDC cleanup, exception-path headers)
 
 ### Changed
 - ADR-001 notes prometheus exposure and defers Spring Boot 4 majors
