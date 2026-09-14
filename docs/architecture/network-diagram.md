@@ -28,8 +28,10 @@ flowchart LR
   Internet["Internet / clients"] -->|"aspirational"| LB["Azure LB / Ingress<br/>(not in this repo)"]
   LB -->|"aspirational"| Svc["Service ClusterIP<br/>deploy/k8s/service.yaml<br/>(reference)"]
   Svc -->|"aspirational"| Pod["Pod: spring-boot-aks-blueprint<br/>deploy/k8s/deployment.yaml<br/>(reference)"]
-  Pod --> App["Container :8080<br/>probes → /actuator/health"]
+  Pod --> App["Container :8080<br/>probes → /actuator/health/readiness|liveness"]
   CM["ConfigMap<br/>deploy/k8s/configmap.yaml"] -.->|"non-secret env"| Pod
+  NP["NetworkPolicy<br/>deploy/k8s/networkpolicy.yaml<br/>(reference, CNI-dependent)"] -.->|"optional"| Pod
+  HPA["HPA<br/>deploy/k8s/hpa.yaml<br/>(reference)"] -.->|"optional scale"| Pod
 ```
 
 ### Legend
