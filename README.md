@@ -14,7 +14,7 @@ Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a
 1. Docs and guardrails (`AGENTS.md`, CONTRIBUTING, SECURITY)
 2. Application + tests (`GET /api/v1/hello`, Problem Details errors)
 3. Observability + Docker (Actuator + Prometheus, request-id, custom metric/info, multi-stage image)
-4. CI + hygiene (reusable Maven CI `@v0.4.0`, Dependabot, templates)
+4. CI + hygiene (reusable Maven CI `@v0.4.2`, Dependabot, templates)
 5. Architecture + ADR + reference `deploy/k8s/` manifests
 
 ## Target stack
@@ -26,7 +26,7 @@ Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a
 | Build | Maven |
 | Container | Multi-stage Dockerfile, non-root `app` user |
 | Orchestration | AKS path documented; manifests under `deploy/k8s/` are **reference only** |
-| CI | `rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.4.0` + local docker build (no push) |
+| CI | `rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.4.2` + local docker build (no push) |
 
 No Node/npm. No fake auth. No secrets in the tree. **springdoc-openapi deferred** until the public API grows (see [api-errors.md](docs/development/api-errors.md)).
 
@@ -84,7 +84,7 @@ Response headers include conservative security defaults and `X-Request-Id` (see 
 
 Pushes to `main` and pull requests run [`.github/workflows/ci.yml`](.github/workflows/ci.yml):
 
-1. **test** — reusable Java Maven workflow pinned at **`@v0.4.0`** (`mvn -B test`, JDK 21)
+1. **test** — reusable Java Maven workflow pinned at **`@v0.4.2`** (`mvn -B test`, JDK 21)
 2. **docker** — `docker build` on the runner with **no registry push**
 
 Superseded runs on the same ref are cancelled via workflow concurrency.
@@ -98,7 +98,7 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 ├── AGENTS.md / CONTRIBUTING.md / SECURITY.md / LICENSE / CHANGELOG.md
 ├── README.md
 ├── pom.xml / Dockerfile / compose.yaml / .dockerignore
-├── .github/                 # CI (@v0.4.0 pin), Dependabot, CODEOWNERS, templates
+├── .github/                 # CI (@v0.4.2 pin), Dependabot, CODEOWNERS, templates
 ├── src/                     # Spring Boot app + tests
 ├── scripts/                 # Optional load-hello smokes (bash/Python)
 ├── deploy/k8s/              # Reference Deployment/Service/ConfigMap/HPA/NP/PDB/SA/Ingress

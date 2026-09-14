@@ -19,7 +19,7 @@ Do not add Node/npm unless an ADR requires it.
 - Prefer **2–4 focused conventional commits** per PR. No Cursor/AI co-author trailers.
 - PRs say what slice landed and what is still out of scope.
 - High-impact changes wait for human approval. See [AGENTS.md](../../AGENTS.md).
-- Wait for CI green. See [ci.md](ci.md) (reusable pin `@v0.4.0`).
+- Wait for CI green. See [ci.md](ci.md) (reusable pin `@v0.4.2`).
 
 ## Working on a slice
 
