@@ -91,4 +91,21 @@ class HelloControllerTest {
         mockMvc.perform(get("/api/v1/missing"))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void helloAcceptsJsonAcceptHeader() throws Exception {
+        mockMvc.perform(get("/api/v1/hello").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("Hello, world!"));
+    }
+
+    @Test
+    void helloRepeatedCallsRemainStable() throws Exception {
+        for (int i = 0; i < 3; i++) {
+            mockMvc.perform(get("/api/v1/hello").param("name", "loop"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.message").value("Hello, loop!"));
+        }
+    }
 }
