@@ -24,4 +24,10 @@ class KubernetesGracefulShutdownManifestTest {
         String text = Files.readString(Path.of("deploy/k8s/deployment.yaml"));
         assertThat(text).contains("minReadySeconds: 10");
     }
+
+    @Test
+    void deploymentSetsProgressDeadlineSeconds() throws Exception {
+        String text = Files.readString(Path.of("deploy/k8s/deployment.yaml"));
+        assertThat(text).contains("progressDeadlineSeconds: 120");
+    }
 }

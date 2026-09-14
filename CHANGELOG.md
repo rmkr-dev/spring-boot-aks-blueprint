@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Deployment sample `minReadySeconds: 10` for safer rolling updates
+- Deployment sample `progressDeadlineSeconds: 120` for stalled-rollout detection
 - `RequestIdFilter` rejects oversized (>128) or control-character incoming ids
 - `Cache-Control: no-store` on `SecurityHeadersFilter` responses
 
