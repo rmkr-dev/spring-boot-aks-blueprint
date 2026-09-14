@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-09-14
+
+Minor ops and platform hardening after v1.1.0: Prometheus scrape, security headers, request correlation, Java 21 virtual threads, and Kubernetes sample polish. Still Spring Boot **3.5.x** (Boot 4 majors ignored).
+
 ### Changed
 - Architecture diagram refreshed for filters, prometheus, and k8s hardening surfaces
 
@@ -66,5 +70,6 @@ First tagged release of the personal Spring Boot + AKS engineering blueprint.
 - Dependabot ignores Spring Boot **major** upgrades (stay on 3.5.x)
 - NetworkPolicy enforcement depends on cluster CNI; HPA needs metrics-server
 
+[1.2.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.2.0
 [1.1.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.1.0
 [1.0.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.0.0
