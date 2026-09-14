@@ -10,6 +10,14 @@ metadata:
     app.kubernetes.io/name: spring-boot-aks-blueprint
 spec:
   replicas: 1
+  # Keep a short ReplicaSet history (default is 10)
+  revisionHistoryLimit: 5
+  # Prefer surge over downtime while the new revision becomes Ready
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   # Wait after a pod becomes Ready before considering the rollout step done
   minReadySeconds: 10
   # Fail the Deployment condition if a rollout stalls (default is 600s)
