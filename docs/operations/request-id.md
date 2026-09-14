@@ -4,7 +4,8 @@
 
 `RequestIdFilter` ensures every HTTP response includes an `X-Request-Id` header:
 
-- If the client sends `X-Request-Id`, the value is trimmed and echoed.
+- If the client sends `X-Request-Id`, the value is trimmed and echoed when it is 1–128 characters with no control characters.
+- Oversized, blank, or control-character values are discarded and a UUID is generated instead.
 - Otherwise a UUID is generated.
 - The same value is placed in SLF4J MDC under `requestId` for the duration of the request.
 - `src/main/resources/logback-spring.xml` includes `%X{requestId:-}` in the console pattern so correlation ids appear in stdout when present.

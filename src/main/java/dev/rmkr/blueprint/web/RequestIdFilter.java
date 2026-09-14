@@ -23,6 +23,8 @@ public class RequestIdFilter extends OncePerRequestFilter {
 
     public static final String HEADER = "X-Request-Id";
     public static final String MDC_KEY = "requestId";
+    /** Reject oversized incoming ids so logs/MDC cannot be flooded. */
+    public static final int MAX_LENGTH = 128;
 
     @Override
     protected void doFilterInternal(
@@ -30,7 +32,7 @@ public class RequestIdFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
         String incoming = request.getHeader(HEADER);
-        String requestId = (incoming != null && !incoming.isBlank())
+        String requestId = usableIncoming(incoming)
                 ? incoming.trim()
                 : UUID.randomUUID().toString();
         MDC.put(MDC_KEY, requestId);
@@ -40,5 +42,22 @@ public class RequestIdFilter extends OncePerRequestFilter {
         } finally {
             MDC.remove(MDC_KEY);
         }
+    }
+
+    static boolean usableIncoming(String incoming) {
+        if (incoming == null) {
+            return false;
+        }
+        String trimmed = incoming.trim();
+        if (trimmed.isEmpty() || trimmed.length() > MAX_LENGTH) {
+            return false;
+        }
+        for (int i = 0; i < trimmed.length(); i++) {
+            char c = trimmed.charAt(i);
+            if (c < 0x20 || c == 0x7f) {
+                return false;
+            }
+        }
+        return true;
     }
 }
