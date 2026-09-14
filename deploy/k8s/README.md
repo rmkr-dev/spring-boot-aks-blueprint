@@ -1,8 +1,15 @@
 # Kubernetes samples (reference only)
 
-These manifests illustrate a minimal Deployment, Service, and ConfigMap for the Spring Boot app.
+These manifests illustrate a minimal Deployment, Service, ConfigMap, and optional HPA for the Spring Boot app.
 
 **They are not applied by CI and are not proof of a live AKS cluster.**
+
+| File | Purpose |
+| --- | --- |
+| `configmap.yaml` | Non-secret env |
+| `deployment.yaml` | Pod template, probes, resources |
+| `service.yaml` | ClusterIP |
+| `hpa.yaml` | CPU-based HorizontalPodAutoscaler (optional) |
 
 ## Probes and resources
 
@@ -15,6 +22,10 @@ The Deployment uses Actuator probe endpoints (requires `management.endpoint.heal
 | `livenessProbe` | `/actuator/health/liveness` | Restarts a stuck process |
 
 Resource requests/limits (`100m`/`1` CPU, `256Mi`/`512Mi` memory) are starter values for a small JVM service—tune for your cluster and load. The Dockerfile sets `MaxRAMPercentage=75.0` so the heap stays within the container limit.
+
+## Horizontal Pod Autoscaler
+
+`hpa.yaml` is an optional sample: scale the Deployment between 1 and 3 replicas when average CPU utilization exceeds 70%. It needs a cluster metrics source (for example metrics-server). It does **not** run from this repo's CI.
 
 Suggested local review (optional):
 
