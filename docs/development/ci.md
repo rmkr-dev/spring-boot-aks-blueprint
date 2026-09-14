@@ -24,3 +24,7 @@ Optional inputs available on `@v0.2.0` (defaults are fine here): `timeout-minute
 ## Permissions
 
 Default workflow `permissions: contents: read`. No secrets are required for the default green path.
+
+## Concurrency
+
+The workflow uses a concurrency group per ref with `cancel-in-progress: true` so newer pushes to the same PR or branch cancel superseded runs.
