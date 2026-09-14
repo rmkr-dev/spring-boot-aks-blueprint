@@ -1,0 +1,14 @@
+# Reference only — not applied from this repository.
+# Useful once minReplicas > 1 (see hpa.yaml). With a single replica,
+# maxUnavailable: 1 still allows voluntary disruption of the only pod.
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: spring-boot-aks-blueprint
+  labels:
+    app.kubernetes.io/name: spring-boot-aks-blueprint
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spring-boot-aks-blueprint

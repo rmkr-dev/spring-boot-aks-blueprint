@@ -50,6 +50,7 @@ Samples live under [`deploy/k8s/`](../../deploy/k8s/):
 | `service.yaml` | ClusterIP Service on port 80 → container 8080 |
 | `hpa.yaml` | Optional CPU HPA (1–3 replicas @ 70% average utilization) — needs metrics-server |
 | `networkpolicy.yaml` | Optional NetworkPolicy sample — CNI must enforce policies |
+| `pdb.yaml` | Optional PodDisruptionBudget (`minAvailable: 1`) |
 
 Probe paths match Actuator when `management.endpoint.health.probes.enabled=true`:
 
