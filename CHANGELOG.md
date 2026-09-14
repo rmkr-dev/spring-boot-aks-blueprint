@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reference `deploy/k8s/ingress.yaml` Ingress sample (controller/host; TLS commented)
 - Expanded MockMvc edge cases, default/named metric tag filters, and HelloService counter coverage
 - ConfigMap/Secret pattern docs (`docs/deployment/config-secrets.md`) and `secret.example.yaml` (no real values)
+- Graceful shutdown (`server.shutdown=graceful`, 30s lifecycle timeout) and Deployment `terminationGracePeriodSeconds: 45`
 - Additional MockMvc and Actuator metric tag-filter tests
 - Reference `deploy/k8s/pdb.yaml` PodDisruptionBudget (`minAvailable: 1`)
 - Reference `deploy/k8s/serviceaccount.yaml` with token automount disabled (Deployment wired)

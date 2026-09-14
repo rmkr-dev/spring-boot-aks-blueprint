@@ -54,6 +54,11 @@ Resource requests/limits (`100m`/`1` CPU, `256Mi`/`512Mi` memory) are starter va
 
 Non-secret env lives in `configmap.yaml`. Credentials use Kubernetes Secrets created **out of band**—see `secret.example.yaml` (placeholders only) and [config-secrets.md](../../docs/deployment/config-secrets.md). External Secrets / Key Vault sync is a documented future option, not shipped as a CRD here. Never commit live `stringData` or `data` payloads.
 
+
+## Graceful shutdown
+
+The Deployment sets `terminationGracePeriodSeconds: 45`. Pair with `server.shutdown=graceful` and `spring.lifecycle.timeout-per-shutdown-phase=30s` in `application.yml` so in-flight requests can finish during rolling updates. Details: [graceful-shutdown.md](../../docs/operations/graceful-shutdown.md).
+
 Suggested local review (optional):
 
 ```bash
