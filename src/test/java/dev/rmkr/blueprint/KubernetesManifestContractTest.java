@@ -46,6 +46,9 @@ class KubernetesManifestContractTest {
     @Test
     void deploymentEnforcesNonRootReadOnlyRootWithTmpEmptyDir() {
         assertThat(deployment).contains("runAsNonRoot: true");
+        assertThat(deployment).contains("runAsUser: 10001");
+        assertThat(deployment).contains("runAsGroup: 10001");
+        assertThat(deployment).contains("fsGroup: 10001");
         assertThat(deployment).contains("readOnlyRootFilesystem: true");
         assertThat(deployment).contains("allowPrivilegeEscalation: false");
         assertThat(deployment).contains("drop: [\"ALL\"]");
