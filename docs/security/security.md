@@ -20,3 +20,8 @@ Dependabot updates Maven and GitHub Actions weekly. Spring Boot **major** bumps 
 ## Reporting
 
 See root [SECURITY.md](../../SECURITY.md). Do not paste secrets into issues; rotate first, then describe the class of leak.
+
+## Kubernetes samples
+
+Reference manifests under `deploy/k8s/` use a non-root securityContext, drop all capabilities, read-only root filesystem, a dedicated ServiceAccount with token automount disabled, and optional NetworkPolicy. They are not applied by CI—review before use in any cluster.
+
