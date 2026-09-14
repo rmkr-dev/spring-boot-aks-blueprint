@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Maven `build-info` for `/actuator/info` build metadata
 
 ### Changed
+- ADR-001 notes prometheus exposure and defers Spring Boot 4 majors
 - README and network diagram refreshed for v1.2.0 surfaces
 - AGENTS/CONTRIBUTING reminders for prometheus, filters, and Boot 3.5 guardrail
 
