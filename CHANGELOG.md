@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Architecture inventory refreshed for Compose healthcheck, scripts, secrets example, graceful shutdown
 - NetworkPolicy sample notes optional Ingress-controller allow rule (commented)
 - CONTRIBUTING/AGENTS pointers for load-hello, graceful shutdown, and Docker healthcheck docs
+- kind.md notes for Ingress sample and expanded k8s inventory
 
 ## [1.1.0] — 2026-09-14
 
