@@ -7,17 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-09-14
+
+Minor blueprint refresh after v1.0.0: more reference Kubernetes samples, ops hardening, tests, and local tooling.
+
 ### Added
 - Reference `deploy/k8s/ingress.yaml` Ingress sample (controller/host; TLS commented)
-- Expanded MockMvc edge cases, default/named metric tag filters, and HelloService counter coverage
+- Reference `deploy/k8s/pdb.yaml` PodDisruptionBudget (`minAvailable: 1`)
+- Reference `deploy/k8s/serviceaccount.yaml` with token automount disabled (Deployment wired)
 - ConfigMap/Secret pattern docs (`docs/deployment/config-secrets.md`) and `secret.example.yaml` (no real values)
 - Graceful shutdown (`server.shutdown=graceful`, 30s lifecycle timeout) and Deployment `terminationGracePeriodSeconds: 45`
 - Dockerfile `HEALTHCHECK` on Actuator liveness (`curl`; start-period 45s)
 - Dependabot group for GitHub Actions updates (`github-actions`)
 - Optional `scripts/load-hello.sh` / `scripts/load-hello.py` smoke load for `/api/v1/hello` (no Node)
-- Additional MockMvc and Actuator metric tag-filter tests
-- Reference `deploy/k8s/pdb.yaml` PodDisruptionBudget (`minAvailable: 1`)
-- Reference `deploy/k8s/serviceaccount.yaml` with token automount disabled (Deployment wired)
+- Expanded MockMvc / Actuator metric tag-filter and HelloService counter coverage
 - CI concurrency group with cancel-in-progress for superseded runs
 
 ## [1.0.0] — 2026-09-14
@@ -40,4 +43,5 @@ First tagged release of the personal Spring Boot + AKS engineering blueprint.
 - Dependabot ignores Spring Boot **major** upgrades (stay on 3.5.x)
 - NetworkPolicy enforcement depends on cluster CNI; HPA needs metrics-server
 
+[1.1.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.1.0
 [1.0.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.0.0
