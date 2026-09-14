@@ -76,6 +76,10 @@ kubectl apply --dry-run=client -f deploy/k8s/
 
 Do **not** expect this repository’s CI to run `kubectl apply` or to create Azure resources.
 
+## Namespace quotas
+
+Operator-owned `ResourceQuota` / `LimitRange` guidance (not shipped as YAML): [namespace-quotas.md](namespace-quotas.md).
+
 ## Config vs secrets
 
 See [config-secrets.md](config-secrets.md) for ConfigMap vs Secret patterns and a future External Secrets note. `secret.example.yaml` is a placeholder shape only.
