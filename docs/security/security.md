@@ -23,5 +23,5 @@ See root [SECURITY.md](../../SECURITY.md). Do not paste secrets into issues; rot
 
 ## Kubernetes samples
 
-Reference manifests under `deploy/k8s/` use a non-root securityContext, drop all capabilities, read-only root filesystem, a dedicated ServiceAccount with token automount disabled, and optional NetworkPolicy. They are not applied by CI—review before use in any cluster.
+Reference manifests under `deploy/k8s/` use a non-root securityContext, drop all capabilities, read-only root filesystem (with an `emptyDir` mount at `/tmp` for JVM scratch), a dedicated ServiceAccount with token automount disabled, and optional NetworkPolicy. They are not applied by CI—review before use in any cluster.
 
