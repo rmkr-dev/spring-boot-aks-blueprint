@@ -22,7 +22,9 @@ SpringBootAksBlueprintApplication
   └── HelloController (/api/v1/hello)
         └── HelloService  (message + spring.application.name)
   └── ApiExceptionHandler  (ConstraintViolation → ProblemDetail 400)
-Actuator (exposed): /actuator/health, /actuator/info, /actuator/metrics
+Actuator (exposed): /actuator/health(+readiness/liveness), /actuator/info, /actuator/metrics
+  └── BlueprintInfoContributor → info.blueprint
+HelloService counter: blueprint.hello.requests
 ```
 
 See the Mermaid view in [architecture-diagram.md](architecture-diagram.md).

@@ -10,7 +10,7 @@ Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a
 
 1. Docs and guardrails (`AGENTS.md`, CONTRIBUTING, SECURITY)
 2. Application + tests (`GET /api/v1/hello`, Problem Details errors)
-3. Observability + Docker (Actuator exposure, multi-stage image)
+3. Observability + Docker (Actuator, custom metric/info, multi-stage image)
 4. CI + hygiene (reusable Maven CI `@v0.2.0`, Dependabot, templates)
 5. Architecture + ADR + reference `deploy/k8s/` manifests
 
@@ -79,6 +79,7 @@ Details: [docs/development/ci.md](docs/development/ci.md).
     ├── decisions/           # ADR-001
     ├── development/         # Workflow, CI, API errors
     ├── deployment/          # Local / container / reference k8s
+    ├── operations/          # Observability notes
     └── security/
 ```
 
@@ -93,6 +94,7 @@ Details: [docs/development/ci.md](docs/development/ci.md).
 | [Architecture](docs/architecture/README.md) | System shape + diagrams |
 | [ADR-001](docs/decisions/0001-spring-boot-aks-blueprint.md) | Blueprint decision |
 | [Deployment](docs/deployment/deployment.md) | Local, container, reference k8s |
+| [Observability](docs/operations/observability.md) | Actuator, custom metric, info |
 | [Security](docs/security/security.md) | Security posture |
 | [SECURITY.md](SECURITY.md) | Vulnerability reporting |
 

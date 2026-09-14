@@ -1,0 +1,46 @@
+# Observability
+
+What this blueprint exposes today via Spring Boot Actuator and Micrometer. No Prometheus push, no APM agent, and no claim of a live dashboard.
+
+## Endpoints (default)
+
+| Path | Purpose |
+| --- | --- |
+| `/actuator/health` | Aggregate health |
+| `/actuator/health/readiness` | Kubernetes readiness (probes enabled) |
+| `/actuator/health/liveness` | Kubernetes liveness (probes enabled) |
+| `/actuator/info` | App + blueprint metadata |
+| `/actuator/metrics` | Micrometer metric names |
+| `/actuator/metrics/{name}` | Single metric |
+
+Exposure is controlled in `src/main/resources/application.yml` (`management.endpoints.web.exposure.include`). Sensitive endpoints such as `env` are **not** exposed.
+
+## Custom metric
+
+`HelloService` registers a counter:
+
+- **Name:** `blueprint.hello.requests`
+- **Meaning:** number of greetings produced (each successful `greet` call)
+
+After calling `GET /api/v1/hello`, inspect:
+
+```bash
+curl -s http://localhost:8080/actuator/metrics/blueprint.hello.requests
+```
+
+JVM and HTTP server metrics from Micrometer/Spring Boot remain available under `/actuator/metrics` without extra configuration.
+
+## Info contributor
+
+`BlueprintInfoContributor` adds a `blueprint` object to `/actuator/info` (stack label, Java version, purpose). Combined with the existing `info.app.*` properties from `application.yml`.
+
+## Operations notes
+
+- Prefer scraping `/actuator/metrics` (or a future Prometheus registry) from your platform—do not commit credentials for remote write.
+- Kubernetes samples probe readiness/liveness paths; see [deployment.md](../deployment/deployment.md) and `deploy/k8s/`.
+- Health details stay `when_authorized` so anonymous clients do not get component-level detail dumps.
+
+## Out of scope here
+
+- OpenTelemetry exporters, Grafana dashboards, or Alertmanager rules
+- Changing Actuator base path or adding Spring Security

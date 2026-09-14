@@ -1,9 +1,11 @@
 package dev.rmkr.blueprint.web;
 
 import dev.rmkr.blueprint.service.HelloService;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
@@ -18,12 +20,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(HelloController.class)
-@Import({HelloService.class, ApiExceptionHandler.class})
+@Import({HelloService.class, ApiExceptionHandler.class, HelloControllerTest.MeterConfig.class})
 @TestPropertySource(properties = "spring.application.name=spring-boot-aks-blueprint")
 class HelloControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    static class MeterConfig {
+        @Bean
+        SimpleMeterRegistry simpleMeterRegistry() {
+            return new SimpleMeterRegistry();
+        }
+    }
 
     @Test
     void helloReturnsDefaultGreeting() throws Exception {

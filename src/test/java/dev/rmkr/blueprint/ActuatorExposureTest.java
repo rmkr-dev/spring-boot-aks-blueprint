@@ -1,5 +1,6 @@
 package dev.rmkr.blueprint;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -49,12 +50,24 @@ class ActuatorExposureTest {
     void infoEndpointIsExposed() throws Exception {
         mockMvc.perform(get("/actuator/info"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.app.name").value("spring-boot-aks-blueprint"));
+                .andExpect(jsonPath("$.app.name").value("spring-boot-aks-blueprint"))
+                .andExpect(jsonPath("$.blueprint.stack").value("spring-boot-aks"));
     }
 
     @Test
     void envEndpointIsNotExposed() throws Exception {
         mockMvc.perform(get("/actuator/env"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void customHelloMetricAppearsAfterGreeting() throws Exception {
+        mockMvc.perform(get("/api/v1/hello"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/actuator/metrics/blueprint.hello.requests"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("blueprint.hello.requests"))
+                .andExpect(jsonPath("$.measurements[0].value").value(Matchers.greaterThanOrEqualTo(1.0)));
     }
 }
