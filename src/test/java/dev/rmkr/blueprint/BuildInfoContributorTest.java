@@ -27,7 +27,7 @@ class BuildInfoContributorTest {
     void buildPropertiesAreAvailable() {
         assertNotNull(buildProperties, "BuildProperties should be produced by spring-boot:build-info");
         assertEquals("spring-boot-aks-blueprint", buildProperties.getArtifact());
-        assertEquals("1.3.0", buildProperties.getVersion());
+        assertEquals("1.3.1", buildProperties.getVersion());
     }
 
     @Test
@@ -35,6 +35,6 @@ class BuildInfoContributorTest {
         mockMvc.perform(get("/actuator/info"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.build.artifact").value("spring-boot-aks-blueprint"))
-                .andExpect(jsonPath("$.build.version").value("1.3.0"));
+                .andExpect(jsonPath("$.build.version").value("1.3.1"));
     }
 }
