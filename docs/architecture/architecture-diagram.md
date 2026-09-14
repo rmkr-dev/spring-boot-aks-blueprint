@@ -60,9 +60,9 @@ flowchart TB
 
 When the runtime shape changes, update this file in the same PR.
 
-## Ops notes (v1.1+ / Unreleased)
+## Ops notes (v1.2+)
 
 - Dockerfile/Compose HEALTHCHECK and k8s probes share Actuator liveness/readiness paths.
-- Graceful shutdown + `terminationGracePeriodSeconds` documented under operations.
+- Graceful shutdown + `preStop` sleep + `terminationGracePeriodSeconds` documented under operations.
 - Config vs Secret patterns: [config-secrets.md](../deployment/config-secrets.md).
 - Prometheus scrape path + optional pod annotations; request-id logging via `logback-spring.xml`.
