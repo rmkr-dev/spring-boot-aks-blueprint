@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Deployment `preStop` sleep (5s) aligned with graceful shutdown budget; binding tests for ServerProperties/LifecycleProperties
 
 ### Changed
+- CI reusable workflow pin `java-maven-ci.yml@v0.2.0` → `@v0.4.0`
 - ADR-001 notes prometheus exposure and defers Spring Boot 4 majors
 - README and network diagram refreshed for v1.2.0 surfaces
 - AGENTS/CONTRIBUTING reminders for prometheus, filters, and Boot 3.5 guardrail

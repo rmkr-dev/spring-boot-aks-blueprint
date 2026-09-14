@@ -30,7 +30,7 @@ flowchart TB
   Docker -.->|"packages JAR"| App
 
   subgraph ci["Implemented: GitHub Actions"]
-    GHA["ci.yml<br/>reusable java-maven-ci@v0.2.0<br/>docker build (no push)<br/>concurrency cancel-in-progress"]
+    GHA["ci.yml<br/>reusable java-maven-ci@v0.4.0<br/>docker build (no push)<br/>concurrency cancel-in-progress"]
   end
 
   GHA -.->|"mvn test"| App
