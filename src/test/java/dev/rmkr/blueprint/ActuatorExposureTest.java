@@ -81,4 +81,17 @@ class ActuatorExposureTest {
                 .andExpect(jsonPath("$.name").value("blueprint.hello.duration"))
                 .andExpect(jsonPath("$.measurements").isArray());
     }
+
+
+    @Test
+    void helloRequestMetricSupportsOutcomeTagFilter() throws Exception {
+        mockMvc.perform(get("/api/v1/hello").param("name", "tagged"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/actuator/metrics/blueprint.hello.requests")
+                        .param("tag", "outcome:named"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("blueprint.hello.requests"))
+                .andExpect(jsonPath("$.measurements[0].value").value(Matchers.greaterThanOrEqualTo(1.0)));
+    }
 }
