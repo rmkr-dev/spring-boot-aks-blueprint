@@ -71,6 +71,10 @@ The Deployment sample includes soft `topologySpreadConstraints` (`whenUnsatisfia
 
 The Deployment pod template includes optional `prometheus.io/scrape`, `prometheus.io/path`, and `prometheus.io/port` annotations pointing at `/actuator/prometheus`. They help operators who already run a Prometheus that honors those annotations. **No scrape, ServiceMonitor, or live metrics pipeline is claimed by this repo.**
 
+## Numeric non-root identity
+
+The Dockerfile creates user/group **`10001`**, and the Deployment sets pod `runAsUser` / `runAsGroup` / `fsGroup` plus container `runAsUser` / `runAsGroup` to the same id. That satisfies common Pod Security restricted expectations for numeric non-root identities and keeps the image user aligned with the sample manifests. Reference only.
+
 ## Read-only root filesystem and `/tmp`
 
 The Deployment sets `readOnlyRootFilesystem: true` on the container. The JVM and many libraries expect a writable temp directory, so the sample mounts an `emptyDir` volume at `/tmp`. Without that mount, the process can fail at runtime even though local `java -jar` works on a writable disk. Tune `emptyDir` size limits in real clusters if needed.
