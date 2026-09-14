@@ -101,6 +101,9 @@ class KubernetesManifestContractTest {
         assertThat(hpa).contains("averageUtilization: 70");
         assertThat(hpa).contains("minReplicas: 1");
         assertThat(hpa).contains("maxReplicas: 3");
+        assertThat(hpa).contains("stabilizationWindowSeconds: 60");
+        assertThat(hpa).contains("scaleDown:");
+        assertThat(hpa).contains("scaleUp:");
     }
 
     @Test
