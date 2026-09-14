@@ -63,3 +63,7 @@ Core slices (app, Actuator/Docker, CI, architecture/ADR/k8s samples, Problem Det
 ## Load smoke
 
 Optional sequential scripts for `GET /api/v1/hello`: see [load-hello.md](load-hello.md).
+
+## Virtual threads (Java 21)
+
+`spring.threads.virtual.enabled=true` opts the Tomcat request handling path into Java 21 virtual threads (Spring Boot 3.2+). This blueprint enables it as a default for a lightweight I/O-bound sample. Disable or revisit if you add blocking native libraries that are not virtual-thread friendly.
