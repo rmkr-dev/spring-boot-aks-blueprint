@@ -51,6 +51,7 @@ Samples live under [`deploy/k8s/`](../../deploy/k8s/):
 | `hpa.yaml` | Optional CPU HPA (1–3 replicas @ 70% average utilization) — needs metrics-server |
 | `networkpolicy.yaml` | Optional NetworkPolicy sample — CNI must enforce policies |
 | `pdb.yaml` | Optional PodDisruptionBudget (`minAvailable: 1`) |
+| `serviceaccount.yaml` | Dedicated ServiceAccount (token automount off) |
 
 Probe paths match Actuator when `management.endpoint.health.probes.enabled=true`:
 

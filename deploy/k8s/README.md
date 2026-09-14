@@ -12,6 +12,7 @@ These manifests illustrate a minimal Deployment, Service, ConfigMap, and optiona
 | `hpa.yaml` | CPU-based HorizontalPodAutoscaler (optional) |
 | `networkpolicy.yaml` | Sample ingress/egress NetworkPolicy (optional; CNI-dependent) |
 | `pdb.yaml` | Optional PodDisruptionBudget (`minAvailable: 1`) |
+| `serviceaccount.yaml` | Dedicated ServiceAccount; token automount disabled |
 
 ## Probes and resources
 
@@ -36,6 +37,10 @@ Resource requests/limits (`100m`/`1` CPU, `256Mi`/`512Mi` memory) are starter va
 ## PodDisruptionBudget
 
 `pdb.yaml` requests `minAvailable: 1` for the app pods. Pair with HPA (`maxReplicas > 1`) so voluntary disruptions can leave capacity. Reference only.
+
+## ServiceAccount
+
+`serviceaccount.yaml` defines a dedicated account with `automountServiceAccountToken: false`. The Deployment sets `serviceAccountName` and also disables token automount on the pod. No RBAC Roles are shipped—add them only when the app needs API access.
 
 Suggested local review (optional):
 
