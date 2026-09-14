@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1] — 2026-09-14
+
+Patch: filter test depth, graceful-shutdown preStop polish, CI pin to reusable `java-maven-ci.yml@v0.4.0`, and docs accuracy. Still Spring Boot **3.5.x**.
+
+
 ### Added
 - Filter `@Order` integration test: RequestIdFilter before SecurityHeadersFilter
 - Maven `build-info` for `/actuator/info` build metadata
@@ -83,6 +88,7 @@ First tagged release of the personal Spring Boot + AKS engineering blueprint.
 - Dependabot ignores Spring Boot **major** upgrades (stay on 3.5.x)
 - NetworkPolicy enforcement depends on cluster CNI; HPA needs metrics-server
 
+[1.2.1]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.2.1
 [1.2.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.2.0
 [1.1.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.1.0
 [1.0.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.0.0
