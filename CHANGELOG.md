@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- README and network diagram refreshed for v1.2.0 surfaces
+
 ## [1.2.0] — 2026-09-14
 
 Minor ops and platform hardening after v1.1.0: Prometheus scrape, security headers, request correlation, Java 21 virtual threads, and Kubernetes sample polish. Still Spring Boot **3.5.x** (Boot 4 majors ignored).

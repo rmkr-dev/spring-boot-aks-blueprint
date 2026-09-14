@@ -13,7 +13,7 @@ Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a
 
 1. Docs and guardrails (`AGENTS.md`, CONTRIBUTING, SECURITY)
 2. Application + tests (`GET /api/v1/hello`, Problem Details errors)
-3. Observability + Docker (Actuator, custom metric/info, multi-stage image)
+3. Observability + Docker (Actuator + Prometheus, request-id, custom metric/info, multi-stage image)
 4. CI + hygiene (reusable Maven CI `@v0.2.0`, Dependabot, templates)
 5. Architecture + ADR + reference `deploy/k8s/` manifests
 
@@ -22,7 +22,7 @@ Greenfield Spring Boot + Kubernetes repos often ship either an empty README or a
 | Concern | Choice |
 | --- | --- |
 | Language / runtime | Java 21 (Temurin) |
-| Framework | Spring Boot **3.5.x** (Web + Actuator + Validation) — not Boot 4 |
+| Framework | Spring Boot **3.5.x** (Web + Actuator + Validation, virtual threads) — not Boot 4 |
 | Build | Maven |
 | Container | Multi-stage Dockerfile, non-root `app` user |
 | Orchestration | AKS path documented; manifests under `deploy/k8s/` are **reference only** |
@@ -77,6 +77,8 @@ python3 scripts/load-hello.py http://127.0.0.1:8080 50
 ```
 
 See [load-hello.md](docs/development/load-hello.md).
+
+Response headers include conservative security defaults and `X-Request-Id` (see [http-headers.md](docs/security/http-headers.md) and [request-id.md](docs/operations/request-id.md)).
 
 ## Continuous integration
 

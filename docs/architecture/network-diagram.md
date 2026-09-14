@@ -7,8 +7,9 @@ Clearly separates **implemented** local/container traffic from the **aspirationa
 | Hop | Status |
 | --- | --- |
 | JVM process on `SERVER_PORT` (default 8080) | Implemented |
-| Container exposing 8080 (non-root) | Implemented |
+| Container exposing 8080 (non-root) + HEALTHCHECK | Implemented |
 | GitHub Actions docker build (no push) | Implemented |
+| Actuator + Prometheus text exposition | Implemented (`/actuator/prometheus`) |
 | Kubernetes Service / Pod (sample YAML) | Reference manifests only — not applied |
 | Azure LB / Ingress / TLS / DNS | Sample `ingress.yaml` is reference only; live endpoint is operator-owned |
 | Database | Not in this blueprint |
@@ -16,12 +17,12 @@ Clearly separates **implemented** local/container traffic from the **aspirationa
 ```mermaid
 flowchart LR
   Client["HTTP client"] --> Local["localhost:8080<br/>or container :8080"]
-  Local --> App["Spring Boot<br/>/api/v1/* + /actuator/health|info|metrics"]
+  Local --> App["Spring Boot<br/>/api/v1/* + /actuator/health|info|metrics|prometheus"]
 ```
 
 ## AKS target (aspirational — labeled)
 
-Sample manifests under `deploy/k8s/` describe ClusterIP Service → Pod. They are **reference**. Applying them, attaching an Ingress, and publishing a public URL are operator steps outside this repository.
+Sample manifests under `deploy/k8s/` describe ClusterIP Service → Pod (with emptyDir `/tmp`, optional scrape annotations, topology spread). They are **reference**. Applying them, attaching an Ingress, and publishing a public URL are operator steps outside this repository.
 
 ```mermaid
 flowchart LR
@@ -32,6 +33,7 @@ flowchart LR
   CM["ConfigMap<br/>deploy/k8s/configmap.yaml"] -.->|"non-secret env"| Pod
   NP["NetworkPolicy<br/>deploy/k8s/networkpolicy.yaml<br/>(reference, CNI-dependent)"] -.->|"optional"| Pod
   HPA["HPA<br/>deploy/k8s/hpa.yaml<br/>(reference)"] -.->|"optional scale"| Pod
+  Prom["Prometheus scrape<br/>(annotations optional)"] -.->|"aspirational"| Pod
 ```
 
 ### Legend
@@ -39,4 +41,4 @@ flowchart LR
 - **Implemented:** solid edges in the first diagram; runnable on a laptop or in CI’s docker build.
 - **Aspirational / reference:** dashed intent in the second diagram; YAML exists for learning and copy-adapt, not as proof of a live AKS deployment.
 
-Keep secrets out of labels, ConfigMaps, and commit history.
+Keep secrets out of labels, ConfigMaps, and commit history. Namespace ResourceQuota/LimitRange remain operator-owned ([namespace-quotas.md](../deployment/namespace-quotas.md)).
