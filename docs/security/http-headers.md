@@ -12,6 +12,8 @@
 | `X-XSS-Protection` | `0` | Disable legacy XSS auditor (modern guidance) |
 | `Permissions-Policy` | geolocation/mic/camera disabled | Tighten powerful browser features |
 
+`SecurityHeadersFilter` is ordered after `RequestIdFilter` (`Ordered.HIGHEST_PRECEDENCE + 20` vs `+ 10`) so correlation ids are assigned first.
+
 ## What this is not
 
 - Not a Content-Security-Policy for a SPA (this service returns JSON/Actuator text).
