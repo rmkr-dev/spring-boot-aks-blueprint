@@ -12,6 +12,7 @@ Security posture for this blueprint and for anyone adapting it.
 - **Kubernetes samples.** ConfigMaps for non-secret config only (`deploy/k8s/`). Secret **shape** in `secret.example.yaml`; never commit Secret data. See [config-secrets.md](../deployment/config-secrets.md).
 - **Actuator.** Only `health`, `info`, `metrics`, and `prometheus` are exposed; health details stay `when_authorized`.
 - **API errors.** Validation failures return Problem Details without stack traces (see [api-errors.md](../development/api-errors.md)).
+- **HTTP security headers.** `SecurityHeadersFilter` sets `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, and disables legacy `X-XSS-Protection` on responses. See [http-headers.md](http-headers.md).
 
 ## Dependencies
 
