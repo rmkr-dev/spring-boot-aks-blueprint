@@ -66,6 +66,17 @@ Or Compose (app image only, no database):
 docker compose up --build
 ```
 
+### Optional load smoke
+
+With the app listening on 8080:
+
+```bash
+./scripts/load-hello.sh http://127.0.0.1:8080 50
+python3 scripts/load-hello.py http://127.0.0.1:8080 50
+```
+
+See [load-hello.md](docs/development/load-hello.md).
+
 ## Continuous integration
 
 Pushes to `main` and pull requests run [`.github/workflows/ci.yml`](.github/workflows/ci.yml):
