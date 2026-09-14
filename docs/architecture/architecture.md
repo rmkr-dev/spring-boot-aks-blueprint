@@ -24,6 +24,7 @@ SpringBootAksBlueprintApplication
         └── HelloService  (message + spring.application.name)
   └── ApiExceptionHandler  (ConstraintViolation → ProblemDetail 400)
   └── SecurityHeadersFilter (response headers)
+  └── RequestIdFilter (X-Request-Id + MDC)
 Actuator (exposed): /actuator/health(+readiness/liveness), /actuator/info, /actuator/metrics, /actuator/prometheus
   └── BlueprintInfoContributor → info.blueprint
 HelloService counter: blueprint.hello.requests

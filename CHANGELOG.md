@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `RequestIdFilter` for `X-Request-Id` correlation (echo or generate) + MDC
 - Explicit Tomcat `connection-timeout` (10s) and `keep-alive-timeout` (20s)
 - Operator notes for namespace ResourceQuota/LimitRange (`docs/deployment/namespace-quotas.md`)
 - Dependabot Maven groups for Spring Boot minor/patch vs other libraries
