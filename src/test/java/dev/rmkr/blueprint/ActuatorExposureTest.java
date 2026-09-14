@@ -94,4 +94,41 @@ class ActuatorExposureTest {
                 .andExpect(jsonPath("$.name").value("blueprint.hello.requests"))
                 .andExpect(jsonPath("$.measurements[0].value").value(Matchers.greaterThanOrEqualTo(1.0)));
     }
+
+    @Test
+    void helloRequestMetricSupportsDefaultOutcomeTagFilter() throws Exception {
+        mockMvc.perform(get("/api/v1/hello"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/actuator/metrics/blueprint.hello.requests")
+                        .param("tag", "outcome:default"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("blueprint.hello.requests"))
+                .andExpect(jsonPath("$.measurements[0].value").value(Matchers.greaterThanOrEqualTo(1.0)));
+    }
+
+    @Test
+    void helloDurationTimerIncrementsAcrossCalls() throws Exception {
+        mockMvc.perform(get("/api/v1/hello").param("name", "a"))
+                .andExpect(status().isOk());
+        mockMvc.perform(get("/api/v1/hello").param("name", "b"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/actuator/metrics/blueprint.hello.duration"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("blueprint.hello.duration"))
+                .andExpect(jsonPath("$.measurements[?(@.statistic == 'COUNT')].value").value(Matchers.hasItem(Matchers.greaterThanOrEqualTo(2.0))));
+    }
+
+    @Test
+    void metricsListsCustomHelloRequestMetricAfterTraffic() throws Exception {
+        mockMvc.perform(get("/api/v1/hello"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/actuator/metrics"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.names", Matchers.hasItem("blueprint.hello.requests")))
+                .andExpect(jsonPath("$.names", Matchers.hasItem("blueprint.hello.duration")));
+    }
+
 }

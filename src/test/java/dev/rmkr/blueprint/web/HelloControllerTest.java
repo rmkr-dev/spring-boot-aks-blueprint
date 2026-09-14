@@ -108,4 +108,35 @@ class HelloControllerTest {
                     .andExpect(jsonPath("$.message").value("Hello, loop!"));
         }
     }
+
+    @Test
+    void helloAcceptsUnicodeName() throws Exception {
+        mockMvc.perform(get("/api/v1/hello").param("name", "世界"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Hello, 世界!"));
+    }
+
+    @Test
+    void helloAcceptsHyphenatedName() throws Exception {
+        mockMvc.perform(get("/api/v1/hello").param("name", "spring-boot"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Hello, spring-boot!"));
+    }
+
+    @Test
+    void helloRejectsNameOneOverMaxWithProblemDetail() throws Exception {
+        String oversized = "b".repeat(65);
+        mockMvc.perform(get("/api/v1/hello").param("name", oversized))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.errors", hasSize(1)));
+    }
+
+    @Test
+    void rootPathIsNotMappedAsHello() throws Exception {
+        mockMvc.perform(get("/"))
+                .andExpect(status().isNotFound());
+    }
+
 }
