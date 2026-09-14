@@ -69,6 +69,7 @@ class SecurityHeadersFilterTest {
                 .andExpect(header().string("X-Frame-Options", "DENY"))
                 .andExpect(header().string("Referrer-Policy", "no-referrer"))
                 .andExpect(header().string("X-XSS-Protection", "0"))
-                .andExpect(header().string("Permissions-Policy", "geolocation=(), microphone=(), camera=()"));
+                .andExpect(header().string("Permissions-Policy", "geolocation=(), microphone=(), camera=()"))
+                .andExpect(header().string("Cache-Control", "no-store"));
     }
 }
