@@ -15,7 +15,7 @@
 uses: rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.2.0
 ```
 
-Pin an annotated tag (`v0.2.0` or later). Bump deliberately when the reusable contract changes; do not float this consumer on `@main`.
+**Verified for this wave:** `v0.2.0` is the newest annotated tag on `rmkr-dev/gha-reusable-workflows` (also `v0.1.0`). Pin an annotated tag; bump deliberately when the reusable contract changes; do not float this consumer on `@main`.
 
 Caller contract: `pom.xml` at repository root (or under `working-directory`).
 

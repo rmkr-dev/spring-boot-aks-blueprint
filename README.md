@@ -1,6 +1,9 @@
 # Spring Boot AKS Blueprint
 
 [![CI](https://github.com/rmkr-dev/spring-boot-aks-blueprint/actions/workflows/ci.yml/badge.svg)](https://github.com/rmkr-dev/spring-boot-aks-blueprint/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](pom.xml)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.x-green.svg)](pom.xml)
 
 A personal **v1** engineering blueprint for a **Java 21 / Spring Boot 3.5** HTTP service aimed at **Azure Kubernetes Service (AKS)**. Honest docs, a runnable app with tests, multi-stage non-root container, GitHub Actions CI pinned to reusable workflows, and **reference-only** Kubernetes samples—not a claim that anything is running in a live cluster.
 
