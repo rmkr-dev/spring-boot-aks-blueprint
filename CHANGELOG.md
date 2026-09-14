@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Deployment sample `minReadySeconds: 10` for safer rolling updates
 
+### Changed
+- README structure and documentation table match v1.2.1 surfaces
+
 ## [1.2.1] — 2026-09-14
 
 Patch: filter test depth, graceful-shutdown preStop polish, CI pin to reusable `java-maven-ci.yml@v0.4.0`, and docs accuracy. Still Spring Boot **3.5.x**.
