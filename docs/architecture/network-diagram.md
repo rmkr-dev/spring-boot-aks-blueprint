@@ -7,7 +7,7 @@ Clearly separates **implemented** local/container traffic from the **aspirationa
 | Hop | Status |
 | --- | --- |
 | JVM process on `SERVER_PORT` (default 8080) | Implemented |
-| Container exposing 8080 (non-root) + HEALTHCHECK | Implemented |
+| Container exposing 8080 (uid/gid 10001) + HEALTHCHECK | Implemented |
 | GitHub Actions docker build (no push) | Implemented |
 | Actuator + Prometheus text exposition | Implemented (`/actuator/prometheus`) |
 | Kubernetes Service / Pod (sample YAML) | Reference manifests only — not applied |
@@ -32,7 +32,7 @@ flowchart LR
   Pod --> App["Container :8080<br/>probes → /actuator/health/readiness|liveness"]
   CM["ConfigMap<br/>deploy/k8s/configmap.yaml"] -.->|"non-secret env"| Pod
   NP["NetworkPolicy<br/>deploy/k8s/networkpolicy.yaml<br/>(reference, CNI-dependent)"] -.->|"optional"| Pod
-  HPA["HPA<br/>deploy/k8s/hpa.yaml<br/>(reference)"] -.->|"optional scale"| Pod
+  HPA["HPA + scaleDown stabilization<br/>deploy/k8s/hpa.yaml<br/>(reference)"] -.->|"optional scale"| Pod
   Prom["Prometheus scrape<br/>(annotations optional)"] -.->|"aspirational"| Pod
 ```
 

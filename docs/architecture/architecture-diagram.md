@@ -24,7 +24,7 @@ flowchart TB
   Client -->|"text / JSON"| Act
 
   subgraph image["Implemented: container image"]
-    Docker["Dockerfile<br/>multi-stage Maven build<br/>Temurin JRE, USER app<br/>HEALTHCHECK liveness"]
+    Docker["Dockerfile<br/>multi-stage Maven build<br/>Temurin JRE, uid/gid 10001<br/>HEALTHCHECK liveness + curl --max-time"]
   end
 
   Docker -.->|"packages JAR"| App
@@ -37,7 +37,7 @@ flowchart TB
   GHA -.->|"docker build"| Docker
 
   subgraph aks_target["Documented target — not applied from this repo"]
-    AKS["AKS + deploy/k8s samples<br/>SA / PDB / HPA / NP / Ingress<br/>emptyDir /tmp + scrape annotations"]
+    AKS["AKS + deploy/k8s samples<br/>SA / PDB / HPA behavior / NP / Ingress<br/>uid 10001 + RollingUpdate + emptyDir /tmp"]
   end
 
   Docker -.->|"operator push + apply"| aks_target
@@ -52,7 +52,7 @@ flowchart TB
 | `SecurityHeadersFilter` / `RequestIdFilter` | Yes |
 | Actuator `health` / `info` / `metrics` / `prometheus` | Yes |
 | Virtual threads + Tomcat timeouts + compression + forward-headers | Yes |
-| Multi-stage non-root Dockerfile + Compose healthcheck | Yes |
+| Multi-stage non-root Dockerfile (uid 10001) + Compose user/healthcheck | Yes |
 | CI (`mvn test` + docker build, no push) | Yes |
 | `deploy/k8s/` sample manifests | Yes — reference only |
 | Live AKS apply / registry push | **No** — not claimed |
@@ -60,9 +60,10 @@ flowchart TB
 
 When the runtime shape changes, update this file in the same PR.
 
-## Ops notes (v1.2+)
+## Ops notes (v1.3+)
 
-- Dockerfile/Compose HEALTHCHECK and k8s probes share Actuator liveness/readiness paths.
-- Graceful shutdown + `preStop` sleep + `terminationGracePeriodSeconds` documented under operations.
+- Dockerfile/Compose HEALTHCHECK (`curl --max-time`) and k8s probes share Actuator liveness/readiness paths; Compose `user: 10001:10001`.
+- Graceful shutdown + `preStop` sleep + `terminationGracePeriodSeconds`; RollingUpdate `maxUnavailable: 0` / `revisionHistoryLimit`.
 - Config vs Secret patterns: [config-secrets.md](../deployment/config-secrets.md).
 - Prometheus scrape path + optional pod annotations; request-id logging via `logback-spring.xml`.
+- HPA sample includes scale-down stabilization; Service sets `appProtocol: http`.
