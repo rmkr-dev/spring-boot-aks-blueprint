@@ -14,6 +14,7 @@ These manifests illustrate a minimal Deployment, Service, ConfigMap, optional HP
 | `pdb.yaml` | Optional PodDisruptionBudget (`minAvailable: 1`) |
 | `serviceaccount.yaml` | Dedicated ServiceAccount; token automount disabled |
 | `ingress.yaml` | Optional Ingress sample (controller + host/TLS required) |
+| `secret.example.yaml` | Secret **shape** only (no real values; copy out of band) |
 
 ## Probes and resources
 
@@ -48,10 +49,15 @@ Resource requests/limits (`100m`/`1` CPU, `256Mi`/`512Mi` memory) are starter va
 
 `ingress.yaml` is an optional sample that routes host `spring-boot-aks-blueprint.example.local` to the ClusterIP Service on port 80. It sets `ingressClassName: nginx` as a common placeholder—swap for AGIC or your controller. TLS is commented out; create a Secret out of band and uncomment when ready. **Requires an Ingress controller in the cluster.** Not applied by CI; no live public URL is claimed.
 
+
+## Config and secrets
+
+Non-secret env lives in `configmap.yaml`. Credentials use Kubernetes Secrets created **out of band**—see `secret.example.yaml` (placeholders only) and [config-secrets.md](../../docs/deployment/config-secrets.md). External Secrets / Key Vault sync is a documented future option, not shipped as a CRD here. Never commit live `stringData` or `data` payloads.
+
 Suggested local review (optional):
 
 ```bash
 kubectl apply --dry-run=client -f deploy/k8s/
 ```
 
-Replace the container `image` with one you built and pushed. Do not commit secrets; use Kubernetes Secrets (out of band) for credentials.
+Replace the container `image` with one you built and pushed. Do not commit secrets; follow [config-secrets.md](../../docs/deployment/config-secrets.md) and keep credentials out of git.
