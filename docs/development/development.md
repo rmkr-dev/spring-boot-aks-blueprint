@@ -59,3 +59,7 @@ kubectl apply --dry-run=client -f deploy/k8s/
 ## v1 status
 
 Core slices (app, Actuator/Docker, CI, architecture/ADR/k8s samples, Problem Details) are on `main`. Further work should be incremental: more tests, careful dependency bumps within Boot 3.5.x, or an ADR-backed feature—not speculative frameworks.
+
+## Load smoke
+
+Optional sequential scripts for `GET /api/v1/hello`: see [load-hello.md](load-hello.md).
