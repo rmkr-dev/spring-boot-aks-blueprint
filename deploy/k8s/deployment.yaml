@@ -18,6 +18,8 @@ spec:
       labels:
         app.kubernetes.io/name: spring-boot-aks-blueprint
     spec:
+      serviceAccountName: spring-boot-aks-blueprint
+      automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
         seccompProfile:
