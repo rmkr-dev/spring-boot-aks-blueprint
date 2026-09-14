@@ -1,0 +1,22 @@
+# Reference only — not applied from this repository.
+# Requires metrics-server (or equivalent) in the cluster. Starter CPU target only.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: spring-boot-aks-blueprint
+  labels:
+    app.kubernetes.io/name: spring-boot-aks-blueprint
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: spring-boot-aks-blueprint
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
