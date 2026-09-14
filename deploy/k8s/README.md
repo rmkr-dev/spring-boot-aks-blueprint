@@ -34,7 +34,7 @@ Resource requests/limits (`100m`/`1` CPU, `256Mi`/`512Mi` memory) are starter va
 
 ## NetworkPolicy
 
-`networkpolicy.yaml` is an optional sample that selects pods labeled `app.kubernetes.io/name=spring-boot-aks-blueprint`. It allows ingress on TCP 8080 from same-namespace pods and from pods labeled `app.kubernetes.io/component=api-client`, plus limited egress (DNS and HTTPS). **Enforcement depends on your CNI.** Treat it as a starting point—tighten for real clusters. Not applied by CI.
+`networkpolicy.yaml` is an optional sample that selects pods labeled `app.kubernetes.io/name=spring-boot-aks-blueprint`. It allows ingress on TCP 8080 from same-namespace pods and from pods labeled `app.kubernetes.io/component=api-client`, plus limited egress (DNS and HTTPS). **Enforcement depends on your CNI.** Treat it as a starting point—tighten for real clusters. If you use `ingress.yaml`, uncomment the optional Ingress-controller ingress rule (or equivalent) so the controller can reach pods. Not applied by CI.
 
 ## PodDisruptionBudget
 
