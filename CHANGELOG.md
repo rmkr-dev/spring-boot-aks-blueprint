@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Filter `@Order` integration test: RequestIdFilter before SecurityHeadersFilter
 - Maven `build-info` for `/actuator/info` build metadata
 - Broader RequestIdFilter and SecurityHeadersFilter tests (blank/UUID/error/actuator paths, MDC cleanup, exception-path headers)
 - Deployment `preStop` sleep (5s) aligned with graceful shutdown budget; binding tests for ServerProperties/LifecycleProperties
