@@ -15,14 +15,24 @@ Without `server.shutdown=graceful`, Tomcat closes connections immediately on sto
 
 ## Kubernetes alignment
 
-The sample Deployment sets `terminationGracePeriodSeconds: 45` so the kubelet allows more wall-clock time than the 30s Spring phase (buffer for SIGTERM delivery and JVM exit). Order of events on delete/roll:
+The sample Deployment sets:
 
-1. Pod receives `SIGTERM`
-2. Readiness fails (endpoint removed from Service) as the process shuts down
-3. Graceful Tomcat drain (≤ 30s)
-4. Process exits; if still running at 45s, kubelet sends `SIGKILL`
+| Knob | Value | Role |
+| --- | --- | --- |
+| `terminationGracePeriodSeconds` | `45` | Kubelet wall-clock from Terminating until `SIGKILL` |
+| container `lifecycle.preStop` | `sleep 5` | Delay `SIGTERM` so kube-proxy / EndpointSlice can drop the pod |
 
-Tune both values together: grace period should be **greater than** `timeout-per-shutdown-phase`.
+Budget: **5s preStop + 30s Spring drain + ~10s JVM-exit buffer = 45s**. Tune all three together: grace period must stay **greater than** preStop duration plus `timeout-per-shutdown-phase`.
+
+Order of events on delete/roll:
+
+1. Pod is marked Terminating; EndpointSlice removal starts (asynchronous)
+2. `preStop` sleeps 5s so Service traffic can drain off this pod
+3. Container receives `SIGTERM`
+4. Spring Boot graceful Tomcat drain (≤ 30s); readiness will fail as the context shuts down
+5. Process exits; if still running at 45s, kubelet sends `SIGKILL`
+
+The short `sleep` does **not** replace `server.shutdown=graceful`. It only covers the race where kube-proxy still routes to a pod that has already started shutting down.
 
 ## Local check
 
@@ -36,7 +46,7 @@ Or send `SIGTERM` to the JVM PID. No load generator is required for a smoke chec
 ## Out of scope
 
 - Custom `TomcatServletWebServerFactory` beans
-- PreStop hooks that sleep instead of relying on graceful shutdown (optional later)
+- Long preStop sleeps that *replace* graceful shutdown (the sample sleep is 5s only)
 - Claiming zero dropped requests under extreme load without measurement
 
 ## Related Tomcat timeouts
