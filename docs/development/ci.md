@@ -6,20 +6,20 @@
 
 | Job | What it does |
 | --- | --- |
-| `test` | Calls reusable `java-maven-ci.yml@v0.2.0` — Temurin 21, `mvn -B test` |
+| `test` | Calls reusable `java-maven-ci.yml@v0.4.0` — Temurin 21, `mvn -B test` |
 | `docker` | Builds the multi-stage image locally on the runner (**no registry push**) |
 
 ## Reusable workflow pin
 
 ```yaml
-uses: rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.2.0
+uses: rmkr-dev/gha-reusable-workflows/.github/workflows/java-maven-ci.yml@v0.4.0
 ```
 
-**Verified for this wave:** `v0.2.0` is the newest annotated tag on `rmkr-dev/gha-reusable-workflows` (also `v0.1.0`). Pin an annotated tag; bump deliberately when the reusable contract changes; do not float this consumer on `@main`.
+**Verified for this wave:** `v0.4.0` is an annotated tag on `rmkr-dev/gha-reusable-workflows` and is compatible with this consumer's inputs (`working-directory`, `java-version`, optional `timeout-minutes` / `fail-fast` / `enable-maven-cache` / `maven-goals`). Pin an annotated tag; bump deliberately when the reusable contract changes; do not float this consumer on `@main`. Newer patch tags (for example `v0.4.1`) exist — bump only after reviewing the reusable changelog.
 
 Caller contract: `pom.xml` at repository root (or under `working-directory`).
 
-Optional inputs available on `@v0.2.0` (defaults are fine here): `timeout-minutes`, `fail-fast`, `enable-maven-cache`, `maven-goals`.
+Optional inputs available on `@v0.4.0` (defaults are fine here): `timeout-minutes`, `fail-fast`, `enable-maven-cache`, `maven-goals`.
 
 ## Permissions
 

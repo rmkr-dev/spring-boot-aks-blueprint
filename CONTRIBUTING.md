@@ -14,7 +14,7 @@ Thanks for improving this blueprint. Keep changes small, complete, and honest ab
 2. Implement **one slice** with **multiple focused commits** (not one giant commit). Update every layer that slice needs (code, tests, docs, CI, manifests).
 3. Use a conventional commit message (`docs:`, `feat:`, `chore:`, `test:`, `ci:`). Write it as if a colleague will read it in `git log` a year from now. No tool or agent co-author footers.
 4. Open a pull request against `main`. Say what slice this is, what is in scope, and what is explicitly out of scope.
-5. Wait for CI green (`test` via reusable workflow `@v0.2.0`, plus docker build).
+5. Wait for CI green (`test` via reusable workflow `@v0.4.0`, plus docker build).
 
 ## What we will not merge
 
