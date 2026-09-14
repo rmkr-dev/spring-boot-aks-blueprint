@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Service sample `appProtocol: http` on the ClusterIP port
 - HPA sample `behavior` with 60s scale-down stabilization (and faster scale-up)
+- Compose `user: "10001:10001"` aligned with Dockerfile/Deployment identity
+- `ComposeNonRootIdentityTest`
 
 ### Changed
 - `BuildInfoContributorTest` reads expected version from `pom.xml` (no hardcoded release version)

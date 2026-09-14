@@ -38,7 +38,7 @@ Or with Compose (app only — no database service):
 docker compose up --build
 ```
 
-This uses root [`compose.yaml`](../../compose.yaml) to build the Dockerfile and publish port `8080`. Stop with `Ctrl+C` or `docker compose down`. Compose does **not** create a Kubernetes cluster; for cluster experiments use your own kind/minikube and the reference manifests under `deploy/k8s/` (still not applied by this repo's CI).
+This uses root [`compose.yaml`](../../compose.yaml) to build the Dockerfile and publish port `8080` (Compose `user: "10001:10001"` matches the image/Deployment identity). Stop with `Ctrl+C` or `docker compose down`. Compose does **not** create a Kubernetes cluster; for cluster experiments use your own kind/minikube and the reference manifests under `deploy/k8s/` (still not applied by this repo's CI).
 
 CI builds the same image on pull requests and `main` pushes **without pushing** to a registry. See [ci.md](../development/ci.md).
 
