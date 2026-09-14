@@ -13,3 +13,7 @@ The multi-stage `Dockerfile` includes a `HEALTHCHECK` aligned with Actuator live
 `curl` is installed in the runtime stage so the healthcheck can run without a custom Java probe. Compose and `docker run` report container health from this check; Kubernetes still prefers the HTTP probes in `deploy/k8s/deployment.yaml`.
 
 This is local/container convenience—not proof of a live AKS deployment.
+
+## Compose
+
+`compose.yaml` mirrors the same Actuator liveness check under `services.app.healthcheck` so `docker compose ps` can show healthy/unhealthy without a separate probe definition.
