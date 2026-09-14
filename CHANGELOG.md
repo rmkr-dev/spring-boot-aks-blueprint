@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1] — 2026-09-14
+
+Patch after v1.3.0: safer RollingUpdate defaults, Kubernetes manifest contract tests, numeric non-root uid/gid **10001**, and CI pin to reusable `java-maven-ci.yml@v0.4.2`. Still Spring Boot **3.5.x**.
+
 ### Added
 - Deployment sample `revisionHistoryLimit: 5` and RollingUpdate `maxUnavailable: 0` / `maxSurge: 1`
 - `KubernetesManifestContractTest` covering SA, probes, securityContext, Service/HPA/PDB/NP/Ingress samples
@@ -112,6 +116,7 @@ First tagged release of the personal Spring Boot + AKS engineering blueprint.
 - Dependabot ignores Spring Boot **major** upgrades (stay on 3.5.x)
 - NetworkPolicy enforcement depends on cluster CNI; HPA needs metrics-server
 
+[1.3.1]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.3.1
 [1.3.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.3.0
 [1.2.1]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.2.1
 [1.2.0]: https://github.com/rmkr-dev/spring-boot-aks-blueprint/releases/tag/v1.2.0
