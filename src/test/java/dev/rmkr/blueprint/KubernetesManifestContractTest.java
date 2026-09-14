@@ -129,4 +129,14 @@ class KubernetesManifestContractTest {
         assertThat(ingress).contains("name: spring-boot-aks-blueprint");
         assertThat(ingress).contains("number: 80");
     }
+
+    @Test
+    void deploymentSetsRollingUpdateAndRevisionHistory() {
+        assertThat(deployment).contains("revisionHistoryLimit: 5");
+        assertThat(deployment).contains("type: RollingUpdate");
+        assertThat(deployment).contains("maxUnavailable: 0");
+        assertThat(deployment).contains("maxSurge: 1");
+        assertThat(deployment).contains("minReadySeconds: 10");
+        assertThat(deployment).contains("progressDeadlineSeconds: 120");
+    }
 }
