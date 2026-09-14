@@ -25,3 +25,9 @@ Thanks for improving this blueprint. Keep changes small, complete, and honest ab
 - Drive-by reformatting of files you did not otherwise change
 
 Questions about process belong in the pull request. Architecture-level choices belong in an ADR — see [docs/decisions/](docs/decisions/).
+
+## Local checks beyond `mvn test`
+
+- Optional load smoke: `scripts/load-hello.sh` or `scripts/load-hello.py` (see [load-hello.md](docs/development/load-hello.md)).
+- Graceful shutdown behavior: [graceful-shutdown.md](docs/operations/graceful-shutdown.md).
+- Container health: Dockerfile/Compose HEALTHCHECK on Actuator liveness ([docker-healthcheck.md](docs/deployment/docker-healthcheck.md)).

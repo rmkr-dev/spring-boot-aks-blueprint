@@ -24,6 +24,7 @@ A slice is not done if you updated only one layer. When the change needs them, u
 - docs that describe the behavior
 - architecture or an ADR, if the shape of the system changed
 - deployment docs/manifests, if the runtime shape changed
+- optional scripts under `scripts/` only when documented and referenced from README/docs
 
 Do not add a file that nothing references, or a doc that describes a file that does not exist.
 
