@@ -70,6 +70,14 @@ A change is done when all of the following are true:
 - [ ] You could merge this PR and leave the repo coherent if no further PR ever shipped
 - [ ] `mvn test` passes when application code is in scope
 
+
+## Current blueprint reminders (v1.2+)
+
+- Stay on Spring Boot **3.5.x** — Dependabot ignores Boot **major** upgrades; no Boot 4 without an ADR.
+- Actuator exposure includes `prometheus` only with `management.prometheus.metrics.export.enabled=true`.
+- Filters: `SecurityHeadersFilter`, `RequestIdFilter` (+ `logback-spring.xml` MDC pattern).
+- K8s samples: `readOnlyRootFilesystem` needs `emptyDir` at `/tmp`; manifests remain reference-only.
+
 ## Final self-review
 
 Before you ask for review:

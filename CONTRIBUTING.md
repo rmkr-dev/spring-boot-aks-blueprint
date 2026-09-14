@@ -31,3 +31,5 @@ Questions about process belong in the pull request. Architecture-level choices b
 - Optional load smoke: `scripts/load-hello.sh` or `scripts/load-hello.py` (see [load-hello.md](docs/development/load-hello.md)).
 - Graceful shutdown behavior: [graceful-shutdown.md](docs/operations/graceful-shutdown.md).
 - Container health: Dockerfile/Compose HEALTHCHECK on Actuator liveness ([docker-healthcheck.md](docs/deployment/docker-healthcheck.md)).
+- Prometheus scrape path: `/actuator/prometheus` ([observability.md](docs/operations/observability.md)).
+- Headers / request id: [http-headers.md](docs/security/http-headers.md), [request-id.md](docs/operations/request-id.md).
