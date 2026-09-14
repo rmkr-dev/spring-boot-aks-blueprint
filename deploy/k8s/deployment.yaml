@@ -17,6 +17,11 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: spring-boot-aks-blueprint
+      annotations:
+        # Common Prometheus Operator / scrape annotations (optional; no live scrape claimed)
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8080"
     spec:
       serviceAccountName: spring-boot-aks-blueprint
       automountServiceAccountToken: false

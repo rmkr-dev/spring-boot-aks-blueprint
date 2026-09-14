@@ -10,7 +10,7 @@ Security posture for this blueprint and for anyone adapting it.
 - **Least privilege workflows.** [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) sets `permissions: contents: read`. No secrets required for the default green path.
 - **Containers.** Dockerfile runs as non-root `app` user.
 - **Kubernetes samples.** ConfigMaps for non-secret config only (`deploy/k8s/`). Secret **shape** in `secret.example.yaml`; never commit Secret data. See [config-secrets.md](../deployment/config-secrets.md).
-- **Actuator.** Only `health`, `info`, and `metrics` are exposed; health details stay `when_authorized`.
+- **Actuator.** Only `health`, `info`, `metrics`, and `prometheus` are exposed; health details stay `when_authorized`.
 - **API errors.** Validation failures return Problem Details without stack traces (see [api-errors.md](../development/api-errors.md)).
 
 ## Dependencies

@@ -55,6 +55,12 @@ class ActuatorExposureTest {
     }
 
     @Test
+    void prometheusEndpointIsExposed() throws Exception {
+        mockMvc.perform(get("/actuator/prometheus"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     void envEndpointIsNotExposed() throws Exception {
         mockMvc.perform(get("/actuator/env"))
                 .andExpect(status().isNotFound());
