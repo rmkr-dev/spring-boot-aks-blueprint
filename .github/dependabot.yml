@@ -8,6 +8,18 @@ updates:
     ignore:
       - dependency-name: "org.springframework.boot:spring-boot-starter-parent"
         update-types: ["version-update:semver-major"]
+    groups:
+      spring-boot-minor-patch:
+        patterns:
+          - "org.springframework.boot*"
+        update-types:
+          - "minor"
+          - "patch"
+      maven-other:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "org.springframework.boot*"
 
   - package-ecosystem: github-actions
     directory: /

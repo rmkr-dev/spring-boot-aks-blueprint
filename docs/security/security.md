@@ -16,7 +16,7 @@ Security posture for this blueprint and for anyone adapting it.
 
 ## Dependencies
 
-Dependabot updates Maven and GitHub Actions weekly. GitHub Actions updates are **grouped** into a single `github-actions` PR. Spring Boot **major** bumps (for example 3.x → 4.x) are ignored so the blueprint stays on 3.5.x until an explicit ADR. CI pins `actions/checkout@v7`.
+Dependabot updates Maven and GitHub Actions weekly. GitHub Actions updates are **grouped** into a single `github-actions` PR. Maven groups Spring Boot minor/patch separately from other libraries. Spring Boot **major** bumps (for example 3.x → 4.x) are ignored so the blueprint stays on 3.5.x until an explicit ADR. CI pins `actions/checkout@v7`.
 
 ## Reporting
 

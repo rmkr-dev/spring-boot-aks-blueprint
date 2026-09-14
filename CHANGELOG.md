@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Dependabot Maven groups for Spring Boot minor/patch vs other libraries
 - Soft `topologySpreadConstraints` on the Deployment sample (hostname skew)
 - Java 21 virtual threads enabled (`spring.threads.virtual.enabled=true`)
 - Conservative HTTP security headers via `SecurityHeadersFilter`

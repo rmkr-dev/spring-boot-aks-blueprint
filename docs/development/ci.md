@@ -31,4 +31,4 @@ The workflow uses a concurrency group per ref with `cancel-in-progress: true` so
 
 ## Dependabot
 
-GitHub Actions updates are grouped (`groups.github-actions`) in `.github/dependabot.yml`. Spring Boot major upgrades remain ignored. Checkout stays pinned at `actions/checkout@v7` in `ci.yml`.
+GitHub Actions updates are grouped (`groups.github-actions`) in `.github/dependabot.yml`. Maven updates group Spring Boot minor/patch separately from other dependencies; Spring Boot **major** upgrades remain ignored. Checkout stays pinned at `actions/checkout@v7` in `ci.yml`.
