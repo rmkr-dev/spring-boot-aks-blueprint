@@ -18,4 +18,10 @@ class KubernetesGracefulShutdownManifestTest {
         assertThat(text).contains("preStop:");
         assertThat(text).contains("command: [\"sleep\", \"5\"]");
     }
+
+    @Test
+    void deploymentSetsMinReadySecondsForRollouts() throws Exception {
+        String text = Files.readString(Path.of("deploy/k8s/deployment.yaml"));
+        assertThat(text).contains("minReadySeconds: 10");
+    }
 }

@@ -75,6 +75,10 @@ The Deployment pod template includes optional `prometheus.io/scrape`, `prometheu
 
 The Deployment sets `readOnlyRootFilesystem: true` on the container. The JVM and many libraries expect a writable temp directory, so the sample mounts an `emptyDir` volume at `/tmp`. Without that mount, the process can fail at runtime even though local `java -jar` works on a writable disk. Tune `emptyDir` size limits in real clusters if needed.
 
+## Rollout readiness
+
+The Deployment sets `minReadySeconds: 10` so a newly Ready pod must stay Ready briefly before the rolling update proceeds. Pair with readiness probes; tune for your JVM warm-up. Reference only.
+
 ## Graceful shutdown
 
 The Deployment sets `terminationGracePeriodSeconds: 45` and a container `preStop` exec of `sleep 5`. Pair with `server.shutdown=graceful` and `spring.lifecycle.timeout-per-shutdown-phase=30s` in `application.yml` so EndpointSlice removal can start before SIGTERM, then in-flight requests can finish (5 + 30 + buffer ≤ 45). Details: [graceful-shutdown.md](../../docs/operations/graceful-shutdown.md).
