@@ -57,6 +57,11 @@ Non-secret env lives in `configmap.yaml`. Credentials use Kubernetes Secrets cre
 
 
 
+
+## Topology spread
+
+The Deployment sample includes soft `topologySpreadConstraints` (`whenUnsatisfiable: ScheduleAnyway`, `topologyKey: kubernetes.io/hostname`, `maxSkew: 1`) so schedulers prefer spreading replicas across nodes when capacity allows. Pair with HPA (`maxReplicas > 1`) for meaningful effect. Reference only—cluster topology and taints still win.
+
 ## Prometheus scrape annotations
 
 The Deployment pod template includes optional `prometheus.io/scrape`, `prometheus.io/path`, and `prometheus.io/port` annotations pointing at `/actuator/prometheus`. They help operators who already run a Prometheus that honors those annotations. **No scrape, ServiceMonitor, or live metrics pipeline is claimed by this repo.**

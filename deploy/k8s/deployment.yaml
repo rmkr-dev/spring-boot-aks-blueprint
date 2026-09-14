@@ -27,6 +27,13 @@ spec:
       automountServiceAccountToken: false
       # Allow in-flight requests to finish (matches spring.lifecycle.timeout-per-shutdown-phase)
       terminationGracePeriodSeconds: 45
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: spring-boot-aks-blueprint
       securityContext:
         runAsNonRoot: true
         seccompProfile:

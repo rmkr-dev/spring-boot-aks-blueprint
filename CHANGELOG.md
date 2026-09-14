@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Soft `topologySpreadConstraints` on the Deployment sample (hostname skew)
 - Java 21 virtual threads enabled (`spring.threads.virtual.enabled=true`)
 - Conservative HTTP security headers via `SecurityHeadersFilter`
 - Micrometer Prometheus registry (`/actuator/prometheus`) and optional scrape annotations on the Deployment
