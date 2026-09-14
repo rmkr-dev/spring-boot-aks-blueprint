@@ -1,6 +1,6 @@
 # Kubernetes samples (reference only)
 
-These manifests illustrate a minimal Deployment, Service, ConfigMap, and optional HPA for the Spring Boot app.
+These manifests illustrate a minimal Deployment, Service, ConfigMap, optional HPA, and a sample Ingress for the Spring Boot app.
 
 **They are not applied by CI and are not proof of a live AKS cluster.**
 
@@ -13,6 +13,7 @@ These manifests illustrate a minimal Deployment, Service, ConfigMap, and optiona
 | `networkpolicy.yaml` | Sample ingress/egress NetworkPolicy (optional; CNI-dependent) |
 | `pdb.yaml` | Optional PodDisruptionBudget (`minAvailable: 1`) |
 | `serviceaccount.yaml` | Dedicated ServiceAccount; token automount disabled |
+| `ingress.yaml` | Optional Ingress sample (controller + host/TLS required) |
 
 ## Probes and resources
 
@@ -41,6 +42,11 @@ Resource requests/limits (`100m`/`1` CPU, `256Mi`/`512Mi` memory) are starter va
 ## ServiceAccount
 
 `serviceaccount.yaml` defines a dedicated account with `automountServiceAccountToken: false`. The Deployment sets `serviceAccountName` and also disables token automount on the pod. No RBAC Roles are shipped—add them only when the app needs API access.
+
+
+## Ingress
+
+`ingress.yaml` is an optional sample that routes host `spring-boot-aks-blueprint.example.local` to the ClusterIP Service on port 80. It sets `ingressClassName: nginx` as a common placeholder—swap for AGIC or your controller. TLS is commented out; create a Secret out of band and uncomment when ready. **Requires an Ingress controller in the cluster.** Not applied by CI; no live public URL is claimed.
 
 Suggested local review (optional):
 

@@ -52,6 +52,7 @@ Samples live under [`deploy/k8s/`](../../deploy/k8s/):
 | `networkpolicy.yaml` | Optional NetworkPolicy sample — CNI must enforce policies |
 | `pdb.yaml` | Optional PodDisruptionBudget (`minAvailable: 1`) |
 | `serviceaccount.yaml` | Dedicated ServiceAccount (token automount off) |
+| `ingress.yaml` | Optional Ingress sample (controller + host; TLS commented) |
 
 Probe paths match Actuator when `management.endpoint.health.probes.enabled=true`:
 
@@ -76,7 +77,7 @@ Do **not** expect this repository’s CI to run `kubectl apply` or to create Azu
 1. Build and push an image to a registry you control.
 2. Edit `deploy/k8s/deployment.yaml` `image` (and namespace/resources as needed).
 3. Apply with `kubectl` (or GitOps) against **your** AKS cluster using credentials that never enter this git repo.
-4. Optionally add Ingress / TLS / DNS—not shipped as a completed story here.
+4. Optionally adapt `deploy/k8s/ingress.yaml` (controller class, host, TLS Secret)—still operator-owned; not applied by CI.
 
 | Step | In this repo? |
 | --- | --- |
@@ -85,7 +86,8 @@ Do **not** expect this repository’s CI to run `kubectl apply` or to create Azu
 | CI docker build (no push) | Yes |
 | Sample Deployment / Service / ConfigMap | Yes — **reference** |
 | Live `kubectl apply` from CI | **No** — not claimed |
-| Ingress, cert-manager, production sizing | Operator / later ADR |
+| Sample Ingress YAML | Yes — **reference** (needs controller + host/TLS) |
+| cert-manager, production sizing | Operator / later ADR |
 
 ## What “done” does not mean
 

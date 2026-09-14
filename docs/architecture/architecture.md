@@ -13,7 +13,7 @@ This repository is a **Spring Boot + AKS engineering blueprint**. Application, c
 | `src/test/java/...` | Unit + WebMvc + Actuator + error tests | Present |
 | `Dockerfile` / `.dockerignore` | Multi-stage non-root image | Present |
 | `.github/workflows/ci.yml` | Reusable Maven CI + docker build (no push) | Present |
-| `deploy/k8s/` | Sample Deployment / Service / ConfigMap / HPA / NetworkPolicy / PDB / ServiceAccount | Reference only |
+| `deploy/k8s/` | Sample Deployment / Service / ConfigMap / HPA / NetworkPolicy / PDB / ServiceAccount / Ingress | Reference only |
 
 ## Application components
 
@@ -33,7 +33,7 @@ Configuration prefers environment variables over hardcoding (`SERVER_PORT`, `SPR
 
 ## Network posture
 
-Local and container processes listen on port 8080. Sample Kubernetes Service/Pod networking is documented as **reference**; Azure LB/Ingress remains aspirational. See [network-diagram.md](network-diagram.md).
+Local and container processes listen on port 8080. Sample Kubernetes Service/Pod/Ingress networking is documented as **reference**; a live Azure LB/TLS endpoint remains operator-owned. See [network-diagram.md](network-diagram.md).
 
 ## Related decisions
 
