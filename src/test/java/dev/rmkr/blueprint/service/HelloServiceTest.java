@@ -70,13 +70,27 @@ class HelloServiceTest {
     }
 
     @Test
-    void greetIncrementsCustomCounter() {
-        helloService.greet("one");
-        helloService.greet("two");
+    void greetIncrementsTaggedCounters() {
+        helloService.greet(null);
+        helloService.greet("named");
 
-        assertThat(meterRegistry.find("blueprint.hello.requests").counter())
+        assertThat(meterRegistry.find("blueprint.hello.requests").tag("outcome", "default").counter())
                 .isNotNull()
                 .extracting(c -> c.count())
-                .isEqualTo(2.0);
+                .isEqualTo(1.0);
+        assertThat(meterRegistry.find("blueprint.hello.requests").tag("outcome", "named").counter())
+                .isNotNull()
+                .extracting(c -> c.count())
+                .isEqualTo(1.0);
+    }
+
+    @Test
+    void greetRecordsDurationTimer() {
+        helloService.greet("timed");
+
+        assertThat(meterRegistry.find("blueprint.hello.duration").timer())
+                .isNotNull()
+                .extracting(t -> t.count())
+                .isEqualTo(1L);
     }
 }

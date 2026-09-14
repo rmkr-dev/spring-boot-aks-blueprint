@@ -70,4 +70,15 @@ class ActuatorExposureTest {
                 .andExpect(jsonPath("$.name").value("blueprint.hello.requests"))
                 .andExpect(jsonPath("$.measurements[0].value").value(Matchers.greaterThanOrEqualTo(1.0)));
     }
+
+    @Test
+    void helloDurationTimerAppearsAfterGreeting() throws Exception {
+        mockMvc.perform(get("/api/v1/hello").param("name", "timer"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/actuator/metrics/blueprint.hello.duration"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("blueprint.hello.duration"))
+                .andExpect(jsonPath("$.measurements").isArray());
+    }
 }
