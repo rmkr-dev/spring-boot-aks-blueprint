@@ -23,10 +23,12 @@ class SecurityHeadersFilterUnitTest {
             assertEquals("no-referrer", response.getHeader("Referrer-Policy"));
             assertEquals("0", response.getHeader("X-XSS-Protection"));
             assertEquals("geolocation=(), microphone=(), camera=()", response.getHeader("Permissions-Policy"));
+            assertEquals("no-store", response.getHeader("Cache-Control"));
         };
 
         filter.doFilter(request, response, chain);
         assertEquals("nosniff", response.getHeader("X-Content-Type-Options"));
+        assertEquals("no-store", response.getHeader("Cache-Control"));
     }
 
     @Test
@@ -43,5 +45,6 @@ class SecurityHeadersFilterUnitTest {
         assertEquals("no-referrer", response.getHeader("Referrer-Policy"));
         assertEquals("0", response.getHeader("X-XSS-Protection"));
         assertEquals("geolocation=(), microphone=(), camera=()", response.getHeader("Permissions-Policy"));
+        assertEquals("no-store", response.getHeader("Cache-Control"));
     }
 }

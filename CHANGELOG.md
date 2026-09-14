@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Deployment sample `minReadySeconds: 10` for safer rolling updates
+- `Cache-Control: no-store` on `SecurityHeadersFilter` responses
 
 ### Changed
 - README structure and documentation table match v1.2.1 surfaces
