@@ -8,7 +8,7 @@ Honest deployment path for this blueprint. **Nothing here claims that a producti
 mvn -B test
 mvn -B spring-boot:run
 # or
-mvn -B package && java -jar target/spring-boot-aks-blueprint-1.3.2.jar
+mvn -B package && java -jar target/spring-boot-aks-blueprint-1.3.3.jar
 ```
 
 Default listen port: `8080` (override with `SERVER_PORT`).
